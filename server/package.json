@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "medusa_server",
   "version": "1.0.0",
-  "description": "Servidor de socket io para medusa",
+  "description": "Servidor de socket io + Express para la app de medusa",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,15 @@
   "author": "Jorge Roselló Martín",
   "license": "ISC",
   "dependencies": {
-    "socket.io": "^4.0.0"
+    "@thream/socketio-jwt": "^2.1.0",
+    "coingecko-api": "^1.0.10",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "google-auth-library": "^7.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.0",
+    "socket.io": "^4.0.0",
+    "socketio-jwt": "^4.6.2"
   }
 }

@@ -1,23 +1,28 @@
 const config = require("../app-config");
 
-const server = require('http').createServer();
-const io = require('socket.io')(server,{
-    cors: {
-        origin: "http://localhost:8080",
-        methods: ["GET", "POST"],
-        credentials:true
-    }
+// Para el servidor de express
+const app = require('express')();
+const http = require('http').createServer(app);
+const bodyParser = require('body-parser');
+
+// Controladores
+const apiCriptoDivisas = require('./controlador/api-criptodivisas');
+
+// Funcionamiento de la comunicación por socket
+const funcionesSocket = require('./socket')(http);
+
+apiCriptoDivisas.init(funcionesSocket).catch(err => {
+    console.log(err);
 });
 
-io.on('connection', socket => {
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-    console.log("SE HA CONECTADO");
+app.use(bodyParser.json());
 
-    setTimeout(()=>{socket.emit("moneda","Uhhhh funciona")},100);
+app.use('/login',require('./rutas/login'));
 
-
+http.listen(config.servidor.puerto,()=>{
+    console.log("Escuchando en: "+config.servidor.puerto)
 });
-
-server.listen(config.servidor.puerto);
-
-console.log("Escuchando en: "+config.servidor.puerto)

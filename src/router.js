@@ -1,7 +1,6 @@
 import VueRouter from "vue-router";
-import HelloWorld from "@/components/HelloWorld";
+import Inicio from "@/components/Inicio";
 import Login from "@/components/Login";
-
 
 
 // 2. Define some routes
@@ -11,14 +10,16 @@ import Login from "@/components/Login";
 // We'll talk about nested routes later.
 const routes = [
     {
-        path: '/foo',
-        component: HelloWorld,
+        name: 'Inicio',
+        path: '/inicio',
+        component: Inicio,
     },
     {
         path: '/bar',
-        component: HelloWorld,
+        component: Inicio,
     },
     {
+        name:'Login',
         path: '/login',
         component: Login,
     }
@@ -29,6 +30,7 @@ const routes = [
 // keep it simple for now.
 
 export default new VueRouter({
+    mode: 'history',
     routes // short for `routes: routes`
 })
 

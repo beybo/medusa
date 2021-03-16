@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-        <h1>{{msg}}</h1>
+        <h1>{{ msg }}</h1>
         <p>
             For a guide and recipes on how to configure / customize this project,<br>
             check out the
@@ -35,18 +35,23 @@
 
 <script>
 export default {
-    name: 'HelloWorld',
-    data(){
+    name: 'Inicio',
+    data() {
         return {
             msg: "ESTO ES UN MENSAJE",
             hide: true
         }
     },
+    mounted() {
+
+        this.msg = JSON.stringify(this.$divisas);
+
+    },
     sockets: {
-        moneda(data) {
+        inicio(data) {
             console.log(data);
 
-            //this.msg = data;
+            this.msg = "Iniciado";
             this.hide = false;
 
         }
@@ -54,7 +59,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
 h3
     margin: 40px 0 0

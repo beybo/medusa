@@ -1,14 +1,13 @@
 <template>
-    <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
-        <Header/>
+    <div id="app" class="columna">
+        <Header v-bind:mostrar="mostrarHeader"/>
         <router-view/>
     </div>
 </template>
 
 <script>
 
-import Header from "@/components/Header";
+import Header from "@/components/Header"
 
 
 export default {
@@ -16,19 +15,25 @@ export default {
     components: {
         Header
     },
+    data(){
+        return {
+            mostrarHeader: true
+        }
+    },
     mounted() {
-
-    }
+        if(this.$router.history.current.name === "Login"){
+            this.mostrarHeader = false;
+        }
+    },
+    watch:{
+        $route (to){
+            this.mostrarHeader = to.name !== "Login";
+        }
+    },
 }
 </script>
 <style lang="sass">
 
-#app
-  font-family: QuickSand, Helvetica, Arial, sans-serif !important
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-align: center
-  color: #2c3e50
-  margin-top: 60px
+@import "assets/sass/main"
 
 </style>
