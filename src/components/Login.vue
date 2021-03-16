@@ -1,25 +1,25 @@
 <template>
-    <transition name="bounce" mode="out-in">
-        <div v-if="estado === 0" key="on" class="caja columna">
-
-            <h2>Medusa</h2>
-
-            <p class="margen-top">Bienvenido a Medusa, el simulador de criptodivisas más fácil de usar.</p>
-            <p class="margen-bottom">Para continuar inicia sesión</p>
-            <button @click.prevent="loginGoogle"><font-awesome-icon :icon="['fab','google']"/> Iniciar Sesión con Google</button>
-
+    <div class="columna caja" :data-fondo="claseFondo">
+        <div class="columna">
+            <img src="@/assets/img/LogoMedusa.svg" @click="estado = estado===0 ? 1: 0;claseFondo = 'no'" class="logo-grande">
         </div>
-        <form @submit.prevent="registrar" v-else key="off" class="caja columna">
+        <transition name="bounce" mode="out-in" v-on:after-leave="entradaAnimacion">
+            <div v-if="estado === 0" key="on" class="columna elemento">
 
-            <h2>Medusa</h2>
+                <p class="margen-top">Bienvenido a Medusa, el simulador de criptodivisas más fácil de usar.</p>
+                <p>Para continuar inicia sesión</p>
+                <button class="btn margen" @click.prevent="loginGoogle"><font-awesome-icon :icon="['fab','google']"/> Iniciar Sesión con Google</button>
 
-            <p>Por favor escribe un nombre de usuario:</p>
-            <input pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text" placeholder="Nombre de usuario">
-            <button>Continuar</button>
+            </div>
+            <form @submit.prevent="registrar" v-else key="off" class="columna elemento">
 
-        </form>
-    </transition>
+                <p class="margen-bottom">Por favor escribe un nombre de usuario:</p>
+                <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text" placeholder="Nombre de usuario">
+                <button class="btn margen-top">Continuar</button>
 
+            </form>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -39,10 +39,15 @@ export default {
         return {
             estado:0,
             permitirRegistro:false,
-            nombre:""
+            nombre:"",
+            token:"",
+            claseFondo:""
         };
     },
     methods: {
+        entradaAnimacion(){
+            this.claseFondo = "si"
+        },
         finalizar(token){
             localStorage.setItem("token",token);
             this.$socket.io.opts.query = {token:token};
@@ -67,6 +72,7 @@ export default {
                         this.$toast.info("Es necesario que finalices el registro");
                         this.token = token;
                         this.estado++;
+                        this.claseFondo = 'no';
                     }
 
                 } else {
@@ -113,15 +119,34 @@ export default {
 
 <style lang="sass" scoped>
 
-    h2
+    h3
         margin-bottom: $margen
         text-align: center
-        color: $color-acento
+        color: $color-letra
 
     .margen-top
         margin-top: $margen
 
     .margen-bottom
         margin-bottom: $margen
+
+    .elemento
+      height: 200px
+
+
+    p
+      padding: 5px
+      text-align: center
+      font-weight: bold
+
+    .caja
+      transition: background-color $tiempo-transicion-l linear
+
+      &[data-fondo="no"]
+        background-color: rgba(0,0,0,0)
+
+
+
+
 
 </style>

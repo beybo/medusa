@@ -13,14 +13,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Divisas from './plugin/store-divisas'
 import SocketIO from "socket.io-client";
 import VueSocketIO from "vue-socket.io";
-//import VueToastMixin from "./plugin/vue-toast-notification-mixin";
-
-
-alert(`Vue version : ${Vue.version}`);
+import VueToastMixin from "./plugin/vue-toast-notification-mixin";
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
 Vue.use(Divisas);
+Vue.use(VueToastMixin);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
@@ -46,7 +44,6 @@ Vue.use(new VueSocketIO({
         }
     )
 }));
-
 
 new Vue({
     router: Router,

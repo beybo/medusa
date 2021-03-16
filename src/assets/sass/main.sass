@@ -6,19 +6,30 @@
   font-weight: 1 700
 
 ::selection
-  background: $color-acento
+  background: #c2a8f7
   color: #000
 
 
 *
   margin: 0
+  outline: none
+
+html
+  background-image: $gradiente-principal
+  height: 100%
+  animation: gradiente 30s ease infinite
+  background-size: 200% 200%
+  overflow: hidden
 
 body
-  background: $color-fondo
   font-family: $fuente
+  height: 100%
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   color: $color-letra
+
+#app
+  height: 100%
 
 .columna,.fila
   display: flex
@@ -30,29 +41,56 @@ body
   flex-flow: row
 
 .caja
-  padding: 20px
-  border: 2px solid $color-fondo-mas-oscuro
-  margin: $margen
-  background-color: $color-fondo-oscuro
+  padding: $padding
+  background: $color-fondo
   border-radius: $radio-borde
+  margin: $margen
 
-button
-  padding: 10px
+
+// Forms
+
+.btn
+  padding: $padding-boton
   border-radius: $radio-borde
   font-family: $fuente
-  border: 2px solid $color-fondo
-  margin: $margen
+  border: 2px solid $color-acento
   background-color: $color-acento
   cursor: pointer
+  color: $color-letra-clara
+  box-shadow: $sombra
+  font-weight: bold
+  transition: box-shadow $tiempo-transicion linear,border-color $tiempo-transicion linear
 
+  &:hover
+    box-shadow: $sombra-hover
+
+input[type="text"]
+  font-family: $fuente
+  padding: $padding-boton
+  border-radius: $radio-borde
+  border: 2px solid transparent
+
+// Márgenes
+.margen
+  margin: $margen
+
+// Imágenes
+.logo-grande
+  width: 300px
+  height: 256px
+  margin-top: -25px
+
+// Toast
+.v-toast__item--info
+  background-color: #1c85d5
 
 // Transiciones
 
 .bounce-enter-active
-  animation: bounce-in $tiempo-transicion
+  animation: bounce-in $tiempo-transicion-l
 
 .bounce-leave-active
-  animation: bounce-in $tiempo-transicion reverse
+  animation: bounce-in $tiempo-transicion-l reverse
 
 @keyframes bounce-in
   0%
@@ -62,6 +100,13 @@ button
     opacity: 1
 
 
+@keyframes gradiente
+  0%
+    background-position: 0 50%
+  50%
+    background-position: 100% 50%
+  100%
+    background-position: 0 50%
 
 
 
