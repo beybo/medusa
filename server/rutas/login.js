@@ -11,11 +11,13 @@ const jwt = require('jsonwebtoken');
 const controladorGoogle = require('../controlador/api-google.js');
 const controladorUsuario = require('../controlador/usuario');
 
-let valoresCors = {origin:"http://localhost:8080",optionsSuccessStatus: 200};
 
-router.options('/google',cors(valoresCors));
+router.use(cors({
+    origin:"http://localhost:8080",optionsSuccessStatus: 200
+}))
 
-router.post('/google',cors(valoresCors),async (req,res)=>{
+
+router.post('/google',async (req,res)=>{
 
     //todo verificar que el body contiene todo y es válido
     if(req.body.google.uc.id_token){
@@ -52,8 +54,7 @@ router.post('/google',cors(valoresCors),async (req,res)=>{
 
 });
 
-router.options('/registro',cors(valoresCors));
-router.post('/registro',cors(valoresCors),async (req,res)=> {
+router.post('/registro',async (req,res)=> {
 
     let body = req.body;
 
@@ -61,11 +62,49 @@ router.post('/registro',cors(valoresCors),async (req,res)=> {
 
         let token = jwt.decode(body.token);
 
-        console.log(token);
+        if(token && token.registrado === false){
+            let existe = await controladorUsuario.existeNombre(body.nombre);
 
-        res.send({
-            error:false
-        })
+            if(!existe){
+
+                try{
+                    await controladorUsuario.nuevo({
+                        id_google: token.id,
+                        nombre:body.nombre,
+                        email:token.email
+                    });
+
+                    res.send({
+                        error:false,
+                        token: firmarToken({
+                            id:token.id,
+                            email:token.email,
+                            nombre:body.nombre
+                        })
+                    })
+
+                }catch (err){
+                    console.log(err);
+                    res.send({
+                        error:true,
+                        mensaje:"Ha ocurrido un error con la BDD"
+                    });
+                }
+
+            }else{
+                res.send({
+                    error:true,
+                    mensaje:"El nombre de usuario ya existe"
+                });
+            }
+        }else{
+            res.send({
+                error:true,
+                mensaje:"Error con el token"
+            });
+        }
+
+        console.log(token);
 
     }
 
@@ -74,7 +113,7 @@ router.post('/registro',cors(valoresCors),async (req,res)=> {
 });
 
 function firmarToken(datos){
-    jwt.sign(datos,
+    return jwt.sign(datos,
         config.servidor.secreto_app,
         {
             algorithm:"HS512",

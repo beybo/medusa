@@ -1,7 +1,7 @@
 <template>
     <div class="columna caja" :data-fondo="claseFondo">
         <div class="columna">
-            <img src="@/assets/img/LogoMedusa.svg" @click="estado = estado===0 ? 1: 0;claseFondo = 'no'" class="logo-grande">
+            <img src="@/assets/img/LogoMedusa.svg" class="logo-grande">
         </div>
         <transition name="bounce" mode="out-in" v-on:after-leave="entradaAnimacion">
             <div v-if="estado === 0" key="on" class="columna elemento">
@@ -12,6 +12,8 @@
 
             </div>
             <form @submit.prevent="registrar" v-else key="off" class="columna elemento">
+
+                <vue-element-loading :active="cargar" background-color="rgba(144,105,229,0.8)" color="#fff" />
 
                 <p class="margen-bottom">Por favor escribe un nombre de usuario:</p>
                 <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text" placeholder="Nombre de usuario">
@@ -41,7 +43,8 @@ export default {
             permitirRegistro:false,
             nombre:"",
             token:"",
-            claseFondo:""
+            claseFondo:"",
+            cargar:false
         };
     },
     methods: {
@@ -58,8 +61,6 @@ export default {
             this.$gAuth.signIn().then(async GoogleUser => {
 
                 let respuesta = await this.$http.post(urlLogin+"/google", {google: GoogleUser});
-
-                console.log(respuesta.body);
 
                 if (!respuesta.body.error) {
 
@@ -88,22 +89,24 @@ export default {
 
         },
         async registrar(){
-            //todo implementar
-            //https://github.com/biigpongsatorn/vue-element-loading
+
+            this.cargar = true;
+
             let nombre = this.nombre.trim();
 
             let respuesta;
 
             try{
-                respuesta = await this.$http.post(urlLogin+"/registro",{token:this.token,nombre:nombre});
 
-                console.log(respuesta.body);
+                respuesta = await this.$http.post(urlLogin+"/registro",{token:this.token,nombre:nombre});
+                console.log(respuesta);
 
                 if (!respuesta.body.error) {
 
                     this.finalizar(respuesta.body.token);
 
                 } else {
+                    this.cargar = false;
                     this.$toast.error(respuesta.body.mensaje);
                 }
 

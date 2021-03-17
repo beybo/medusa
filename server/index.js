@@ -4,7 +4,9 @@ const config = require("../app-config");
 const app = require('express')();
 const http = require('http').createServer(app);
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 
+app.use(helmet());
 // Controladores
 const apiCriptoDivisas = require('./controlador/api-criptodivisas');
 

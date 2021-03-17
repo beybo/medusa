@@ -21,5 +21,5 @@ nav
     width: 100%
     padding: 10px
     background: red
-
+    display: none
 </style>

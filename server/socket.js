@@ -1,7 +1,11 @@
+
 const EMITIR = {
     INICIO:"inicio",
-    NUEVO_PRECIO:"precio"
+    NUEVO_PRECIO:"precio",
+    DESCONECTAR:"desconectar"
 };
+
+const controladorUsuario = require('./controlador/usuario');
 
 module.exports = (http) => {
 
@@ -82,8 +86,24 @@ module.exports = (http) => {
 
     io.on('connection', socket => {
 
-        console.log(socket.decoded_token);
-        initSocket(socket,funcionesDivisasSocket).catch(err => {
+        controladorUsuario.getUsuario(socket.decoded_token.id).then(resultado => {
+
+            if(resultado.length > 0){
+                socket.usuario = resultado[0];
+                initSocket(socket,funcionesDivisasSocket).catch(err => {
+                    console.log(err);
+                });
+            }else{
+
+                console.log("No se encuentra el usuario");
+                console.log(resultado);
+                socket.emit(EMITIR.DESCONECTAR);
+
+            }
+
+
+
+        }).catch(err => {
             console.log(err);
         });
 
@@ -98,7 +118,7 @@ async function initSocket(socket,funcionesDivisasSocket){
     let divisas = funcionesDivisasSocket.divisas;
 
     socket.emit(EMITIR.INICIO, {
-        usuario:{nombre:"Jorge"},
+        usuario:socket.usuario,
         divisas:divisas
     });
 

@@ -69,6 +69,11 @@ input[type="text"]
   padding: $padding-boton
   border-radius: $radio-borde
   border: 2px solid transparent
+  box-shadow: $sombra
+  transition: box-shadow $tiempo-transicion linear,border-color $tiempo-transicion linear
+
+  &:hover,&:focus
+    box-shadow: $sombra-hover
 
 // Márgenes
 .margen
@@ -83,6 +88,10 @@ input[type="text"]
 // Toast
 .v-toast__item--info
   background-color: #1c85d5
+
+// Loader
+.velmld-overlay
+  border-radius: $radio-borde
 
 // Transiciones
 
