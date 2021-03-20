@@ -1,16 +1,18 @@
 <template>
     <div class="hello">
-        <h1>Hola {{ getNombre }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a {{ getPrecio(divisa_actual) }}</h1>
-        <h2>Tienes {{ getValorCartera(divisa_actual) }}, en tu cartera.</h2>
+        <h1>Hola {{ getNombre }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a <dinero v-bind:valor="getPrecio(divisa_actual)"/></h1>
+        <h2>Tienes <dinero v-bind:valor="getValorCartera(divisa_actual)"/>, en tu cartera.</h2>
     </div>
 </template>
 
 <script>
 
 import {mapGetters} from 'vuex'
+import Dinero from "@/components/Dinero";
 
 export default {
     name: 'Inicio',
+    components: {Dinero},
     data() {
         return {
             divisa_actual:"bitcoin"
@@ -44,11 +46,12 @@ export default {
 </script>
 
 <style scoped lang="sass">
-h2
-  text-align: center
 
-.ul
-  text-decoration: underline
-  cursor: pointer
+    h2
+      text-align: center
+
+    .ul
+      text-decoration: underline
+      cursor: pointer
 
 </style>

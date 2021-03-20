@@ -12,10 +12,12 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 import VueToastMixin from "./plugin/vue-toast-notification-mixin";
+import VueHelper from '@/plugin/vue-helpers'
 
 Vue.use(VueToastMixin);
+Vue.use(VueHelper);
 
-import {store} from './plugin/store-datos'
+import {index} from './store'
 
 import GAuth from 'vue-google-oauth2'
 import VueSocketIO from "vue-socket.io";
@@ -37,7 +39,7 @@ Vue.use(new VueSocketIO({
         }
     ),
     vuex: {
-        store,
+        store: index,
         actionPrefix: "SOCKET_",
         mutationPrefix: "SOCKET_"
     }
@@ -59,7 +61,7 @@ Vue.component("VueElementLoading", VueElementLoading);
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 new Vue({
-    store,
+    store: index,
     router: Router,
     render: h => h(App),
     mounted() {
@@ -88,10 +90,6 @@ new Vue({
         },
     }
 }).$mount('#app');
-
-
-
-
 
 
 

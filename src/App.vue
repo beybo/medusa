@@ -1,7 +1,9 @@
 <template>
     <div id="app" class="columna">
         <Header v-bind:mostrar="mostrarHeader"/>
-        <router-view/>
+        <transition name="ocultar-corto" mode="out-in">
+            <router-view/>
+        </transition>
     </div>
 </template>
 
@@ -35,5 +37,8 @@ export default {
 <style lang="sass">
 
 @import "assets/sass/main"
+
+#app
+  justify-content: flex-start
 
 </style>

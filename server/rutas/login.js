@@ -65,7 +65,9 @@ router.post('/registro',async (req,res)=> {
         if(token && token.registrado === false){
             let existe = await controladorUsuario.existeNombre(body.nombre);
 
-            if(!existe){
+            let existeGoogle = await controladorUsuario.existeUsuarioDeGoogle(token.id);
+
+            if(!existe && !existeGoogle){
 
                 try{
                     await controladorUsuario.nuevo({

@@ -3,7 +3,7 @@
         <div class="columna">
             <img src="@/assets/img/LogoMedusa.svg" class="logo-grande">
         </div>
-        <transition name="bounce" mode="out-in" v-on:after-leave="entradaAnimacion">
+        <transition name="ocultar" mode="out-in" v-on:after-leave="entradaAnimacion">
             <div v-if="estado === 0" key="on" class="columna elemento">
 
                 <p class="margen-top">Bienvenido a Medusa, el simulador de criptodivisas más fácil de usar.</p>
