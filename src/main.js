@@ -1,5 +1,3 @@
-import Config from "../app-config"
-
 import Vue from 'vue'
 import App from './App.vue'
 import Router from './router'
@@ -22,9 +20,9 @@ import {index} from './store'
 import GAuth from 'vue-google-oauth2'
 import VueSocketIO from "vue-socket.io";
 import SocketIO from "socket.io-client";
-
+console.log(process.env.VUE_APP_MEDUSA_SERVIDOR_URL)
 Vue.use(GAuth, {
-    clientId: Config.servidor.auth_id,
+    clientId: process.env.VUE_APP_G_AUTH_ID,
     scope: 'profile email',
     prompt: 'select_account'
 })
@@ -32,7 +30,7 @@ Vue.use(GAuth, {
 Vue.use(new VueSocketIO({
     debug: false,
     connection: SocketIO(
-        'http://localhost:' + Config.servidor.puerto,
+        process.env.VUE_APP_MEDUSA_SERVIDOR_URL,
         {
             autoConnect:false,
             query: `token=${localStorage.getItem("token")}`

@@ -26,14 +26,12 @@
 
 <script>
 
-import Config from '@/../app-config'
-
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 library.add(faGoogle);
 
-let urlLogin = Config.servidor.url + ":" + Config.servidor.puerto + "/login";
+let urlLogin = process.env.VUE_APP_MEDUSA_SERVIDOR_URL + "/login";
 
 export default {
     name: "Login",

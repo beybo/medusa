@@ -1,5 +1,14 @@
 # medusa
 
+Servidor para medusa alojado en [medusa-server](https://github.com/beybo/medusa-server)
+
+Es necesario que definas las siguientes variables de entorno:
+
+|Nombre|Valor|
+|------|-----|
+|VUE_APP_G_AUTH_ID|ID de autorización de la APP de Google|
+|VUE_APP_MEDUSA_SERVER_PORT|Url del servidor de medusa|
+
 ## Project setup
 ```
 yarn install
