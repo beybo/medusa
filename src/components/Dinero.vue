@@ -1,5 +1,5 @@
 <template>
-    <span :class="negrita ? 'negrita' : ''">{{format(valor)}}</span>
+    <span :class="negrita ? 'negrita' : ''">{{ format(valor) }}</span>
 </template>
 
 <script>
@@ -7,16 +7,16 @@ export default {
     name: "Dinero",
     props: {
         valor: {
-            type:Number,
-            required:true
+            type: Number,
+            required: true
         },
         negrita: {
-            type:Boolean,
+            type: Boolean,
             default: false
         }
     },
-    methods:{
-        format(valor){
+    methods: {
+        format(valor) {
             return this.$helpers.formatearDinero(valor)
         }
     }

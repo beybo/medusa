@@ -17,18 +17,18 @@ export default {
     components: {
         Header
     },
-    data(){
+    data() {
         return {
             mostrarHeader: true
         }
     },
     mounted() {
-        if(this.$router.history.current.name === "Login"){
+        if (this.$router.history.current.name === "Login") {
             this.mostrarHeader = false;
         }
     },
-    watch:{
-        $route (to){
+    watch: {
+        $route(to) {
             this.mostrarHeader = to.name !== "Login";
         }
     },

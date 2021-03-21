@@ -9,6 +9,7 @@
   background: #c2a8f7
   color: #000
 
+// Generales
 
 *
   margin: 0
@@ -31,7 +32,7 @@ body
 #app
   height: 100%
 
-.columna,.fila
+.columna, .fila
   display: flex
   justify-content: center
   align-items: center
@@ -46,6 +47,8 @@ body
   border-radius: $radio-borde
   margin: $margen
 
+.negrita
+  font-weight: bold
 
 // Forms
 
@@ -59,7 +62,7 @@ body
   color: $color-letra-clara
   box-shadow: $sombra
   font-weight: bold
-  transition: box-shadow $tiempo-transicion linear,border-color $tiempo-transicion linear
+  transition: box-shadow $tiempo-transicion linear, border-color $tiempo-transicion linear
 
   &:hover
     box-shadow: $sombra-hover
@@ -70,9 +73,9 @@ input[type="text"]
   border-radius: $radio-borde
   border: 2px solid transparent
   box-shadow: $sombra
-  transition: box-shadow $tiempo-transicion linear,border-color $tiempo-transicion linear
+  transition: box-shadow $tiempo-transicion linear, border-color $tiempo-transicion linear
 
-  &:hover,&:focus
+  &:hover, &:focus
     box-shadow: $sombra-hover
 
 // Márgenes

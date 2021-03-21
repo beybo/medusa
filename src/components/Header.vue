@@ -21,49 +21,49 @@
 <script>
 
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHome,faWallet,faUser } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faHome, faWallet, faUser} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faHome,faWallet,faUser);
+library.add(faHome, faWallet, faUser);
 
 export default {
     name: "Header",
-    props:['mostrar']
+    props: ['mostrar']
 }
 </script>
 
 <style scoped lang="sass">
 
-    .transparente
-      background-color: transparent
+.transparente
+  background-color: transparent
 
-    h1
-      margin-bottom: $margen
+h1
+  margin-bottom: $margen
 
-    a
-      margin: 10px 30px
-      text-decoration: none
-      text-align: center
-      border-radius: 50%
-      transition: opacity $tiempo-transicion linear
+a
+  margin: 10px 30px
+  text-decoration: none
+  text-align: center
+  border-radius: 50%
+  transition: opacity $tiempo-transicion linear
 
-      p
-        font-weight: bold
-        color: $color-letra-intermedia
-        transition: border-bottom $tiempo-transicion linear
-        border-bottom: 3px solid transparent
+  p
+    font-weight: bold
+    color: $color-letra-intermedia
+    transition: border-bottom $tiempo-transicion linear
+    border-bottom: 3px solid transparent
 
-      svg
-        color: $color-letra-intermedia
+  svg
+    color: $color-letra-intermedia
 
-      &:not(.router-link-exact-active):hover
-        opacity: 0.4
+  &:not(.router-link-exact-active):hover
+    opacity: 0.4
 
-      &.router-link-exact-active
-        cursor: initial
+  &.router-link-exact-active
+    cursor: initial
 
-        p
-          border-bottom: 3px solid $color-letra-intermedia
+    p
+      border-bottom: 3px solid $color-letra-intermedia
 
 
 </style>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Router from './router'
+import Router from './router/index'
 
 // Plugins
 import VueRouter from 'vue-router'
@@ -20,6 +20,7 @@ import {index} from './store'
 import GAuth from 'vue-google-oauth2'
 import VueSocketIO from "vue-socket.io";
 import SocketIO from "socket.io-client";
+
 console.log(process.env.VUE_APP_MEDUSA_SERVIDOR_URL)
 Vue.use(GAuth, {
     clientId: process.env.VUE_APP_G_AUTH_ID,
@@ -32,7 +33,7 @@ Vue.use(new VueSocketIO({
     connection: SocketIO(
         process.env.VUE_APP_MEDUSA_SERVIDOR_URL,
         {
-            autoConnect:false,
+            autoConnect: false,
             query: `token=${localStorage.getItem("token")}`
         }
     ),
@@ -44,11 +45,9 @@ Vue.use(new VueSocketIO({
 }));
 
 
-
-
 // Componentes
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import VueElementLoading from "vue-element-loading";
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -64,24 +63,24 @@ new Vue({
     render: h => h(App),
     mounted() {
 
-        if(localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
             this.$socket.connect();
-        }else if(this.$router.history.current.name !== "Login"){
+        } else if (this.$router.history.current.name !== "Login") {
             this.$router.replace({name: "Login"});
         }
 
     },
-    sockets:{
-        inicio(){
+    sockets: {
+        inicio() {
 
             let actual = this.$router.history.current.path;
 
-            if(actual === "/" || actual === "/login"){
+            if (actual === "/" || actual === "/login") {
                 this.$router.replace({name: "Inicio"});
             }
 
         },
-        desconectar(){
+        desconectar() {
             this.$socket.disconnect();
             localStorage.removeItem("token");
             this.$router.replace({name: "Login"});

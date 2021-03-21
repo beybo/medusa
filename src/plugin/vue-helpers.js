@@ -1,6 +1,5 @@
-
 const vueHelpers = {
-    formatearDinero(valor){
+    formatearDinero(valor) {
         let formatter = new Intl.NumberFormat('es-ES', {
             style: 'currency',
             currency: 'EUR'
@@ -11,7 +10,7 @@ const vueHelpers = {
 }
 
 export default {
-    install(Vue){
+    install(Vue) {
         Vue.helpers = vueHelpers;
         Vue.prototype.$helpers = vueHelpers;
     }

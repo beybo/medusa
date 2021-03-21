@@ -8,15 +8,19 @@
 
                 <p class="margen-top">Bienvenido a Medusa, el simulador de criptodivisas más fácil de usar.</p>
                 <p>Para continuar inicia sesión</p>
-                <button class="btn margen" @click.prevent="loginGoogle"><font-awesome-icon :icon="['fab','google']"/> Iniciar Sesión con Google</button>
+                <button class="btn margen" @click.prevent="loginGoogle">
+                    <font-awesome-icon :icon="['fab','google']"/>
+                    Iniciar Sesión con Google
+                </button>
 
             </div>
             <form @submit.prevent="registrar" v-else key="off" class="columna elemento">
 
-                <vue-element-loading :active="cargar" background-color="rgba(144,105,229,0.8)" color="#fff" />
+                <vue-element-loading :active="cargar" background-color="rgba(144,105,229,0.8)" color="#fff"/>
 
                 <p class="margen-bottom">Por favor escribe un nombre de usuario:</p>
-                <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text" placeholder="Nombre de usuario">
+                <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text"
+                       placeholder="Nombre de usuario">
                 <button class="btn margen-top">Continuar</button>
 
             </form>
@@ -26,8 +30,8 @@
 
 <script>
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 library.add(faGoogle);
 
@@ -37,37 +41,37 @@ export default {
     name: "Login",
     data() {
         return {
-            estado:0,
-            permitirRegistro:false,
-            nombre:"",
-            token:"",
-            claseFondo:"",
-            cargar:false
+            estado: 0,
+            permitirRegistro: false,
+            nombre: "",
+            token: "",
+            claseFondo: "",
+            cargar: false
         };
     },
     methods: {
-        entradaAnimacion(){
+        entradaAnimacion() {
             this.claseFondo = "si"
         },
-        finalizar(token){
-            localStorage.setItem("token",token);
-            this.$socket.io.opts.query = {token:token};
+        finalizar(token) {
+            localStorage.setItem("token", token);
+            this.$socket.io.opts.query = {token: token};
             this.$socket.connect();
         },
         loginGoogle() {
 
             this.$gAuth.signIn().then(async GoogleUser => {
 
-                let respuesta = await this.$http.post(urlLogin+"/google", {google: GoogleUser});
+                let respuesta = await this.$http.post(urlLogin + "/google", {google: GoogleUser});
 
                 if (!respuesta.body.error) {
 
                     let token = respuesta.body.token;
 
-                    if(respuesta.body.registrado){
+                    if (respuesta.body.registrado) {
                         this.$toast.success("¡Bienvenido de nuevo!");
                         this.finalizar(token);
-                    }else{
+                    } else {
                         this.$toast.info("Es necesario que finalices el registro");
                         this.token = token;
                         this.estado++;
@@ -80,13 +84,13 @@ export default {
 
             }).catch(error => {
                 console.log(error);
-                if(error.error === "popup_closed_by_user"){
+                if (error.error === "popup_closed_by_user") {
                     this.$toast.error("No se ha completado el inicio de sesión porque has cerrado el popup");
                 }
             });
 
         },
-        async registrar(){
+        async registrar() {
 
             this.cargar = true;
 
@@ -94,9 +98,9 @@ export default {
 
             let respuesta;
 
-            try{
+            try {
 
-                respuesta = await this.$http.post(urlLogin+"/registro",{token:this.token,nombre:nombre});
+                respuesta = await this.$http.post(urlLogin + "/registro", {token: this.token, nombre: nombre});
                 console.log(respuesta);
 
                 if (!respuesta.body.error) {
@@ -108,7 +112,7 @@ export default {
                     this.$toast.error(respuesta.body.mensaje);
                 }
 
-            }catch (err){
+            } catch (err) {
                 console.log(err);
                 this.$toast.error("Ha ocurrido un error");
             }
@@ -120,34 +124,34 @@ export default {
 
 <style lang="sass" scoped>
 
-    h3
-        margin-bottom: $margen
-        text-align: center
-        color: $color-letra
+#app
+  justify-content: center
 
-    .margen-top
-        margin-top: $margen
+h3
+  margin-bottom: $margen
+  text-align: center
+  color: $color-letra
 
-    .margen-bottom
-        margin-bottom: $margen
+.margen-top
+  margin-top: $margen
 
-    .elemento
-      height: 200px
+.margen-bottom
+  margin-bottom: $margen
 
-
-    p
-      padding: 5px
-      text-align: center
-      font-weight: bold
-
-    .caja
-      transition: background-color $tiempo-transicion-l linear
-
-      &[data-fondo="no"]
-        background-color: rgba(0,0,0,0)
+.elemento
+  height: 200px
 
 
+p
+  padding: 5px
+  text-align: center
+  font-weight: bold
 
+.caja
+  transition: background-color $tiempo-transicion-l linear
+
+  &[data-fondo="no"]
+    background-color: rgba(0, 0, 0, 0)
 
 
 </style>

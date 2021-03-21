@@ -1,12 +1,12 @@
 import VueRouter from "vue-router";
-import Inicio from "@/components/Inicio";
-import Login from "@/components/Login";
-import Cartera from "@/components/Cartera";
-import Perfil from "@/components/Perfil";
+import Inicio from "@/components/pages/Inicio";
+import Login from "@/components/pages/Login";
+import Cartera from "@/components/pages/Cartera";
+import Perfil from "@/components/pages/Perfil";
 
 const routes = [
     {
-        name:'Login',
+        name: 'Login',
         path: '/login',
         component: Login,
     },
@@ -27,8 +27,10 @@ const routes = [
     }
 ]
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes
-})
+});
+
+export default router;
 

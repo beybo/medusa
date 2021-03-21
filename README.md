@@ -10,24 +10,29 @@ Es necesario que definas las siguientes variables de entorno:
 |VUE_APP_MEDUSA_SERVER_PORT|Url del servidor de medusa|
 
 ## Project setup
+
 ```
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 yarn serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 yarn build
 ```
 
 ### Lints and fixes files
+
 ```
 yarn lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
