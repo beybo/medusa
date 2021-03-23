@@ -21,7 +21,7 @@ export default {
                                 display:false
                             },
                             ticks: {
-                                fontColor: "#000",
+                                fontColor: "#fff",
                                 fontFamily:'QuickSand'
                             }
                         }],
@@ -30,7 +30,7 @@ export default {
                                 display:false
                             },
                             ticks: {
-                                fontColor: "#000",
+                                fontColor: "#fff",
                                 fontFamily:'QuickSand'
                             }
                         }]

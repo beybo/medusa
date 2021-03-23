@@ -1,8 +1,8 @@
 <template>
-    <div id="app" class="columna">
+    <div id="app" :class="mostrarHeader ? 'columna' : 'columna centrar'">
         <Header v-bind:mostrar="mostrarHeader"/>
         <transition name="ocultar-corto" mode="out-in">
-            <router-view/>
+            <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
         </transition>
     </div>
 </template>
@@ -23,8 +23,23 @@ export default {
         }
     },
     mounted() {
-        if (this.$router.history.current.name === "Login") {
-            this.mostrarHeader = false;
+        this.cargarTema();
+    },
+    methods:{
+        cambiarMostrarHeader(valor){
+            this.mostrarHeader = valor;
+        },
+        cargarTema(){
+            let tema = "";
+
+            if(localStorage.getItem("tema") === "oscuro"){
+                tema = "oscuro";
+            } else if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                tema = "oscuro";
+            }
+
+            document.documentElement.setAttribute("data-tema", tema);
+
         }
     },
     watch: {
@@ -40,5 +55,8 @@ export default {
 
 #app
   justify-content: flex-start
+
+#app.centrar
+  justify-content: center
 
 </style>

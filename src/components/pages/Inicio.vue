@@ -1,6 +1,6 @@
 <template>
-    <div class="hello" v-if="conectado">
-        <h1>Hola {{ getNombre }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a
+    <div class="hello caja" v-if="conectado">
+        <h1>Hola {{ getNombreUsuario }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a
             <dinero v-bind:valor="getPrecio(divisa_actual)"/>
         </h1>
         <h2>Tienes
@@ -15,7 +15,7 @@
 
 <script>
 
-import {mapGetters} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 import Dinero from "@/components/Dinero";
 import Grafico from "@/components/Grafico";
 
@@ -41,7 +41,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getNombre', 'getPrecio', 'getValorCartera','conectado'])
+        ...mapState(['conectado']),
+        ...mapGetters(['getNombreUsuario', 'getPrecio', 'getValorCartera'])
     },
     methods: {
         siguiente() {
@@ -73,7 +74,7 @@ h2
   cursor: pointer
 
 .grafico
-  height: 200px
+  height: 400px
   margin-top: $margen
 
 </style>

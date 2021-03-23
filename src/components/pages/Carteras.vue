@@ -1,7 +1,7 @@
 <template>
 
     <div class="caja columna">
-        <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa">
+        <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
             <img :src="getImagen(id)">
             <p>{{ getNombre(id) }}</p>
             <dinero v-bind:valor="getValorCartera(id)" negrita></dinero>
@@ -14,7 +14,7 @@ import {mapGetters} from "vuex";
 import Dinero from "@/components/Dinero";
 
 export default {
-    name: "Cartera",
+    name: "Carteras",
     components: {Dinero},
     computed: {
         ...mapGetters(['getIdsCartera', 'getCartera', 'getDivisa', "getValorCartera"]),
@@ -29,6 +29,11 @@ export default {
                 return "Euros";
             }
             return state.$store.getters.getDivisa(id).name;
+        }
+    },
+    methods:{
+        abrirCartera(id){
+            this.$router.push(`/cartera/${id}`);
         }
     }
 }

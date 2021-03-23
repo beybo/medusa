@@ -1,5 +1,5 @@
 <template>
-    <span :class="negrita ? 'negrita' : ''">{{ format(valor) }}</span>
+    <span class="dinero" :class="negrita ? 'negrita' : ''">{{ format(valor) }}</span>
 </template>
 
 <script>

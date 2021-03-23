@@ -1,23 +1,10 @@
+// Fuente
+
 $fuente: QuickSand, Helvetica, Arial, sans-serif
 
 // Colores
-$color-fondo: rgba(255, 255, 255, 0.14)
 
 $color-acento: #00c9b7
-$color-acento-claro: lighten(#00c9b7, 5%)
-$color-acento-oscuro: darken(#00c9b7, 5%)
-
-$color-letra: #000
-$color-letra-intermedia: #222
-$color-letra-clara: #fff
-
-// Sombras
-$sombra: 5px 5px 8px rgba(0, 0, 0, .2)
-$sombra-hover: 5px 5px 8px rgba(0, 0, 0, .1)
-
-// Gradientes
-$gradiente-colores: [#aa89ee, #9069e5, #7649db, #5726d0]
-$gradiente-principal: radial-gradient(circle, nth($gradiente-colores, 1), nth($gradiente-colores, 2), nth($gradiente-colores, 3), nth($gradiente-colores, 4))
 
 //$color-fondo: #2c3e50
 
@@ -29,6 +16,37 @@ $tiempo-transicion-l: $tiempo-transicion * 2
 // Medidas
 $margen: 15px
 $radio-borde: 20px
+$radio-borde-boton: 10px
 
 $padding: 20px
-$padding-boton: ($padding/2) (($padding/2)*3)
+$padding-boton: ($padding/3)*2 ($padding/3)*4
+
+
+// Variables CSS
+
+
+\:root
+  --fondo: #E4EBF5
+  --fondo-claro: #9baacf
+  --acento: #fc651f
+  --acento-oscuro: #{darken(#fc651f,15%)}
+  --acento-claro: #{lighten(#fc651f,15%)}
+  --opacidad-seleccionado: 0.9
+  --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 1.8rem #fff
+  --sombra-boton: inset 0.2rem 0.2rem 1rem var(--acento-claro), inset -0.2rem -0.2rem 1rem var(--acento-oscuro), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
+  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #fff
+  --sombra-interior-boton: inset .2rem .2rem 1rem var(--acento-oscuro), inset -.2rem -.2rem 1rem var(--acento-claro)
+  --letra: #{darken(#9baacf,10%)}
+  --letra-clara: #9baacf
+  --letra-boton: #fff
+  --letra-secundario: #{darken(#9baacf,15%)}
+
+html[data-tema="oscuro"]
+  --fondo: #221f28
+  --fondo-claro: #555
+  --opacidad-seleccionado: 1
+  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f,-0.2rem -0.2rem 1.8rem #312d38
+  --sombra-boton: inset 0.2rem 0.2rem 1rem #{lighten(#fc651f,15%)}, inset -0.2rem -0.2rem 1rem #{darken(#fc651f,15%)}, 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
+  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f,inset -0.2rem -0.2rem 0.5rem #312d38
+  --letra:  #ccc
+  --letra-secundario: #fff

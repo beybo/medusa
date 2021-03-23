@@ -1,7 +1,7 @@
 <template>
     <div class="columna caja" :data-fondo="claseFondo">
         <div class="columna">
-            <img src="@/assets/img/LogoMedusa.svg" class="logo-grande">
+            <img svg-inline src="../../assets/img/LogoMedusa.svg" class="logo-grande"/>
         </div>
         <transition name="ocultar" mode="out-in" v-on:after-leave="entradaAnimacion">
             <div v-if="estado === 0" key="on" class="columna elemento">
@@ -118,19 +118,19 @@ export default {
             }
 
         }
+    },
+    mounted(){
+        this.$emit("mostrar-header",false);
     }
 }
 </script>
 
 <style lang="sass" scoped>
 
-#app
-  justify-content: center
-
 h3
   margin-bottom: $margen
   text-align: center
-  color: $color-letra
+  color: var(--letra)
 
 .margen-top
   margin-top: $margen
@@ -146,12 +146,17 @@ p
   padding: 5px
   text-align: center
   font-weight: bold
+  z-index: 10
 
 .caja
   transition: background-color $tiempo-transicion-l linear
 
   &[data-fondo="no"]
     background-color: rgba(0, 0, 0, 0)
-
+svg
+  overflow: visible
+.cls-1
+  fill: var(--letra-secundario)
+  filter: drop-shadow( 0.8rem 0.8rem 1.4rem var(--fondo-claro) )
 
 </style>

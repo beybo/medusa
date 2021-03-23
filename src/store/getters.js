@@ -8,7 +8,7 @@ export let getters = {
 
     // Getters de Usuario
 
-    getNombre(state) {
+    getNombreUsuario(state) {
         return state.usuario.nombre;
     },
 

@@ -6,8 +6,8 @@
   font-weight: 1 700
 
 ::selection
-  background: #c2a8f7
-  color: #000
+  background: var(--acento)
+  color: #fff
 
 // Generales
 
@@ -16,10 +16,8 @@
   outline: none
 
 html
-  background-image: $gradiente-principal
+  background: var(--fondo)
   height: 100%
-  animation: gradiente 30s ease infinite
-  background-size: 200% 200%
   overflow: hidden
 
 body
@@ -27,7 +25,7 @@ body
   height: 100%
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-  color: $color-letra
+  color: var(--letra)
 
 #app
   height: 100%
@@ -43,9 +41,11 @@ body
 
 .caja
   padding: $padding
-  background: $color-fondo
+  background: var(--fondo)
   border-radius: $radio-borde
   margin: $margen
+  box-shadow: var(--sombra)
+  z-index: 1
 
 .negrita
   font-weight: bold
@@ -53,30 +53,45 @@ body
 // Forms
 
 .btn
+  display: block
   padding: $padding-boton
-  border-radius: $radio-borde
+  border-radius: $radio-borde-boton
   font-family: $fuente
-  border: 2px solid $color-acento
-  background-color: $color-acento
+  border: 0
+  background: linear-gradient(315deg, #e35b1c, #ff6c21)
   cursor: pointer
-  color: $color-letra-clara
-  box-shadow: $sombra
+  color: var(--letra-boton)
+  box-shadow: var(--sombra)
   font-weight: bold
-  transition: box-shadow $tiempo-transicion linear, border-color $tiempo-transicion linear
+  z-index: 2
+  transition: box-shadow $tiempo-transicion-c linear
 
-  &:hover
-    box-shadow: $sombra-hover
+  &:active
+    box-shadow: var(--sombra-interior-boton)
 
-input[type="text"]
+
+// Ocultar las flechas de un input number en webkit
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+input[type="text"],input[type="number"]
   font-family: $fuente
   padding: $padding-boton
-  border-radius: $radio-borde
-  border: 2px solid transparent
-  box-shadow: $sombra
-  transition: box-shadow $tiempo-transicion linear, border-color $tiempo-transicion linear
+  border-radius: $radio-borde-boton
+  border: 0
+  -moz-appearance: textfield
+  box-shadow: var(--sombra-interior)
+  transition: box-shadow $tiempo-transicion-c linear
+  background: var(--fondo)
 
-  &:hover, &:focus
-    box-shadow: $sombra-hover
+  &::placeholder
+    color: var(--letra)
+
+  &:focus
+    box-shadow: var(--sombra)
+
 
 // Márgenes
 .margen
