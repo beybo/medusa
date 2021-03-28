@@ -1,7 +1,9 @@
 <template>
     <div id="app" :class="mostrarHeader ? 'columna' : 'columna centrar'">
-        <Header v-bind:mostrar="mostrarHeader"/>
-        <transition name="ocultar-corto" mode="out-in">
+        <transition :name="animacion" v-if="mostrarHeader" mode="out-in">
+            <Header/>
+        </transition>
+        <transition :name="animacion" mode="out-in">
             <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
         </transition>
     </div>
@@ -18,33 +20,30 @@ export default {
         Header
     },
     data() {
+        let router = this.$router,
+            helper = this.$helpers;
         return {
-            mostrarHeader: true
+            mostrarHeader: helper.mostrarHeaderInicial(router),
+            animacion:"sin-animacion"
         }
     },
     mounted() {
-        this.cargarTema();
+        this.$helpers.cargarTema();
     },
     methods:{
         cambiarMostrarHeader(valor){
-            this.mostrarHeader = valor;
-        },
-        cargarTema(){
-            let tema = "";
-
-            if(localStorage.getItem("tema") === "oscuro"){
-                tema = "oscuro";
-            } else if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                tema = "oscuro";
+            if(valor===false){
+                this.animacion = "sin-animacion";
+            }else{
+                this.animacion = "ocultar-corto";
             }
-
-            document.documentElement.setAttribute("data-tema", tema);
-
+            this.mostrarHeader = valor;
         }
     },
     watch: {
         $route(to) {
             this.mostrarHeader = to.name !== "Login";
+            this.animacion = this.mostrarHeader ? "ocultar-corto" : "sin-animacion";
         }
     },
 }

@@ -1,10 +1,10 @@
 <template>
     <div class="hello caja" v-if="conectado">
         <h1>Hola {{ getNombreUsuario }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a
-            <dinero v-bind:valor="getPrecio(divisa_actual)"/>
+            <numero v-bind:valor="getPrecioValor(divisa_actual)"/>
         </h1>
         <h2>Tienes
-            <dinero v-bind:valor="getValorCartera(divisa_actual)"/>
+            <numero v-bind:valor="getValorCartera(divisa_actual)"/>
             , en tu cartera.
         </h2>
         <div class="grafico">
@@ -16,12 +16,12 @@
 <script>
 
 import {mapGetters, mapState} from 'vuex'
-import Dinero from "@/components/Dinero";
+import Numero from "@/components/Numero";
 import Grafico from "@/components/Grafico";
 
 export default {
     name: 'Inicio',
-    components: {Grafico, Dinero},
+    components: {Grafico, Numero},
     data() {
         return {
             divisa_actual: "bitcoin",
@@ -42,7 +42,7 @@ export default {
     },
     computed: {
         ...mapState(['conectado']),
-        ...mapGetters(['getNombreUsuario', 'getPrecio', 'getValorCartera'])
+        ...mapGetters(['getNombreUsuario', 'getPrecioValor', 'getValorCartera'])
     },
     methods: {
         siguiente() {

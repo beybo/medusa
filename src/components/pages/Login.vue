@@ -1,5 +1,5 @@
 <template>
-    <div class="columna caja" :data-fondo="claseFondo">
+    <div class="columna caja" :data-fondo="claseFondo" v-if="mostrar">
         <div class="columna">
             <img svg-inline src="../../assets/img/LogoMedusa.svg" class="logo-grande"/>
         </div>
@@ -15,8 +15,6 @@
 
             </div>
             <form @submit.prevent="registrar" v-else key="off" class="columna elemento">
-
-                <vue-element-loading :active="cargar" background-color="rgba(144,105,229,0.8)" color="#fff"/>
 
                 <p class="margen-bottom">Por favor escribe un nombre de usuario:</p>
                 <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text"
@@ -46,7 +44,7 @@ export default {
             nombre: "",
             token: "",
             claseFondo: "",
-            cargar: false
+            mostrar: true
         };
     },
     methods: {
@@ -54,6 +52,7 @@ export default {
             this.claseFondo = "si"
         },
         finalizar(token) {
+            this.mostrar = false;
             localStorage.setItem("token", token);
             this.$socket.io.opts.query = {token: token};
             this.$socket.connect();
@@ -92,11 +91,10 @@ export default {
         },
         async registrar() {
 
-            this.cargar = true;
-
             let nombre = this.nombre.trim();
 
             let respuesta;
+            this.mostrar = false;
 
             try {
 
@@ -108,7 +106,7 @@ export default {
                     this.finalizar(respuesta.body.token);
 
                 } else {
-                    this.cargar = false;
+                    this.cargar = true;
                     this.$toast.error(respuesta.body.mensaje);
                 }
 

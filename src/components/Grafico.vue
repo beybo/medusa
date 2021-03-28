@@ -9,6 +9,9 @@ export default {
     props:{
         options:{
             default(){
+
+                let colorLetra = getComputedStyle(document.documentElement).getPropertyValue('--letra');
+
                 return {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -21,7 +24,7 @@ export default {
                                 display:false
                             },
                             ticks: {
-                                fontColor: "#fff",
+                                fontColor: colorLetra,
                                 fontFamily:'QuickSand'
                             }
                         }],
@@ -30,10 +33,13 @@ export default {
                                 display:false
                             },
                             ticks: {
-                                fontColor: "#fff",
+                                fontColor: colorLetra,
                                 fontFamily:'QuickSand'
                             }
                         }]
+                    },
+                    animation: {
+                        duration: 0
                     }
                 };
             }

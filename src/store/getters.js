@@ -23,8 +23,11 @@ export let getters = {
     getDivisa: (state) => (id) => {
         return state.divisas[id];
     },
-    getPrecio: (state) => (id) => {
+    getPrecioValor: (state) => (id) => {
         return state.divisas[id].precio.valor;
+    },
+    getPrecioCambio: (state) => (id) => {
+        return state.divisas[id].precio.cambio;
     },
 
     // Getters de Cartera

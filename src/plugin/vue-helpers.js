@@ -1,17 +1,23 @@
 const vueHelpers = {
-    formatearDinero(valor) {
-        let formatter = new Intl.NumberFormat('es-ES', {
-            style: 'currency',
-            currency: 'EUR'
-        });
+    cargarTema() {
+        let tema = "";
 
-        return formatter.format(valor);
+        if(localStorage.getItem("tema")){
+            tema = localStorage.getItem("tema");
+        } else if(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            tema = "oscuro";
+        }
+
+        document.documentElement.setAttribute("data-tema", tema);
+    },
+    mostrarHeaderInicial(router){
+        let paginasSinHeader = ["Login","404"];
+        return paginasSinHeader.indexOf(router.currentRoute.name) === -1;
     }
 }
 
 export default {
     install(Vue) {
-        Vue.helpers = vueHelpers;
         Vue.prototype.$helpers = vueHelpers;
     }
 }

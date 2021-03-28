@@ -21,6 +21,30 @@ $radio-borde-boton: 10px
 $padding: 20px
 $padding-boton: ($padding/3)*2 ($padding/3)*4
 
+// Mixins
+
+@mixin marcador($w,$h) // Para el marcador de un pestaña
+  position: absolute
+  width: $w
+  height: $h
+  box-shadow: var(--sombra-interior)
+  transition: left $tiempo-transicion cubic-bezier(0.645, 0.045, 0.355, 1)
+  border-radius: $radio-borde-boton
+
+@mixin marcador-enlace($margen,$w,$cant,$selector)
+  $acu: $margen
+  $ocultar: ""
+  @for $i from 1 through $cant
+
+    &:nth-child(#{$i})#{$selector} ~ .marcador
+      left: $acu
+
+    $acu: $acu + $w + (2*$margen)
+    $ocultar: $ocultar + "&:not("+$selector+") ~"
+
+  #{$ocultar} .marcador
+    display: none
+
 
 // Variables CSS
 
@@ -32,7 +56,7 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
   --acento-oscuro: #{darken(#fc651f,15%)}
   --acento-claro: #{lighten(#fc651f,15%)}
   --opacidad-seleccionado: 0.9
-  --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 1.8rem #fff
+  --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
   --sombra-boton: inset 0.2rem 0.2rem 1rem var(--acento-claro), inset -0.2rem -0.2rem 1rem var(--acento-oscuro), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
   --sombra-interior: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #fff
   --sombra-interior-boton: inset .2rem .2rem 1rem var(--acento-oscuro), inset -.2rem -.2rem 1rem var(--acento-claro)
@@ -40,13 +64,15 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
   --letra-clara: #9baacf
   --letra-boton: #fff
   --letra-secundario: #{darken(#9baacf,15%)}
+  --letra-oscura: #{darken(#9baacf,50%)}
 
 html[data-tema="oscuro"]
   --fondo: #221f28
   --fondo-claro: #555
   --opacidad-seleccionado: 1
-  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f,-0.2rem -0.2rem 1.8rem #312d38
+  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f,-0.2rem -0.2rem 0.5rem #312d38
   --sombra-boton: inset 0.2rem 0.2rem 1rem #{lighten(#fc651f,15%)}, inset -0.2rem -0.2rem 1rem #{darken(#fc651f,15%)}, 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
   --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f,inset -0.2rem -0.2rem 0.5rem #312d38
   --letra:  #ccc
   --letra-secundario: #fff
+  --letra-oscura: #fff

@@ -4,36 +4,41 @@
         <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
             <img :src="getImagen(id)">
             <p>{{ getNombre(id) }}</p>
-            <dinero v-bind:valor="getValorCartera(id)" negrita></dinero>
+            <numero v-bind:valor="getValorCartera(id)" negrita></numero>
         </div>
     </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
-import Dinero from "@/components/Dinero";
+import Numero from "@/components/Numero";
 
 export default {
     name: "Carteras",
-    components: {Dinero},
+    components: {Numero},
     computed: {
         ...mapGetters(['getIdsCartera', 'getCartera', 'getDivisa', "getValorCartera"]),
         getImagen: (state) => (id) => {
             if (id === "euros") {
                 return require("@/assets/img/logo-euro.png");
             }
-            return state.$store.getters.getDivisa(id).image.thumb;
+            return state.$store.getters.getDivisa(id).imagen.mini;
         },
         getNombre: (state) => (id) => {
             if (id === "euros") {
                 return "Euros";
             }
-            return state.$store.getters.getDivisa(id).name;
+            return state.$store.getters.getDivisa(id).nombre;
         }
     },
     methods:{
         abrirCartera(id){
-            this.$router.push(`/cartera/${id}`);
+            if(id==="euros"){
+                this.$router.push(`/cartera-fiat`);
+            }else{
+                this.$router.push(`/cartera/${id}`);
+            }
+
         }
     }
 }
