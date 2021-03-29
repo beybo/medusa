@@ -19,13 +19,13 @@ export default {
     computed: {
         ...mapGetters(['getIdsCartera', 'getCartera', 'getDivisa', "getValorCartera"]),
         getImagen: (state) => (id) => {
-            if (id === "euros") {
+            if (id === "fiat") {
                 return require("@/assets/img/logo-euro.png");
             }
             return state.$store.getters.getDivisa(id).imagen.mini;
         },
         getNombre: (state) => (id) => {
-            if (id === "euros") {
+            if (id === "fiat") {
                 return "Euros";
             }
             return state.$store.getters.getDivisa(id).nombre;
@@ -33,7 +33,7 @@ export default {
     },
     methods:{
         abrirCartera(id){
-            if(id==="euros"){
+            if(id === "fiat"){
                 this.$router.push(`/cartera-fiat`);
             }else{
                 this.$router.push(`/cartera/${id}`);

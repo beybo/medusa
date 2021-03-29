@@ -31,6 +31,7 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
   transition: left $tiempo-transicion cubic-bezier(0.645, 0.045, 0.355, 1)
   border-radius: $radio-borde-boton
 
+
 @mixin marcador-enlace($margen,$w,$cant,$selector)
   $acu: $margen
   $ocultar: ""
@@ -46,33 +47,51 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
     display: none
 
 
+@mixin grid-areas($areas) // Para las areas de CSS Grid
+
+  @each $area in $areas
+    #{".area-"+$area}
+      grid-area: #{$area}
+
+
 // Variables CSS
 
 
 \:root
   --fondo: #E4EBF5
   --fondo-claro: #9baacf
+
   --acento: #fc651f
   --acento-oscuro: #{darken(#fc651f,15%)}
   --acento-claro: #{lighten(#fc651f,15%)}
+
   --opacidad-seleccionado: 0.9
+
   --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
   --sombra-boton: inset 0.2rem 0.2rem 1rem var(--acento-claro), inset -0.2rem -0.2rem 1rem var(--acento-oscuro), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
   --sombra-interior: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #fff
   --sombra-interior-boton: inset .2rem .2rem 1rem var(--acento-oscuro), inset -.2rem -.2rem 1rem var(--acento-claro)
+
   --letra: #{darken(#9baacf,10%)}
   --letra-clara: #9baacf
   --letra-boton: #fff
   --letra-secundario: #{darken(#9baacf,15%)}
   --letra-oscura: #{darken(#9baacf,50%)}
 
+  --exito: #4cd964
+  --error: #ff3b30
+
+
 html[data-tema="oscuro"]
   --fondo: #221f28
   --fondo-claro: #555
+
   --opacidad-seleccionado: 1
+
   --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f,-0.2rem -0.2rem 0.5rem #312d38
   --sombra-boton: inset 0.2rem 0.2rem 1rem #{lighten(#fc651f,15%)}, inset -0.2rem -0.2rem 1rem #{darken(#fc651f,15%)}, 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
   --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f,inset -0.2rem -0.2rem 0.5rem #312d38
+
   --letra:  #ccc
   --letra-secundario: #fff
   --letra-oscura: #fff

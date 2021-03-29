@@ -13,6 +13,10 @@ const vueHelpers = {
     mostrarHeaderInicial(router){
         let paginasSinHeader = ["Login","404"];
         return paginasSinHeader.indexOf(router.currentRoute.name) === -1;
+    },
+    formatearFecha(fecha) {
+        let f = new Intl.DateTimeFormat('es');
+        return f.format(new Date(fecha));
     }
 }
 

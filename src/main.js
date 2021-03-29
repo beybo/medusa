@@ -79,9 +79,11 @@ new Vue({
                 this.$router.replace({name: "Inicio"});
             }
 
+        },
+        desconectar() {
+            this.$socket.disconnect();
+            localStorage.removeItem("token");
+            this.$router.replace({name: "Login"});
         }
     }
 }).$mount('#app');
-
-
-

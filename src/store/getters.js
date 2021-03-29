@@ -29,6 +29,9 @@ export let getters = {
     getPrecioCambio: (state) => (id) => {
         return state.divisas[id].precio.cambio;
     },
+    getSimbolo:(state) => (id) => {
+        return state.divisas[id].simbolo.toUpperCase();
+    },
 
     // Getters de Cartera
 
@@ -43,7 +46,7 @@ export let getters = {
     },
     getValorCartera: (state, getters) => (id) => {
         let divisa = getters.getDivisa(id);
-        return getters.getCartera(id).cantidad * (id === "euros" ? 1 : divisa.precio.valor);
+        return getters.getCartera(id).cantidad * (id === "fiat" ? 1 : divisa.precio.valor);
     }
 }
 

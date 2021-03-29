@@ -51,7 +51,7 @@ const routes = [
         path: '/cartera-fiat',
         component: CarteraFiat,
         meta:{
-            title:`Cartera - Euros`
+            title:`Cartera - Fiat`
         }
     },
 
