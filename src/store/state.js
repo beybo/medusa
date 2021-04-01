@@ -1,8 +1,8 @@
 let modeloCripto = {
     imagen: {
-        miniatura:"",
-        peque:"",
-        grande:""
+        miniatura: "",
+        peque: "",
+        grande: ""
     },
     nombre: "",
     precio: {
@@ -21,6 +21,7 @@ let modeloDivisas = divisas.reduce((acumulador, divisa) => {
 }, {});
 
 export let state = {
+
     usuario: {
         id_google: '',
         nombre: '',
@@ -28,6 +29,10 @@ export let state = {
         cartera: [],
         transacciones: []
     },
+
     divisas: modeloDivisas,
-    conectado:false
+
+    conectado: false,
+    tema:"claro",
+    cargando:false
 }

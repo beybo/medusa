@@ -12,6 +12,7 @@
 <script>
 
 import Header from "@/components/Header"
+import {mapActions, mapGetters} from "vuex";
 
 
 export default {
@@ -24,17 +25,21 @@ export default {
             helper = this.$helpers;
         return {
             mostrarHeader: helper.mostrarHeaderInicial(router),
-            animacion:"sin-animacion"
+            animacion: "sin-animacion"
         }
     },
     mounted() {
-        this.$helpers.cargarTema();
+        this.cargarTema();
     },
-    methods:{
-        cambiarMostrarHeader(valor){
-            if(valor===false){
+    computed:{
+        ...mapGetters(['getTema'])
+    },
+    methods: {
+        ...mapActions(['cargarTema']),
+        cambiarMostrarHeader(valor) {
+            if (valor === false) {
                 this.animacion = "sin-animacion";
-            }else{
+            } else {
                 this.animacion = "ocultar-corto";
             }
             this.mostrarHeader = valor;

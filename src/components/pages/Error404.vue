@@ -9,26 +9,26 @@
 <script>
 export default {
     name: "Error404",
-    data(){
+    data() {
         return {
-            mostrar:false
+            mostrar: false
         }
     },
     created() {
-        this.$emit("mostrar-header",false);
+        this.$emit("mostrar-header", false);
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.mostrar = true;
-        },500)
+        }, 500)
 
     },
-    methods:{
-        inicio(){
-            this.$router.replace({name:"Inicio"});
+    methods: {
+        inicio() {
+            this.$router.replace({name: "Inicio"});
         }
     },
-    sockets:{
-        inicio(){
+    sockets: {
+        inicio() {
             console.log("INICIADO")
             this.mostrar = false;
         }

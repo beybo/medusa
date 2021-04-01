@@ -42,14 +42,14 @@ export default {
   background-color: transparent
 
 h1
-  font-size: 20pt
+  font-size: 1.7em
   color: var(--letra-secundario)
 
 $margen-enlace: 8px
 $tam-boton: 80px
 
 a
-  @include marcador-enlace($margen-enlace,$tam-boton,4,".router-link-exact-active")
+  @include marcador-enlace($margen-enlace, $tam-boton, 4, ".router-link-exact-active")
 
   text-decoration: none
   text-align: center
@@ -78,19 +78,16 @@ a
   &.router-link-exact-active
     cursor: initial
 
-    p,svg
+    p, svg
       color: var(--acento)
       opacity: var(--opacidad-seleccionado)
-
 
 
 .fila
   position: relative
 
 .marcador
-  @include marcador($tam-boton,$tam-boton)
-
-
+  @include marcador($tam-boton, $tam-boton)
 
 
 </style>

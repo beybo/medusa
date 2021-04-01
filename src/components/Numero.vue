@@ -1,10 +1,10 @@
 <template>
-    <span :class="negrita ? 'negrita '+clase : clase">{{!animar ? format(valor) : ""}}</span>
+    <span :class="clase">{{ !animar ? format(valor) : "" }}</span>
 </template>
 
 <script>
 
-import { CountUp } from 'countup.js';
+import {CountUp} from 'countup.js';
 
 export default {
     name: "Numero",
@@ -22,10 +22,10 @@ export default {
             default: false
         },
         duracion: {
-            type:Number,
+            type: Number,
             default: 2
         },
-        decimales:{
+        decimales: {
             type: Number,
             default: 2
         },
@@ -33,34 +33,47 @@ export default {
             type: String,
             default: "dinero",
             validator: value => ['dinero', 'porcentaje', 'criptodivisa'].indexOf(value) >= 0
+        },
+        simbolo: {
+            type: String,
+            default:''
         }
     },
-    data(){
+    data() {
         return {
-            clase: this.tipo,
             counter: null
         }
     },
     mounted() {
-        if(this.valor>0){
-            this.clase+=" positivo";
-        }else{
-            this.clase+=" negativo";
-        }
-        if(this.animar){
-            this.counter = new CountUp(this.$el,this.valor,{
-                formattingFn:this.format,
-                duration:this.duracion,
+
+        if (this.animar) {
+            this.counter = new CountUp(this.$el, this.valor, {
+                formattingFn: this.format,
+                duration: this.duracion,
                 decimalPlaces: this.decimales
             });
             this.counter.start();
         }
     },
-    watch:{
-        valor(valor){
-            if(this.animar){
+    watch: {
+        valor(valor) {
+            if (this.animar) {
                 this.counter.update(valor);
             }
+        }
+    },
+    computed:{
+        clase(){
+            let clase = this.tipo;
+            if (this.valor > 0) {
+                clase += " positivo";
+            } else {
+                clase += " negativo";
+            }
+            if(this.negrita){
+                clase+=" negrita";
+            }
+            return clase;
         }
     },
     methods: {
@@ -71,28 +84,32 @@ export default {
                 currency: 'EUR'
             };
 
-            if(this.tipo === "porcentaje"){
+            if (this.tipo === "porcentaje") {
                 opciones = {
                     style: 'percent',
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 }
-            }else if(this.tipo === "criptodivisa"){
+            } else if (this.tipo === "criptodivisa") {
                 opciones = {
-                    style: "decimal"
+                    style: 'currency',
+                    currency: "MED",
+                    currencyDisplay: 'symbol',
+                    maximumFractionDigits: 8,
+                    minimumFractionDigits: 0
                 }
             }
 
             let formatter = new Intl.NumberFormat('es-ES', opciones);
 
-            return formatter.format(valor);
+            return formatter.format(valor).replace("MED",this.simbolo);
         }
     }
 }
 </script>
 <style lang="sass" scoped>
 
-.porcentaje,.colorear
+.porcentaje, .colorear
 
   &.positivo
     color: var(--exito)

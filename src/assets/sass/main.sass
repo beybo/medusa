@@ -16,7 +16,6 @@
   outline: none
 
 html
-  background: var(--fondo)
   height: 100%
   overflow: hidden
 
@@ -26,6 +25,7 @@ body
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   color: var(--letra)
+  background: var(--fondo)
 
 #app
   height: 100%
@@ -52,7 +52,7 @@ body
 
 // Forms
 
-.btn,.btn-icon
+.btn, .btn-icon
   display: block
   padding: $padding-boton
   border-radius: $radio-borde-boton
@@ -66,8 +66,12 @@ body
   z-index: 2
   transition: box-shadow $tiempo-transicion-c linear
 
-  &:active
+  &:not([disabled]):active
     box-shadow: var(--sombra-interior-boton)
+
+  &[disabled]
+    opacity: 0.4
+    cursor: default
 
 .btn-icon
   color: var(--letra-secundario)
@@ -82,11 +86,8 @@ body
     width: 2rem
     height: 2rem
 
-  &:active
+  &:not([disabled]):active
     box-shadow: var(--sombra-interior)
-
-
-
 
 
 // Ocultar las flechas de un input number en webkit
@@ -95,7 +96,7 @@ input::-webkit-inner-spin-button
   -webkit-appearance: none
   margin: 0
 
-input[type="text"],input[type="number"]
+input[type="text"], input[type="number"]
   font-family: $fuente
   padding: $padding-boton
   border-radius: $radio-borde-boton
@@ -104,6 +105,7 @@ input[type="text"],input[type="number"]
   box-shadow: var(--sombra-interior)
   transition: box-shadow $tiempo-transicion-c linear
   background: var(--fondo)
+  color: var(--letra-oscura)
 
   &::placeholder
     color: var(--letra-oscura)
@@ -115,6 +117,9 @@ input[type="text"],input[type="number"]
 // Márgenes
 .margen
   margin: $margen
+
+.margen-inf
+  margin-bottom: $margen
 
 // Imágenes
 .logo
@@ -130,6 +135,10 @@ input[type="text"],input[type="number"]
 // Toast
 .v-toast__item--info
   background-color: #1c85d5
+
+// Carga
+.velmld-overlay
+  background: var(--fondo-carga) !important
 
 // Loader
 .velmld-overlay

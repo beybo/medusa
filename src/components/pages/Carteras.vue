@@ -17,7 +17,7 @@ export default {
     name: "Carteras",
     components: {Numero},
     computed: {
-        ...mapGetters(['getIdsCartera', 'getCartera', 'getDivisa', "getValorCartera"]),
+        ...mapGetters(['getIdsCartera', 'getCartera', 'getDivisa', 'getValorCartera']),
         getImagen: (state) => (id) => {
             if (id === "fiat") {
                 return require("@/assets/img/logo-euro.png");
@@ -31,11 +31,11 @@ export default {
             return state.$store.getters.getDivisa(id).nombre;
         }
     },
-    methods:{
-        abrirCartera(id){
-            if(id === "fiat"){
+    methods: {
+        abrirCartera(id) {
+            if (id === "fiat") {
                 this.$router.push(`/cartera-fiat`);
-            }else{
+            } else {
                 this.$router.push(`/cartera/${id}`);
             }
 

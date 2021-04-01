@@ -117,8 +117,8 @@ export default {
 
         }
     },
-    mounted(){
-        this.$emit("mostrar-header",false);
+    mounted() {
+        this.$emit("mostrar-header", false);
     }
 }
 </script>
@@ -151,10 +151,12 @@ p
 
   &[data-fondo="no"]
     background-color: rgba(0, 0, 0, 0)
+
 svg
   overflow: visible
+
 .cls-1
   fill: var(--letra-secundario)
-  filter: drop-shadow( 0.8rem 0.8rem 1.4rem var(--fondo-claro) )
+  filter: drop-shadow(0.8rem 0.8rem 1.4rem var(--fondo-claro))
 
 </style>

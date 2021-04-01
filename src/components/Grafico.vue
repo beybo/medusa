@@ -1,14 +1,14 @@
 <script>
 
-import { Line, mixins } from 'vue-chartjs';
+import {Line, mixins} from 'vue-chartjs';
 
 export default {
-    extends:Line,
+    extends: Line,
     name: "Grafico",
-    mixins:[mixins.reactiveProp],
-    props:{
-        options:{
-            default(){
+    mixins: [mixins.reactiveProp],
+    props: {
+        options: {
+            default() {
 
                 let colorLetra = getComputedStyle(document.documentElement).getPropertyValue('--letra');
 
@@ -21,20 +21,20 @@ export default {
                     scales: {
                         xAxes: [{
                             gridLines: {
-                                display:false
+                                display: false
                             },
                             ticks: {
                                 fontColor: colorLetra,
-                                fontFamily:'QuickSand'
+                                fontFamily: 'QuickSand'
                             }
                         }],
                         yAxes: [{
                             gridLines: {
-                                display:false
+                                display: false
                             },
                             ticks: {
                                 fontColor: colorLetra,
-                                fontFamily:'QuickSand'
+                                fontFamily: 'QuickSand'
                             }
                         }]
                     },
@@ -45,7 +45,7 @@ export default {
             }
         }
     },
-    mounted(){
+    mounted() {
 
         this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
 
@@ -57,7 +57,7 @@ export default {
 
         this.chartData.datasets[0].backgroundColor = this.gradient;
 
-        this.renderChart(this.chartData,this.options);
+        this.renderChart(this.chartData, this.options);
     }
 }
 </script>

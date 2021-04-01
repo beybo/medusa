@@ -1,52 +1,41 @@
 export let getters = {
 
-    // Getters del estado
+    // Getters de estado
 
-    conectado(state){
-        return state.conectado;
-    },
+    getConectado: (state) => state.conectado,
+    getCargando: (state) => state.cargando,
+    getTema: (state) => state.tema,
 
     // Getters de Usuario
 
-    getNombreUsuario(state) {
-        return state.usuario.nombre;
-    },
+    getNombreUsuario: (state) => state.usuario.nombre,
 
     // Getters de divisas
 
-    getDivisas(state) {
-        return state.divisas;
-    },
-    getIdsDivisa(state) {
-        return Object.keys(state.divisas);
-    },
-    getDivisa: (state) => (id) => {
-        return state.divisas[id];
-    },
-    getPrecioValor: (state) => (id) => {
-        return state.divisas[id].precio.valor;
-    },
-    getPrecioCambio: (state) => (id) => {
-        return state.divisas[id].precio.cambio;
-    },
-    getSimbolo:(state) => (id) => {
-        return state.divisas[id].simbolo.toUpperCase();
-    },
+    getDivisas: (state) => state.divisas,
+
+    getIdsDivisa: state => Object.keys(state.divisas),
+
+    getDivisa: (state) => (id) => state.divisas[id],
+
+    getPrecioValor: (state) => (id) => state.divisas[id].precio.valor,
+
+    getPrecioCambio: (state) => (id) => state.divisas[id].precio.cambio,
+
+    getSimbolo: (state) => (id) => state.divisas[id].simbolo.toUpperCase(),
 
     // Getters de Cartera
 
-    getCarteras(state) {
-        return state.usuario.cartera;
-    },
-    getIdsCartera(state) {
-        return Object.keys(state.usuario.cartera);
-    },
-    getCartera: (state) => (id) => {
-        return state.usuario.cartera[id];
-    },
-    getValorCartera: (state, getters) => (id) => {
-        let divisa = getters.getDivisa(id);
-        return getters.getCartera(id).cantidad * (id === "fiat" ? 1 : divisa.precio.valor);
-    }
+    getCarteras: state => state.usuario.cartera,
+
+    getIdsCartera: state => Object.keys(state.usuario.cartera),
+
+    getCartera: (state) => (id) => state.usuario.cartera[id],
+
+    getValorCartera: (state, getters) => (id) => getters.getCartera(id).cantidad * (id==='fiat' ? 1 : getters.getDivisa(id).precio.valor),
+
+    getCantidadCartera: (state,getters) => (id) => getters.getCartera(id).cantidad,
+
+    getCantidadFiat : (state,getters) => getters.getCartera('fiat').cantidad,
 }
 

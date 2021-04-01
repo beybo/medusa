@@ -16,8 +16,8 @@ const routes = [
         name: 'Login',
         path: '/login',
         component: Login,
-        meta:{
-            title:`Login - ${TITULO}`
+        meta: {
+            title: `Login - ${TITULO}`
         }
     },
 
@@ -25,8 +25,8 @@ const routes = [
         name: 'Inicio',
         path: '/inicio',
         component: Inicio,
-        meta:{
-            title:`Inicio - ${TITULO}`
+        meta: {
+            title: `Inicio - ${TITULO}`
         }
     },
 
@@ -34,24 +34,24 @@ const routes = [
         name: 'Carteras',
         path: '/carteras',
         component: Carteras,
-        meta:{
-            title:`Cartera - ${TITULO}`
+        meta: {
+            title: `Cartera - ${TITULO}`
         }
     },
     {
         name: 'Cartera',
         path: '/cartera/:id',
         component: Cartera,
-        meta:{
-            title:`Cartera - ${TITULO}`
+        meta: {
+            title: `Cartera - ${TITULO}`
         }
     },
     {
         name: 'CarteraFiat',
         path: '/cartera-fiat',
         component: CarteraFiat,
-        meta:{
-            title:`Cartera - Fiat`
+        meta: {
+            title: `Cartera - Fiat`
         }
     },
 
@@ -59,8 +59,8 @@ const routes = [
         name: 'Perfil',
         path: '/perfil',
         component: Perfil,
-        meta:{
-            title:`Perfil - ${TITULO}`
+        meta: {
+            title: `Perfil - ${TITULO}`
         }
     },
 

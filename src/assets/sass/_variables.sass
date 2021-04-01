@@ -24,12 +24,12 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
 // Mixins
 
 @mixin marcador($w,$h) // Para el marcador de un pestaña
-  position: absolute
-  width: $w
-  height: $h
-  box-shadow: var(--sombra-interior)
-  transition: left $tiempo-transicion cubic-bezier(0.645, 0.045, 0.355, 1)
-  border-radius: $radio-borde-boton
+   position: absolute
+   width: $w
+   height: $h
+   box-shadow: var(--sombra-interior)
+   transition: left $tiempo-transicion cubic-bezier(0.645, 0.045, 0.355, 1)
+   border-radius: $radio-borde-boton
 
 
 @mixin marcador-enlace($margen,$w,$cant,$selector)
@@ -49,9 +49,9 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
 
 @mixin grid-areas($areas) // Para las areas de CSS Grid
 
-  @each $area in $areas
-    #{".area-"+$area}
-      grid-area: #{$area}
+   @each $area in $areas
+     #{".area-"+$area}
+       grid-area: #{$area}
 
 
 // Variables CSS
@@ -60,6 +60,7 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
 \:root
   --fondo: #E4EBF5
   --fondo-claro: #9baacf
+  --fondo-carga: #E4EBF5cc
 
   --acento: #fc651f
   --acento-oscuro: #{darken(#fc651f,15%)}
@@ -82,16 +83,17 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
   --error: #ff3b30
 
 
-html[data-tema="oscuro"]
+body[data-tema="oscuro"]
   --fondo: #221f28
   --fondo-claro: #555
+  --fondo-carga: #221f28cc
 
   --opacidad-seleccionado: 1
 
-  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f,-0.2rem -0.2rem 0.5rem #312d38
+  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
   --sombra-boton: inset 0.2rem 0.2rem 1rem #{lighten(#fc651f,15%)}, inset -0.2rem -0.2rem 1rem #{darken(#fc651f,15%)}, 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
-  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f,inset -0.2rem -0.2rem 0.5rem #312d38
+  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f, inset -0.2rem -0.2rem 0.5rem #312d38
 
-  --letra:  #ccc
+  --letra: #ccc
   --letra-secundario: #fff
   --letra-oscura: #fff

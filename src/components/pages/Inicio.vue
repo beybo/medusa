@@ -1,5 +1,5 @@
 <template>
-    <div class="hello caja" v-if="conectado">
+    <div class="hello caja" v-if="getConectado">
         <h1>Hola {{ getNombreUsuario }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a
             <numero v-bind:valor="getPrecioValor(divisa_actual)"/>
         </h1>
@@ -15,7 +15,7 @@
 
 <script>
 
-import {mapGetters, mapState} from 'vuex'
+import {mapGetters} from 'vuex'
 import Numero from "@/components/Numero";
 import Grafico from "@/components/Grafico";
 
@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             divisa_actual: "bitcoin",
-            datosGrafica:{
+            datosGrafica: {
                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
                 datasets: [
                     {
@@ -41,8 +41,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['conectado']),
-        ...mapGetters(['getNombreUsuario', 'getPrecioValor', 'getValorCartera'])
+        ...mapGetters(['getConectado','getNombreUsuario', 'getPrecioValor', 'getValorCartera'])
     },
     methods: {
         siguiente() {
