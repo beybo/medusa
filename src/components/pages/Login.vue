@@ -16,10 +16,13 @@
             </div>
             <form @submit.prevent="registrar" v-else key="off" class="columna elemento">
 
+                <imagen-perfil class="caja" v-bind:nombre-usuario="nombre"/>
+
                 <p class="margen-bottom">Por favor escribe un nombre de usuario:</p>
                 <input required class="margen-bottom" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text"
                        placeholder="Nombre de usuario">
-                <button class="btn margen-top">Continuar</button>
+
+                <button :disabled="nombreValido" class="btn margen-top">Continuar</button>
 
             </form>
         </transition>
@@ -30,6 +33,7 @@
 
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
+import ImagenPerfil from "@/components/ImagenPerfil";
 
 library.add(faGoogle);
 
@@ -37,6 +41,7 @@ let urlLogin = process.env.VUE_APP_MEDUSA_SERVIDOR_URL + "/login";
 
 export default {
     name: "Login",
+    components: {ImagenPerfil},
     data() {
         return {
             estado: 0,
@@ -46,6 +51,14 @@ export default {
             claseFondo: "",
             mostrar: true
         };
+    },
+    mounted() {
+        this.$emit("mostrar-header", false);
+    },
+    computed:{
+        nombreValido(){
+            return this.nombre.trim().length < 4;
+        }
     },
     methods: {
         entradaAnimacion() {
@@ -106,7 +119,7 @@ export default {
                     this.finalizar(respuesta.body.token);
 
                 } else {
-                    this.cargar = true;
+                    this.mostrar = true;
                     this.$toast.error(respuesta.body.mensaje);
                 }
 
@@ -116,9 +129,6 @@ export default {
             }
 
         }
-    },
-    mounted() {
-        this.$emit("mostrar-header", false);
     }
 }
 </script>
@@ -137,7 +147,7 @@ h3
   margin-bottom: $margen
 
 .elemento
-  height: 200px
+  height: 300px
 
 
 p
@@ -154,6 +164,9 @@ p
 
 svg
   overflow: visible
+
+.caja.imagen-perfil
+  background-color: #E4EBF5
 
 .cls-1
   fill: var(--letra-secundario)

@@ -37,5 +37,13 @@ export let getters = {
     getCantidadCartera: (state,getters) => (id) => getters.getCartera(id).cantidad,
 
     getCantidadFiat : (state,getters) => getters.getCartera('fiat').cantidad,
+
+    getValorTodasCartera: (state,getters) => {
+        let cartera = state.usuario.cartera;
+        return Object.keys(cartera).reduce((acu,id)=>{
+            return acu + getters.getValorCartera(id);
+        },0);
+    }
+
 }
 

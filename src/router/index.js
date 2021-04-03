@@ -7,6 +7,7 @@ import Vue from "vue";
 import Carteras from "@/components/pages/Carteras";
 import Cartera from "@/components/subpages/Cartera";
 import CarteraFiat from "@/components/subpages/CarteraFiat";
+import Ranking from "@/components/pages/Ranking";
 
 const TITULO = "Medusa";
 
@@ -52,6 +53,15 @@ const routes = [
         component: CarteraFiat,
         meta: {
             title: `Cartera - Fiat`
+        }
+    },
+
+    {
+        name: 'Ranking',
+        path: '/ranking',
+        component: Ranking,
+        meta: {
+            title: `Ranking - ${TITULO}`
         }
     },
 
