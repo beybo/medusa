@@ -25,7 +25,8 @@ export let state = {
     usuario: {
         id_google: '',
         nombre: '',
-        email: '',
+        resets: 0,
+        fecha_registro: '',
         cartera: [],
         transacciones: []
     },

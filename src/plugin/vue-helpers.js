@@ -10,7 +10,11 @@ const vueHelpers = {
 
 const vueFiltros = {
     fecha(fecha) {
-        let f = new Intl.DateTimeFormat('es');
+        let f = new Intl.DateTimeFormat('default',{
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: 'numeric', minute: 'numeric', second: 'numeric',
+            hour12: false,
+        });
         return f.format(new Date(fecha));
     },
     capitalizar(value) {

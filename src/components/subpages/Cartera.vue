@@ -83,6 +83,6 @@ h2
 .texto-grande
   margin-bottom: $margen
   font-size: 1.3em
-  color: var(--acento-claro)
+  color: var(--acento)
 
 </style>

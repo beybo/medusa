@@ -66,13 +66,17 @@ export default {
 
             let arng = new alea(this.nombreUsuario);
 
-            let colores = [];
-            for(let i = 0; i < 3; i++){
-                let c = Math.floor(arng() * (255 + 1));
-                colores.push(c)
-            }
+            // Convertimos el color calculado a la Y de YIQ
+            // Es decir a blanco y negro y comprobamos si es muy clara
+            let r,g,b,contraste;
+            do{
+                r = Math.floor(arng() * (255 + 1));
+                g = Math.floor(arng() * (255 + 1));
+                b = Math.floor(arng() * (255 + 1));
+                contraste = ((r*299)+(g*587)+(b*114))/1000;
+            }while (contraste>200);
 
-            ctx.fillStyle = `rgb(${colores.join(',')})`;
+            ctx.fillStyle = `rgb(${r},${g},${b})`;
 
             let pos = [],
                 total = 0;
