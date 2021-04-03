@@ -1,4 +1,8 @@
-# medusa
+<p align="center">
+  <img src="/public/icon/apple-icon.png" />
+</p>
+
+<h1 align="center">Medusa</h1>
 
 Servidor para medusa alojado en [medusa-server](https://github.com/beybo/medusa-server)
 

@@ -23,7 +23,7 @@
 
         <button class="btn" @click="crearOperacion" :disabled="deshabilitarBotonOperar">{{ modo | capitalizar }}</button>
 
-        <vue-element-loading :active="getCargando" color="#fc651f"/>
+        <vue-element-loading :active="cargando" color="#fc651f"/>
 
     </div>
 </template>

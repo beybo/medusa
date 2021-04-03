@@ -3,6 +3,9 @@
         <transition name="ocultar-corto" v-if="mostrarHeader" mode="out-in">
             <Header/>
         </transition>
+
+        <vue-element-loading :active="!getConectado" color="#fc651f" v-bind:text="mensaje"/>
+
         <transition name="ocultar-corto" mode="out-in">
             <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
         </transition>
@@ -23,7 +26,8 @@ export default {
     data() {
         let nombre = this.$router.currentRoute.name;
         return {
-            mostrarHeader: this.$helpers.mostrarHeaderInicial(nombre)
+            mostrarHeader: this.$helpers.mostrarHeaderInicial(nombre),
+            mensaje: ""
         }
     },
     mounted() {
@@ -35,9 +39,15 @@ export default {
             this.$router.replace({name: "Login"});
         }
 
+        setTimeout(()=>{
+            if(!this.getConectado){
+                this.mensaje = "Vaya, hay un problema con la conexión...";
+            }
+        },5000)
+
     },
     computed:{
-        ...mapGetters(['getTema'])
+        ...mapGetters(['getTema','getConectado'])
     },
     methods: {
         ...mapActions(['cargarTema']),
