@@ -2,9 +2,8 @@ const vueHelpers = {
     cargarTema() {
 
     },
-    mostrarHeaderInicial(router) {
-        let paginasSinHeader = ["Login", "404"];
-        return paginasSinHeader.indexOf(router.currentRoute.name) === -1;
+    mostrarHeaderInicial(name) {
+        return ["Login", "Registro", "404"].indexOf(name) === -1;
     }
 }
 

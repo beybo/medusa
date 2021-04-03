@@ -60,30 +60,5 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production'
 new Vue({
     store: index,
     router: Router,
-    render: h => h(App),
-    mounted() {
-
-        if (localStorage.getItem("token")) {
-            this.$socket.connect();
-        } else if (this.$router.history.current.name !== "Login") {
-            this.$router.replace({name: "Login"});
-        }
-
-    },
-    sockets: {
-        inicio() {
-
-            let actual = this.$router.history.current.path;
-
-            if (actual === "/" || actual === "/login") {
-                this.$router.replace({name: "Inicio"});
-            }
-
-        },
-        desconectar() {
-            this.$socket.disconnect();
-            localStorage.removeItem("token");
-            this.$router.replace({name: "Login"});
-        }
-    }
+    render: h => h(App)
 }).$mount('#app');

@@ -1,9 +1,9 @@
 <template>
     <div id="app" :class="mostrarHeader ? 'columna' : 'columna centrar'">
-        <transition :name="animacion" v-if="mostrarHeader" mode="out-in">
+        <transition name="ocultar-corto" v-if="mostrarHeader" mode="out-in">
             <Header/>
         </transition>
-        <transition :name="animacion" mode="out-in">
+        <transition name="ocultar-corto" mode="out-in">
             <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
         </transition>
     </div>
@@ -21,15 +21,20 @@ export default {
         Header
     },
     data() {
-        let router = this.$router,
-            helper = this.$helpers;
+        let nombre = this.$router.currentRoute.name;
         return {
-            mostrarHeader: helper.mostrarHeaderInicial(router),
-            animacion: "sin-animacion"
+            mostrarHeader: this.$helpers.mostrarHeaderInicial(nombre)
         }
     },
     mounted() {
         this.cargarTema();
+
+        if (localStorage.getItem("token")) {
+            this.$socket.connect();
+        } else if (this.$router.history.current.name !== "Login") {
+            this.$router.replace({name: "Login"});
+        }
+
     },
     computed:{
         ...mapGetters(['getTema'])
@@ -37,20 +42,21 @@ export default {
     methods: {
         ...mapActions(['cargarTema']),
         cambiarMostrarHeader(valor) {
-            if (valor === false) {
-                this.animacion = "sin-animacion";
-            } else {
-                this.animacion = "ocultar-corto";
-            }
             this.mostrarHeader = valor;
         }
     },
     watch: {
         $route(to) {
-            this.mostrarHeader = to.name !== "Login";
-            this.animacion = this.mostrarHeader ? "ocultar-corto" : "sin-animacion";
+            this.mostrarHeader = this.$helpers.mostrarHeaderInicial(to.name)
         }
     },
+    sockets: {
+        desconectar() {
+            this.$socket.disconnect();
+            localStorage.removeItem("token");
+            this.$router.replace({name: "Login"});
+        }
+    }
 }
 </script>
 <style lang="sass">

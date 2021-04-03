@@ -8,10 +8,21 @@ import Carteras from "@/components/pages/Carteras";
 import Cartera from "@/components/subpages/Cartera";
 import CarteraFiat from "@/components/subpages/CarteraFiat";
 import Ranking from "@/components/pages/Ranking";
+import Registro from "@/components/pages/Registro";
 
 const TITULO = "Medusa";
 
 const routes = [
+
+    {
+        path: "/",
+        redirect: () => {
+            if(localStorage.getItem("token")){
+                return "/inicio";
+            }
+            return "/login"
+        }
+    },
 
     {
         name: 'Login',
@@ -20,6 +31,15 @@ const routes = [
         meta: {
             title: `Login - ${TITULO}`
         }
+    },
+    {
+        name: 'Registro',
+        path: '/registro',
+        component: Registro,
+        meta: {
+            title: `Registro - ${TITULO}`
+        },
+        props: true
     },
 
     {
