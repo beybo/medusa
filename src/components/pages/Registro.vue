@@ -4,8 +4,8 @@
         <imagen-perfil class="caja" v-bind:nombre-usuario="nombre"/>
 
         <p class="margen-inf">Por favor escribe un nombre de usuario:</p>
-        <input required class="margen-inf" pattern="[a-zA-Z0-9-]+" v-model="nombre" minlength="4" type="text"
-               placeholder="Nombre de usuario">
+        <input required class="margen-inf" pattern="[a-zA-Z0-9]+" v-model="nombre" minlength="4" maxlength="15" type="text"
+               placeholder="Nombre de usuario" title="Entre 4 y 15 carácteres, solo letras y números">
 
         <button :disabled="nombreValido" class="btn margen-top">Continuar</button>
 
@@ -58,7 +58,6 @@ export default {
             let nombre = this.nombre.trim();
 
             let respuesta;
-            this.mostrar = false;
 
             try {
 
@@ -66,10 +65,10 @@ export default {
 
                 if (!respuesta.body.error) {
 
+                    this.mostrar = false;
                     this.finalizar(respuesta.body.token);
 
                 } else {
-                    this.mostrar = true;
                     this.$toast.error(respuesta.body.mensaje);
                 }
 

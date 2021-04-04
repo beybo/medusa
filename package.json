@@ -26,6 +26,7 @@
     "vue-resource": "^1.5.2",
     "vue-router": "^3.5.1",
     "vue-socket.io": "^3.0.10",
+    "vue-sweetalert2": "^4.2.1",
     "vue-toast-notification": "^0.6.1",
     "vuex": "^3.6.2"
   },

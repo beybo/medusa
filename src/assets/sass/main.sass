@@ -67,6 +67,20 @@ body
   z-index: 2
   transition: box-shadow $tiempo-transicion-c linear
 
+  &.info
+    background: linear-gradient(315deg, var(--info), var(--info-claro))
+    box-shadow: var(--sombra-boton-info)
+
+    &:not([disabled]):active
+      box-shadow: var(--sombra-interior-boton-info)
+
+  &.error
+    background: linear-gradient(315deg, var(--error), var(--error-claro))
+    box-shadow: var(--sombra-boton-error)
+
+    &:not([disabled]):active
+      box-shadow: var(--sombra-interior-boton-error)
+
   &:not([disabled]):active
     box-shadow: var(--sombra-interior-boton)
 
@@ -87,9 +101,9 @@ body
     width: 2rem
     height: 2rem
 
-  &.m
-    width: 3rem
-    height: 3rem
+  &.s
+    width: 2.5rem
+    height: 2.5rem
 
   &:not([disabled]):active
     box-shadow: var(--sombra-interior)
@@ -136,6 +150,8 @@ input[type="checkbox"]
     background: var(--fondo)
     box-shadow: var(--sombra)
     transition: all $tiempo-transicion-c linear
+
+    cursor: pointer
 
     &:before
       content: ''
@@ -185,6 +201,28 @@ input[type="checkbox"]
 // Loader
 .velmld-overlay
   border-radius: $radio-borde
+
+// Swal2
+.swal2-container
+  .swal2-popup
+    border-radius: $radio-borde
+    background: var(--fondo)
+
+  .swal2-title, #swal2-content
+    padding-bottom: $margen
+
+  .swal2-input:focus
+    border: 0
+
+  .swal2-input
+    width: 200px
+
+  .btn
+    margin: 0 $margen
+
+  .swal2-validation-message
+    font-weight: bold
+
 
 // Transiciones
 

@@ -1,41 +1,51 @@
 <template>
-    <div class="caja grid" v-if="getConectado">
+    <div class="grid" v-if="getConectado">
 
-        <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
+        <div class="caja fila area-info">
 
-        <div class="area-info grid-info">
-            <p class="area-titulo-1">Nombre:</p>
-            <b class="area-nombre">{{getNombreUsuario}}</b>
-            <p class="area-titulo-2">Reseteos:</p>
-            <b class="area-resets">{{getResets}}</b>
-            <p class="area-titulo-3">Registro:</p>
-            <b class="area-registro">{{getFechaRegistro | fecha}}</b>
-        </div>
+            <imagen-perfil class="caja" v-bind:nombre-usuario="getNombreUsuario"/>
 
-        <div class="area-ajustes grid-ajustes">
-
-            <b class="margen-inf area-lab-1">Resetear Cartera</b>
-            <b class="margen-inf area-lab-2">Tema Oscuro</b>
-            <b class="margen-inf area-lab-3">Borrar Cuenta</b>
-
-            <div class="area-bot-1 columna">
-                <button class="btn-icon sm">
-                    <font-awesome-icon :icon="['fas','undo-alt']"/>
-                </button>
+            <div class="columna">
+                <p>Nombre:</p>
+                <p>Reseteos:</p>
+                <p>Registro:</p>
             </div>
 
-            <div class="area-bot-2 columna">
-                <input @change="cambiarTema" :checked="esTemaOscuro" type="checkbox" id="tema">
-                <label for="tema"/>
-            </div>
-
-            <div class="area-bot-3 columna">
-                <button class="btn-icon sm area-bot-3">
-                    <font-awesome-icon :icon="['fas','trash']"/>
-                </button>
+            <div class="columna">
+                <b class="area-nombre">{{getNombreUsuario}}</b>
+                <b>{{getResets}}</b>
+                <b>{{getFechaRegistro | fecha}}</b>
             </div>
 
         </div>
+
+        <div class="caja columna area-cerrar">
+            <h4 class="margen-inf">Cerrar Sesión</h4>
+            <button class="btn-icon sm" @click="cerrarSesion">
+                <font-awesome-icon :icon="['fas','door-closed']"/>
+            </button>
+        </div>
+
+        <div class="caja columna area-tema">
+            <h4 class="margen-inf">Tema Oscuro</h4>
+            <input @change="cambiarTema" :checked="esTemaOscuro" type="checkbox" id="tema">
+            <label for="tema"/>
+        </div>
+
+        <div class="caja columna area-reset">
+            <h4 class="margen-inf">Resetear Cartera</h4>
+            <button class="btn-icon sm">
+                <font-awesome-icon :icon="['fas','undo-alt']"/>
+            </button>
+        </div>
+
+        <div class="caja columna area-borrar">
+            <h4 class="margen-inf">Borrar Cuenta</h4>
+            <button class="btn-icon sm area-bot-3" @click="borrarCuenta">
+                <font-awesome-icon :icon="['fas','trash']"/>
+            </button>
+        </div>
+
 
     </div>
 </template>
@@ -45,21 +55,56 @@
 import ImagenPerfil from "@/components/ImagenPerfil";
 import {mapActions, mapGetters} from "vuex";
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faTrash,faUndoAlt} from '@fortawesome/free-solid-svg-icons'
+import {faTrash,faUndoAlt,faDoorClosed} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faTrash,faUndoAlt);
+library.add(faTrash,faUndoAlt,faDoorClosed);
 
 export default {
     name: "Perfil",
     components: {ImagenPerfil},
     methods:{
+
         ...mapActions(['setTema']),
+
+        cerrarSesion(){
+            this.$emit("cerrar-sesion");
+        },
+
         cambiarTema(){
             let nuevoTema = "oscuro";
             if(this.getTema === "oscuro"){
                 nuevoTema = "claro";
             }
             this.setTema(nuevoTema);
+        },
+
+        async borrarCuenta(){
+
+            let nombreUsuario = this.getNombreUsuario;
+
+            let respuesta = await this.$swal({
+                title: '¿Quieres borrar la cuenta?',
+                input: 'text',
+                showDenyButton:true,
+                confirmButtonText: 'Borrar',
+                denyButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'btn error',
+                    denyButton: 'btn info'
+                },
+                inputAttributes:{
+                    placeholder: `Escribir ${nombreUsuario}...`
+                },
+                inputValidator(inputValue) {
+                    return inputValue !== nombreUsuario ? 'Tienes que escribir el nombre correctamente' : false;
+                },
+                html: `<p>Para borrar la cuenta por favor escribe: '<b>${nombreUsuario}</b>'</p>`
+            });
+
+            if(respuesta.isConfirmed === true){
+                this.$socket.emit('borrar-cuenta');
+            }
+
         }
     },
     computed:{
@@ -75,21 +120,24 @@ export default {
 
 .grid
   display: grid
+  grid-template-columns: repeat(2,1fr)
   gap: 0 0
-  grid-template-areas: "imagen info" "ajustes ajustes"
+  grid-template-areas: "info info" "cerrar tema" "reset borrar"
 
-  @include grid-areas(["imagen", "info", "ajustes"])
+  @include grid-areas(["info", "cerrar", "tema", "reset", "borrar"])
 
-.grid-info
-  margin-left: $margen/2
-  margin-top: $margen + $padding
-  margin-bottom: $margen
-  display: grid
-  grid-template-rows: repeat(3, 1fr)
-  gap: 0 0
-  grid-template-areas: "area-titulo-1 nombre" "area-titulo-2 resets" "area-titulo-3 registro"
+.area-info
+
+  .imagen-perfil
+    margin: 0 $margen+5px 0 0
+
+  .columna
+    justify-content: space-around
+    height: 100%
+    align-items: flex-start
 
   p
+    text-align: left
     margin-right: 5px
 
   b
@@ -97,20 +145,7 @@ export default {
     text-overflow: ellipsis
     max-width: 180px
 
-
-  @include grid-areas(["area-titulo-1", "nombre","area-titulo-2","resets","area-titulo-3","registro"])
-
-
-.grid-ajustes
-  display: grid
-  gap: 0 0
-  grid-template-columns: repeat(3,1fr)
-  grid-template-areas: "lab-1 lab-2 lab-3" "bot-1 bot-2 bot-3"
-  align-items: center
-
-  b
-    text-align: center
-
-  @include grid-areas(["lab-1","lab-2","lab-3","bot-1","bot-2","bot-3"])
+.btn-icon
+  transform: scale(1.3,1.3)
 
 </style>

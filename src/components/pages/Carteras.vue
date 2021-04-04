@@ -81,7 +81,7 @@ export default {
     align-items: flex-end
 
   .cantidad
-    font-size: 0.7rem
+    font-size: 0.8rem
     font-weight: normal !important
 
 </style>

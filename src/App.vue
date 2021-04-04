@@ -7,7 +7,7 @@
         <vue-element-loading :active="!getConectado && !this.$helpers.mostrarHeaderInicial" color="#fc651f" v-bind:text="mensaje"/>
 
         <transition name="ocultar-corto" mode="out-in">
-            <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
+            <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
         </transition>
     </div>
 </template>
@@ -50,9 +50,19 @@ export default {
         ...mapGetters(['getTema','getConectado'])
     },
     methods: {
-        ...mapActions(['cargarTema']),
+
+        ...mapActions(['cargarTema','setConectado']),
+
         cambiarMostrarHeader(valor) {
             this.mostrarHeader = valor;
+        },
+
+        cerrarSesion() {
+            this.setConectado(false);
+            this.mostrarHeader = false;
+            this.$socket.disconnect();
+            localStorage.removeItem("token");
+            this.$router.replace({name: "Login"});
         }
     },
     watch: {
@@ -62,9 +72,7 @@ export default {
     },
     sockets: {
         desconectar() {
-            this.$socket.disconnect();
-            localStorage.removeItem("token");
-            this.$router.replace({name: "Login"});
+            this.cerrarSesion();
         }
     }
 }

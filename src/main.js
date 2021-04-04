@@ -20,8 +20,9 @@ import {index} from './store'
 import GAuth from 'vue-google-oauth2'
 import VueSocketIO from "vue-socket.io";
 import SocketIO from "socket.io-client";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
-console.log(process.env.VUE_APP_MEDUSA_SERVIDOR_URL)
 Vue.use(GAuth, {
     clientId: process.env.VUE_APP_G_AUTH_ID,
     scope: 'profile email',
@@ -44,6 +45,15 @@ Vue.use(new VueSocketIO({
     }
 }));
 
+Vue.use(VueSweetalert2,{
+    customClass:{
+        confirmButton: 'btn info',
+        cancelButton: 'btn error',
+        denyButton: 'btn error'
+    },
+    buttonsStyling: false,
+    reverseButtons: true
+});
 
 // Componentes
 

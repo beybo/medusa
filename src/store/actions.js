@@ -1,5 +1,7 @@
 export let actions = {
 
+    // Tema
+
     setTema(context,tema){
         context.commit("cambiar_tema",tema);
 
@@ -21,6 +23,14 @@ export let actions = {
         document.body.dataset.tema = tema;
 
     },
+
+    // Usuario
+
+    setConectado(context,conectado){
+        context.commit("set_conectado",conectado)
+    },
+
+    // Divisas
 
     nuevaTransaccion(context,transaccion){
 

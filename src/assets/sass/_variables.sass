@@ -66,8 +66,13 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
 
   --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
   --sombra-boton: inset 0.2rem 0.2rem 1rem var(--acento-claro), inset -0.2rem -0.2rem 1rem var(--acento-oscuro), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
+  --sombra-boton-error: inset 0.2rem 0.2rem 1rem var(--error-claro), inset -0.2rem -0.2rem 1rem var(--error), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
+  --sombra-boton-info: inset 0.2rem 0.2rem 1rem var(--info-claro), inset -0.2rem -0.2rem 1rem var(--info), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
+
   --sombra-interior: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #fff
   --sombra-interior-boton: inset .2rem .2rem 1rem var(--acento-oscuro), inset -.2rem -.2rem 1rem var(--acento-claro)
+  --sombra-interior-boton-error: inset .2rem .2rem 1rem var(--error), inset -.2rem -.2rem 1rem var(--error-claro)
+  --sombra-interior-boton-info: inset .2rem .2rem 1rem var(--info), inset -.2rem -.2rem 1rem var(--info-claro)
 
   --letra: #{darken(#9baacf,10%)}
   --letra-clara: #9baacf
@@ -77,6 +82,9 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
 
   --exito: #4cd964
   --error: #ff3b30
+  --error-claro: #ff6b63
+  --info: #309eff
+  --info-claro: #{lighten(#309eff,10%)}
 
 
 body[data-tema="oscuro"]

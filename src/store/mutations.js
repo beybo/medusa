@@ -11,6 +11,11 @@ export let mutations = {
       state.cargando = cargando;
     },
 
+    //Conectado
+    set_conectado(state,conectado){
+        state.conectado = conectado;
+    },
+
     // Transacciones
     nueva_transaccion(state,transacciones){
 
