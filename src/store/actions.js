@@ -1,5 +1,11 @@
 export let actions = {
 
+    setTema(context,tema){
+        context.commit("cambiar_tema",tema);
+
+        document.body.dataset.tema = tema;
+    },
+
     cargarTema(context) {
 
         let tema = "claro";

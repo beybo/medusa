@@ -45,6 +45,7 @@ body
   margin: $margen
   box-shadow: var(--sombra)
   z-index: 1
+  transition: background-color $tiempo-transicion-c linear
 
 .negrita
   font-weight: bold
@@ -86,6 +87,10 @@ body
     width: 2rem
     height: 2rem
 
+  &.m
+    width: 3rem
+    height: 3rem
+
   &:not([disabled]):active
     box-shadow: var(--sombra-interior)
 
@@ -106,6 +111,8 @@ input[type="text"], input[type="number"]
   transition: box-shadow $tiempo-transicion-c linear
   background: var(--fondo)
   color: var(--letra-oscura)
+  font-weight: bold
+  font-size: 0.9rem
 
   &::placeholder
     color: var(--letra-oscura)
@@ -113,6 +120,41 @@ input[type="text"], input[type="number"]
   &:focus
     box-shadow: var(--sombra)
 
+input[type="checkbox"]
+  display: none
+
+  $ancho-check: 60px
+  $alto-check: $ancho-check/2
+  $margen-check: 5px
+
+  &+label
+    display: block
+    position: relative
+    width: $ancho-check
+    height: $alto-check
+    border-radius: $radio-borde
+    background: var(--fondo)
+    box-shadow: var(--sombra)
+    transition: all $tiempo-transicion-c linear
+
+    &:before
+      content: ''
+      transition: all $tiempo-transicion-c linear
+      position: absolute
+      height: $alto-check - ($margen-check * 2)
+      width: $alto-check - ($margen-check * 2)
+      margin: $margen-check
+      transform: translateX(0)
+      background: var(--letra-clara)
+
+      border-radius: $radio-borde
+
+  &:checked+label
+    box-shadow: var(--sombra-interior-boton)
+    background: var(--acento)
+    &:before
+      background: var(--fondo)
+      transform: translateX(calc(100% + #{$margen-check*2}))
 
 // Márgenes
 .margen

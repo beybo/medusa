@@ -1,5 +1,5 @@
 <template>
-    <div class="caja columna" @click="cargando = true">
+    <div class="caja columna">
 
         <h2 class="margen-inf">{{ modo | capitalizar }}</h2>
 
@@ -54,7 +54,8 @@ export default {
         return {
             operarEnFiat: false,
             simboloDivisa: simbolo,
-            valor:0
+            valor:0,
+            cargando:false
         }
     },
     methods: {
@@ -77,6 +78,7 @@ export default {
 
             this.nuevaTransaccion(transaccion).then(msg => {
                 this.valor = 0;
+                this.cargando = false;
                 this.$toast.success(msg);
             }).catch(err => {
                 this.$toast.error(err);
@@ -114,7 +116,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera','getCargando']),
+        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera']),
 
         simboloDivisaMostrar() {
             return this.operarEnFiat ? "EUR" : this.simboloDivisa;

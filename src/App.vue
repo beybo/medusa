@@ -4,7 +4,7 @@
             <Header/>
         </transition>
 
-        <vue-element-loading :active="!getConectado" color="#fc651f" v-bind:text="mensaje"/>
+        <vue-element-loading :active="!getConectado && !this.$helpers.mostrarHeaderInicial" color="#fc651f" v-bind:text="mensaje"/>
 
         <transition name="ocultar-corto" mode="out-in">
             <router-view v-on:mostrar-header="cambiarMostrarHeader"/>
