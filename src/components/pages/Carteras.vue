@@ -6,7 +6,7 @@
 
         <div class="caja columna">
             <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
-                <img :src="getImagen(id)">
+                <imagen-divisa :id-divisa="id" />
                 <p>{{ getNombre(id) }}</p>
                 <div class="columna valor">
                     <numero v-bind:valor="getValorCartera(id)" negrita></numero>
@@ -20,17 +20,16 @@
 <script>
 import {mapGetters} from "vuex";
 import Numero from "@/components/Numero";
+import ImagenDivisa from "@/components/ImagenDivisa";
 
 export default {
     name: "Carteras",
-    components: {Numero},
+    components: {ImagenDivisa, Numero},
     computed: {
         ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera']),
-        getImagen: (context) => (id) => {
-            if (id === "fiat") {
-                return require("@/assets/img/logo-euro.png");
-            }
-            return context.$store.getters.getDivisa(id).imagen.peque;
+
+        getSimboloIcono: (context) => (id) => {
+            return id==='fiat' ? 'eur' : context.$store.getters.getSimbolo(id);
         },
         getNombre: (context) => (id) => {
             if (id === "fiat") {
@@ -70,12 +69,11 @@ export default {
   &:hover
     font-weight: bold
 
+    img
+      transform: scale(1.2)
+
   img
-    border-radius: $radio-borde
-    background: #fff
-    width: 25px
-    height: 25px
-    padding: 5px
+    transition: transform $tiempo-transicion-c linear
 
   .valor
     align-items: flex-end

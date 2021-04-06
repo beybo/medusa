@@ -4,7 +4,7 @@
             <Header/>
         </transition>
 
-        <vue-element-loading :active="!getConectado && !this.$helpers.mostrarHeaderInicial" color="#fc651f" v-bind:text="mensaje"/>
+        <vue-element-loading :active="!getConectado && this.mostrarHeaderInicial()" color="#fc651f" v-bind:text="mensaje"/>
 
         <transition name="ocultar-corto" mode="out-in">
             <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
@@ -24,9 +24,8 @@ export default {
         Header
     },
     data() {
-        let nombre = this.$router.currentRoute.name;
         return {
-            mostrarHeader: this.$helpers.mostrarHeaderInicial(nombre),
+            mostrarHeader: this.mostrarHeaderInicial(),
             mensaje: ""
         }
     },
@@ -52,6 +51,11 @@ export default {
     methods: {
 
         ...mapActions(['cargarTema','setConectado']),
+
+        mostrarHeaderInicial(){
+            let nombre = this.$router.currentRoute.name;
+            return this.$helpers.mostrarHeaderInicial(nombre);
+        },
 
         cambiarMostrarHeader(valor) {
             this.mostrarHeader = valor;

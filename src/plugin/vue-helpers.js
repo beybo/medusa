@@ -1,7 +1,4 @@
 const vueHelpers = {
-    cargarTema() {
-
-    },
     mostrarHeaderInicial(name) {
         return ["Login", "Registro", "404"].indexOf(name) === -1;
     }
@@ -10,8 +7,8 @@ const vueHelpers = {
 const vueFiltros = {
     fecha(fecha) {
         let f = new Intl.DateTimeFormat('default',{
-            year: 'numeric', month: 'numeric', day: 'numeric',
-            hour: 'numeric', minute: 'numeric', second: 'numeric',
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit',
             hour12: false,
         });
         return f.format(new Date(fecha));

@@ -23,7 +23,7 @@
 
         <button class="btn" @click="crearOperacion" :disabled="deshabilitarBotonOperar">{{ modo | capitalizar }}</button>
 
-        <vue-element-loading :active="cargando" color="#fc651f"/>
+        <vue-element-loading :active="getCargando" color="#fc651f"/>
 
     </div>
 </template>
@@ -55,7 +55,6 @@ export default {
             operarEnFiat: false,
             simboloDivisa: simbolo,
             valor:0,
-            cargando:false
         }
     },
     methods: {
@@ -116,7 +115,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera']),
+        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera','getCargando']),
 
         simboloDivisaMostrar() {
             return this.operarEnFiat ? "EUR" : this.simboloDivisa;

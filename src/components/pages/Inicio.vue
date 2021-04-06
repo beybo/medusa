@@ -1,14 +1,10 @@
 <template>
-    <div class="hello caja" v-if="getConectado">
-        <h1>Hola {{ getNombreUsuario }}, el <span class="ul" @click="siguiente">{{ divisa_actual }}</span> está a
-            <numero v-bind:valor="getPrecioValor(divisa_actual)"/>
-        </h1>
-        <h2>Tienes
-            <numero v-bind:valor="getValorCartera(divisa_actual)"/>
-            , en tu cartera.
-        </h2>
-        <div class="grafico">
-            <grafico :chart-data="datosGrafica"/>
+    <div class="hello caja" v-if="getConectado" @click="siguiente">
+        <h3>Precio de {{idDivisa}}
+            <numero v-bind:valor="getPrecioValor(idDivisa)"/>
+        </h3>
+        <div class="grafico-divisa">
+            <grafico-divisa :id-divisa="idDivisa"/>
         </div>
     </div>
 </template>
@@ -17,37 +13,24 @@
 
 import {mapGetters} from 'vuex'
 import Numero from "@/components/Numero";
-import Grafico from "@/components/Grafico";
+import GraficoDivisa from "@/components/GraficoDivisa";
 
 export default {
     name: 'Inicio',
-    components: {Grafico, Numero},
+    components: {GraficoDivisa, Numero},
     data() {
         return {
-            divisa_actual: "bitcoin",
-            datosGrafica: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
-                datasets: [
-                    {
-                        label: 'Bitcoin',
-                        borderColor: '#05CBE1',
-                        pointBackgroundColor: 'white',
-                        borderWidth: 1,
-                        pointBorderColor: 'white',
-                        data: [40000, 39000, 10000, 40000, 39000, 80000, 40000]
-                    },
-                ]
-            }
+            idDivisa: "bitcoin"
         }
     },
     computed: {
-        ...mapGetters(['getConectado','getNombreUsuario', 'getPrecioValor', 'getValorCartera'])
+        ...mapGetters(['getConectado','getPrecioValor']),
     },
     methods: {
         siguiente() {
             let divisas = Object.keys(this.$store.state.divisas);
 
-            let indice = divisas.indexOf(this.divisa_actual);
+            let indice = divisas.indexOf(this.idDivisa);
 
             indice++;
 
@@ -55,7 +38,7 @@ export default {
                 indice = 0;
             }
 
-            this.divisa_actual = divisas[indice];
+            this.idDivisa = divisas[indice];
 
         }
     },
@@ -72,8 +55,7 @@ h2
   text-decoration: underline
   cursor: pointer
 
-.grafico
-  height: 400px
-  margin-top: $margen
+.grafico-divisa
+  width: 600px
 
 </style>

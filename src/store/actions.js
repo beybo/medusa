@@ -4,7 +4,7 @@ export let actions = {
 
     setTema(context,tema){
         context.commit("cambiar_tema",tema);
-
+        localStorage.setItem("tema",tema);
         document.body.dataset.tema = tema;
     },
 
