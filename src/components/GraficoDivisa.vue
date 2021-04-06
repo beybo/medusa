@@ -1,19 +1,19 @@
 <template>
     <div class="grafico">
         <numero :style="porcenataje(pos('max'))" :valor="getPrecio(pos('max'))" animar/>
-        <grafico :chart-data="getDatosGrafica"/>
+        <grafico-lineas class="altura" :chart-data="getDatosGrafica"/>
         <numero class="minimo" :style="porcenataje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
     </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
-import Grafico from "@/components/Grafico";
+import GraficoLineas from "@/components/GraficoLineas";
 import Numero from "@/components/Numero";
 
 export default {
     name: "GraficoDivisa",
-    components: {Numero, Grafico},
+    components: {Numero, GraficoLineas},
     props:{
         idDivisa:String
     },
@@ -24,7 +24,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getDivisa']),
+        ...mapGetters(['getDivisa','getColorDivisa']),
 
         pos: (state) => (modo) => {
 
@@ -55,7 +55,8 @@ export default {
 
         getDatosGrafica(){
 
-            let divisa = this.getDivisa(this.idDivisa);
+            let divisa = this.getDivisa(this.idDivisa),
+                color = this.getColorDivisa(this.idDivisa);
 
             let datosGrafica = {
                 labels: [],
@@ -63,7 +64,7 @@ export default {
                     {
                         data: [],
                         label: "Precio",
-                        borderColor: divisa.color,
+                        borderColor: color,
                         borderJoinStyle: 'round',
                         borderCapStyle: 'round',
                         borderWidth: 3,
@@ -81,6 +82,7 @@ export default {
             divisa.precios.forEach((precio)=>{
 
                 let f = new Intl.DateTimeFormat('default',{
+                    year: 'numeric', month: '2-digit', day: '2-digit',
                     hour: '2-digit', minute: '2-digit',
                     hour12: false,
                 });
@@ -118,9 +120,15 @@ export default {
 
 <style scoped lang="sass">
 
+$margen-grafico: 20px
+
 .grafico
   position: relative
-  margin: 30px
+  margin: $margen-grafico
+  height: calc(100% - #{$margen-grafico * 2})
+
+.altura
+  height: 100%
 
 .dinero
   position: absolute

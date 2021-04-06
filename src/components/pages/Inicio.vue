@@ -1,10 +1,12 @@
 <template>
-    <div class="hello caja" v-if="getConectado" @click="siguiente">
-        <h3>Precio de {{idDivisa}}
-            <numero v-bind:valor="getPrecioValor(idDivisa)"/>
-        </h3>
-        <div class="grafico-divisa">
-            <grafico-divisa :id-divisa="idDivisa"/>
+    <div class="columna" v-if="getConectado" @click="siguiente">
+        <div class="grafico-divisa caja">
+            <grafico-divisa class="altura" :id-divisa="idDivisa"/>
+        </div>
+        <div class="caja">
+            <h3>Precio de {{idDivisa}}
+                <numero v-bind:valor="getPrecioValor(idDivisa)"/>
+            </h3>
         </div>
     </div>
 </template>
@@ -56,6 +58,10 @@ h2
   cursor: pointer
 
 .grafico-divisa
-  width: 600px
+  width: 100%
+  max-width: 500px
+
+  .altura
+    height: 300px
 
 </style>

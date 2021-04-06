@@ -47,6 +47,19 @@ export let mutations = {
     },
 
     SOCKET_precio(state, params) {
-        state.divisas[params[0]].precio = params[1];
+        let divisa = state.divisas[params[0]];
+
+        divisa.precio = params[1];
+
+        let ultFecha = divisa.precios[divisa.precios.length-1][0];
+
+        // Eliminamos el primer valor del array si hay una diferencia de más de ~4 minutos
+        // Esto lo hacemos para que en el array que tiene el servidor con los último precios,
+        // solo estén las últimas 24h
+        let fechaNueva = divisa.precio.fecha;
+        if(fechaNueva-ultFecha > 250000){
+            divisa.precios.splice(0,1).push([fechaNueva,divisa.precio.valor]);
+        }
+
     }
 }

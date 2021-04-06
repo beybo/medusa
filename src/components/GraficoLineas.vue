@@ -17,12 +17,15 @@ function formatearDinero(valor){
 
 export default {
     extends: Line,
-    name: "Grafico",
+    name: "GraficoLineas",
     mixins: [mixins.reactiveProp],
     props: {
         options: {
             default() {
-                let colorLetra = getComputedStyle(document.documentElement).getPropertyValue('--letra');
+                let estilos = getComputedStyle(document.body);
+
+                let colorLetra = estilos.getPropertyValue('--letra-boton'),
+                    colorFondo = estilos.getPropertyValue('--fondo-claro');
 
                 return {
                     responsive: true,
@@ -31,7 +34,12 @@ export default {
                         display: false
                     },
                     layout:{
-                      padding: 5
+                      padding: {
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0
+                      }
                     },
                     animations:{
                         y:false
@@ -61,12 +69,29 @@ export default {
                         }]
                     },
                     tooltips: {
-                        fontFamily: 'QuickSand',
+                        yPadding: 10,
+                        xPadding: 10,
+                        position: 'nearest',
+                        caretSize: 10,
                         callbacks: {
                             label: function(t) {
-                                return formatearDinero(t.yLabel);
-                            }
-                        }
+                                return formatearDinero(t.yLabel)
+                            },
+                            footer(t){
+                                return t[0].xLabel;
+                            },
+                            title(){}
+                        },
+                        bodyFontSize: 14,
+                        backgroundColor: colorFondo,
+                        bodyFontColor: colorLetra,
+                        bodyFontStyle: 'bold',
+                        bodyFontFamily: 'QuickSand',
+                        bodyAlign: 'center',
+                        footerFontColor: colorLetra,
+                        footerFontFamily: 'QuickSand',
+                        footerFontStyle: 'normal',
+                        displayColors: false
                     },
                     downsample: {
                         enabled: true,

@@ -22,7 +22,6 @@ import VueSocketIO from "vue-socket.io";
 import SocketIO from "socket.io-client";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import VueSimpleSVG from 'vue-simple-svg';
 
 Vue.use(GAuth, {
     clientId: process.env.VUE_APP_G_AUTH_ID,
@@ -56,7 +55,6 @@ Vue.use(VueSweetalert2,{
     reverseButtons: true
 });
 
-Vue.use(VueSimpleSVG);
 // Componentes
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'

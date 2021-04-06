@@ -1,16 +1,12 @@
 let modeloCripto = {
-    imagen: {
-        miniatura: "",
-        peque: "",
-        grande: ""
-    },
     nombre: "",
     precio: {
         fecha: "",
         valor: null
     },
     precios: [],
-    simbolo: ""
+    simbolo: "",
+    color: ''
 }
 
 let divisas = ["bitcoin", "cardano", "chainlink", "ethereum", "litecoin", "polkadot", "ripple", "uniswap"];

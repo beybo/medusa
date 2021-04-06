@@ -26,6 +26,19 @@ export let getters = {
 
     getSimbolo: (state) => (id) => state.divisas[id].simbolo.toUpperCase(),
 
+    getColorDivisa: (state,getters) => (id) => {
+
+        if(getters.getTema === 'oscuro' && state.divisas[id].colorOscuro){
+            return state.divisas[id].colorOscuro;
+        }
+
+        if(getters.getTema === 'claro' && state.divisas[id].colorClaro){
+            return state.divisas[id].colorClaro;
+        }
+
+        return state.divisas[id].color;
+    },
+
     // Getters de Cartera
 
     getCarteras: state => state.usuario.cartera,
