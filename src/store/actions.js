@@ -3,7 +3,7 @@ export let actions = {
     // Tema
 
     setTema(context,tema){
-        context.commit("cambiar_tema",tema);
+        context.commit("CAMBIAR_TEMA",tema);
         localStorage.setItem("tema",tema);
         document.body.dataset.tema = tema;
     },
@@ -18,7 +18,7 @@ export let actions = {
             tema = "oscuro";
         }
 
-        context.commit("cambiar_tema",tema);
+        context.commit("CAMBIAR_TEMA",tema);
 
         document.body.dataset.tema = tema;
 
@@ -27,25 +27,25 @@ export let actions = {
     // Usuario
 
     setConectado(context,conectado){
-        context.commit("set_conectado",conectado)
+        context.commit("SET_CONECTADO",conectado)
     },
 
     // Divisas
 
     nuevaTransaccion(context,transaccion){
 
-        context.commit("set_cargando",true);
+        context.commit("SET_CARGANDO",true);
 
         return new Promise((resolve,reject) => {
 
-            this._vm.$socket.emit("transaccion",transaccion,(error,datos)=>{
+            this._vm.$socket.emit("TRANSACCION",transaccion,(error,datos)=>{
 
-                context.commit("set_cargando",false);
+                context.commit("SET_CARGANDO",false);
 
                 if(error){
                     reject(datos);
                 }else{
-                    context.commit("nueva_transaccion",datos);
+                    context.commit("NUEVA_TRANSACCION",datos);
                     resolve("La transaccion se ha completado con éxito");
                 }
 

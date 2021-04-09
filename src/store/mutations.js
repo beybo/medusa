@@ -2,22 +2,22 @@ export let mutations = {
 
     // Tema
 
-    cambiar_tema(state,tema){
+    CAMBIAR_TEMA(state, tema){
         state.tema = tema;
     },
 
     // Cargar
-    set_cargando(state,cargando){
+    SET_CARGANDO(state, cargando){
       state.cargando = cargando;
     },
 
     //Conectado
-    set_conectado(state,conectado){
+    SET_CONECTADO(state, conectado){
         state.conectado = conectado;
     },
 
     // Transacciones
-    nueva_transaccion(state,transacciones){
+    NUEVA_TRANSACCION(state, transacciones){
 
         console.log(transacciones);
 
@@ -33,20 +33,32 @@ export let mutations = {
 
     },
 
-    // Sockets
 
-    SOCKET_inicio(state, datos) {
+    // Sockets
+    SOCKET_TRANSACCION:(state,transacciones)=>{
+        Object.keys(transacciones).forEach(divisa => {
+
+            let transaccion = transacciones[divisa];
+
+            state.usuario.cartera[divisa].transacciones.push(transaccion);
+
+            state.usuario.cartera[divisa].cantidad += (transaccion.tipo ==="compra" ? 1 : -1) *  transaccion.cantidad;
+
+        });
+    },
+
+    SOCKET_INICIO(state, datos) {
         console.log(JSON.parse(JSON.stringify(datos)))
         state.conectado = true;
         state.usuario = {...datos.usuario};
         state.divisas = {...datos.divisas};
     },
 
-    SOCKET_divisas(state,divisas){
+    SOCKET_DIVISAS(state,divisas){
         state.divisas = {...divisas};
     },
 
-    SOCKET_precio(state, params) {
+    SOCKET_PRECIO(state, params) {
         let divisa = state.divisas[params[0]];
 
         divisa.precio = params[1];

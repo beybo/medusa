@@ -26,17 +26,7 @@ export default {
     name: "Carteras",
     components: {ImagenDivisa, Numero},
     computed: {
-        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera']),
-
-        getSimboloIcono: (context) => (id) => {
-            return id==='fiat' ? 'eur' : context.$store.getters.getSimbolo(id);
-        },
-        getNombre: (context) => (id) => {
-            if (id === "fiat") {
-                return "Euros";
-            }
-            return context.$store.getters.getDivisa(id).nombre;
-        }
+        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera','getNombre']),
     },
     methods: {
         abrirCartera(id) {

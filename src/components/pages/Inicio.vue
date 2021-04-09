@@ -1,36 +1,48 @@
 <template>
-    <div class="columna" v-if="getConectado" @click="siguiente">
-        <div class="grafico-divisa caja">
+    <div class="columna grid" v-if="getConectado">
+        <div class="area-grafico caja">
             <grafico-divisa class="altura" :id-divisa="idDivisa"/>
         </div>
-        <div class="caja">
-            <h3>Precio de {{idDivisa}}
-                <numero v-bind:valor="getPrecioValor(idDivisa)"/>
-            </h3>
+        <div class="area-selector caja">
+            <h2 class="texto">Divisa</h2>
+                <v-select class="select margen" :options="getIdsDivisa" v-model="idDivisa" :clearable="false" :searchable="false">
+                    <template v-slot:option="option" class="fila">
+                        <imagen-divisa :id-divisa="option.label" tam="35" />
+                        {{ getNombre(option.label) }}
+                    </template>
+                    <template v-slot:selected-option="option" class="fila">
+                        <imagen-divisa :id-divisa="option.label" tam="35"/>
+                        {{ getNombre(option.label) }}
+                    </template>
+                </v-select>
         </div>
+
+        <precio-divisa class="area-precio" :id-divisa="idDivisa" />
+
     </div>
 </template>
 
 <script>
 
 import {mapGetters} from 'vuex'
-import Numero from "@/components/Numero";
-import GraficoDivisa from "@/components/GraficoDivisa";
+import GraficoDivisa from "@/components/graficos/GraficoDivisa";
+import ImagenDivisa from "@/components/ImagenDivisa";
+import PrecioDivisa from "@/components/PrecioDivisa";
 
 export default {
     name: 'Inicio',
-    components: {GraficoDivisa, Numero},
+    components: {PrecioDivisa, ImagenDivisa, GraficoDivisa},
     data() {
         return {
             idDivisa: "bitcoin"
         }
     },
     computed: {
-        ...mapGetters(['getConectado','getPrecioValor']),
+        ...mapGetters(['getConectado','getPrecioValor','getIdsDivisa','getNombre']),
     },
     methods: {
         siguiente() {
-            let divisas = Object.keys(this.$store.state.divisas);
+            let divisas = this.getIdsDivisa;
 
             let indice = divisas.indexOf(this.idDivisa);
 
@@ -43,25 +55,29 @@ export default {
             this.idDivisa = divisas[indice];
 
         }
-    },
-    sockets: {}
+    }
 }
 </script>
 
 <style scoped lang="sass">
 
-h2
-  text-align: center
+.grid
+  display: grid
+  grid-template-columns: repeat(2, 1fr)
+  grid-template-rows: auto 1fr 1fr
+  gap: 0 0
+  grid-template-areas: "grafico grafico" "selector precio"
+
+  @include grid-areas(["grafico","selector","precio"])
+
+.area-selector,.area-precio
+  height: 110px
 
 .ul
   text-decoration: underline
   cursor: pointer
 
-.grafico-divisa
-  width: 100%
-  max-width: 500px
-
-  .altura
-    height: 300px
+.area-grafico .altura
+  height: 250px
 
 </style>

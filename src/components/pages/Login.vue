@@ -36,11 +36,12 @@ export default {
 
         if(localStorage.getItem("token")){
             this.mostrar = false;
+            this.$router.replace({name: "Inicio"});
         }
 
     },
     sockets:{
-        inicio(){
+        INICIO(){
             this.$router.replace({name: "Inicio"});
         }
     },

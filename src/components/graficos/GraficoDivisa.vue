@@ -8,7 +8,7 @@
 
 <script>
 import {mapGetters} from "vuex";
-import GraficoLineas from "@/components/GraficoLineas";
+import GraficoLineas from "@/components/graficos/GraficoLineas";
 import Numero from "@/components/Numero";
 
 export default {
@@ -48,9 +48,15 @@ export default {
 
             let porcentaje = (posicion / precios.length) * 100;
 
-            let restar = precios[posicion][1].toFixed(2).toString().length-1;
+            let restar = precios[posicion][1].toFixed(2).toString().length;
 
-            return `left: ${porcentaje.toFixed(2)-restar}%;`
+            if(porcentaje+restar>99){
+                restar *= 1.5;
+            }
+
+            porcentaje = porcentaje.toFixed(2)-restar;
+
+            return `left: ${porcentaje}%;`
         },
 
         getDatosGrafica(){

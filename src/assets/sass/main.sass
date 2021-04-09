@@ -179,6 +179,17 @@ input[type="checkbox"]
 .margen-inf
   margin-bottom: $margen
 
+// Textos
+.texto-grande
+  margin-bottom: $margen
+  font-size: 1.3em
+  color: var(--acento)
+
+h2.texto
+  font-size: 1.4em
+  text-align: center
+  color: var(--letra-secundario)
+
 // Imágenes
 .logo
   width: 72px
@@ -222,6 +233,49 @@ input[type="checkbox"]
 
   .swal2-validation-message
     font-weight: bold
+
+// Vue select
+
+.select
+
+  .vs__selected
+    color: var(--letra)
+
+  .vs__dropdown-toggle
+    box-shadow: var(--sombra-interior)
+    border: 0
+    cursor: pointer
+    border-radius: $radio-borde-boton
+    padding-left: 5px
+    padding-right: 5px
+    height: 46px
+
+  .vs__open-indicator
+    fill: var(--letra)
+
+  .vs__dropdown-menu
+    @include scroll-bar
+    background: var(--fondo)
+    box-shadow: var(--sombra-interior)
+    border: 0
+
+  .vs__dropdown-option
+    display: flex
+    align-items: center
+    color: var(--letra)
+
+    &.vs__dropdown-option--highlight
+      background: var(--fondo-claro)
+      color: var(--letra-boton)
+
+    &.vs__dropdown-option--selected
+      opacity: 0.4
+      background: var(--fondo)
+      color: var(--letra)
+      cursor: default
+
+  .imagen-divisa
+    margin-right: $margen
 
 
 // Transiciones

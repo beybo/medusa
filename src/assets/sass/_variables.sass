@@ -50,6 +50,24 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
        grid-area: #{$area}
 
 
+@mixin scroll-bar()
+
+  scrollbar-width: thin
+
+  &::-webkit-scrollbar-track
+    box-shadow: var(--sombra-interior)
+    border-radius: 10px
+    background-color: var(--fondo)
+
+  &::-webkit-scrollbar
+    width: 12px
+    background-color: var(--fondo)
+
+
+  &::-webkit-scrollbar-thumb
+    border-radius: 10px
+    background-color: var(--fondo-claro)
+
 // Variables CSS
 
 

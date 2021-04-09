@@ -7,27 +7,9 @@
 
         </div>
 
-        <div class="caja columna area-balance">
+        <precio-cartera class="area-balance" :id-divisa="idDivisa"/>
 
-            <h2 class="margen">Cartera de {{ getDivisa(idDivisa).nombre }}</h2>
-
-            <numero class="texto-grande" negrita v-bind:valor="getCartera(idDivisa).cantidad" :style="estilosTexto" tipo="criptodivisa" v-bind:simbolo="getSimbolo(idDivisa)"/>
-
-            <p>Valor
-                <numero animar v-bind:valor="getValorCartera(idDivisa)" negrita/>
-            </p>
-
-        </div>
-
-        <div class="caja columna area-precio">
-
-            <h2 class="margen">Precio de {{ getDivisa(idDivisa).nombre }}</h2>
-
-            <numero animar v-bind:valor="getPrecioValor(idDivisa)" :style="estilosTexto" negrita class="texto-grande"/>
-
-            <p>Ult. 24h <numero v-bind:valor="getPrecioCambio(idDivisa)" negrita tipo="porcentaje"/></p>
-
-        </div>
+        <precio-divisa class="area-precio" :id-divisa="idDivisa"/>
 
         <crear-transaccion class="area-comprar" v-bind:id-divisa="idDivisa" modo="comprar"/>
 
@@ -40,18 +22,19 @@
 
 <script>
 import {mapGetters} from "vuex";
-import Numero from "@/components/Numero";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faCheck, faExchangeAlt} from '@fortawesome/free-solid-svg-icons'
 import CrearTransaccion from "@/components/CrearTransaccion";
 import Transacciones from "@/components/Transacciones";
-import GraficoDivisa from "@/components/GraficoDivisa";
+import GraficoDivisa from "@/components/graficos/GraficoDivisa";
+import PrecioDivisa from "@/components/PrecioDivisa";
+import PrecioCartera from "@/components/PrecioCartera";
 
 library.add(faCheck, faExchangeAlt);
 
 export default {
     name: "Cartera",
-    components: {GraficoDivisa, Transacciones, CrearTransaccion, Numero},
+    components: {PrecioCartera, PrecioDivisa, GraficoDivisa, Transacciones, CrearTransaccion},
     data() {
         return {
             idDivisa: this.$route.params.id,
@@ -64,7 +47,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getConectado','getCartera', 'getDivisa', 'getPrecioValor', 'getValorCartera', 'getPrecioCambio', 'getSimbolo']),
+        ...mapGetters(['getConectado','getCartera', 'getDivisa', 'getValorCartera', 'getSimbolo']),
 
         estilosTexto(){
 
@@ -95,14 +78,5 @@ export default {
 
 .area-grafico
   max-height: 300px
-
-h2
-  font-size: 1.4em
-  color: var(--letra-secundario)
-
-.texto-grande
-  margin-bottom: $margen
-  font-size: 1.3em
-  color: var(--acento)
 
 </style>

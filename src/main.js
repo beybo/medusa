@@ -5,9 +5,19 @@ import Router from './router/index'
 // Plugins
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import GAuth from 'vue-google-oauth2'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
+
+Vue.use(GAuth, {
+    clientId: process.env.VUE_APP_G_AUTH_ID,
+    scope: 'profile email',
+    prompt: 'select_account'
+})
+
+
+// Propios
 
 import VueToastMixin from "./plugin/vue-toast-notification-mixin";
 import VueHelper from '@/plugin/vue-helpers'
@@ -17,17 +27,11 @@ Vue.use(VueHelper);
 
 import {index} from './store'
 
-import GAuth from 'vue-google-oauth2'
+// Socket y alertas
 import VueSocketIO from "vue-socket.io";
 import SocketIO from "socket.io-client";
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
-Vue.use(GAuth, {
-    clientId: process.env.VUE_APP_G_AUTH_ID,
-    scope: 'profile email',
-    prompt: 'select_account'
-})
 
 Vue.use(new VueSocketIO({
     debug: false,
@@ -59,9 +63,12 @@ Vue.use(VueSweetalert2,{
 
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import VueElementLoading from "vue-element-loading";
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component("VueElementLoading", VueElementLoading);
+Vue.component('v-select', vSelect)
 
 // Iniciamos la App
 

@@ -36,7 +36,7 @@ export default {
         };
     },
     sockets:{
-        inicio(){
+        INICIO(){
             this.$router.replace({name: "Inicio"});
         }
     },

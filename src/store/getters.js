@@ -39,6 +39,13 @@ export let getters = {
         return state.divisas[id].color;
     },
 
+    getNombre: (state,getters) => (id) => {
+        if (id === "fiat") {
+            return "Euros";
+        }
+        return getters.getDivisa(id).nombre;
+    },
+
     // Getters de Cartera
 
     getCarteras: state => state.usuario.cartera,

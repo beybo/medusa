@@ -1,7 +1,7 @@
 <template>
     <div class="caja columna">
 
-        <h2 class="margen-inf">{{ modo | capitalizar }}</h2>
+        <h2 class="margen-inf texto">{{ modo | capitalizar }}</h2>
 
         <div :data-simbolo="simboloDivisaMostrar" :class="claseExtra">
             <input type="number" placeholder="Cantidad..." v-model="valor" @keypress="esNumero($event)">
@@ -156,15 +156,17 @@ export default {
             return this.getPrecioValor(this.idDivisa) * this.valor;
         }
 
+    },
+    sockets:{
+        TRANSACCION(datos){
+            console.log(datos);
+            console.log("funciona")
+        }
     }
 }
 </script>
 
 <style scoped lang="sass">
-
-h2
-  font-size: 1.4em
-  color: var(--letra-secundario)
 
 input[type="number"]
   width: 98px

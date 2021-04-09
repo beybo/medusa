@@ -28,8 +28,7 @@ export default {
         }
     },
     sockets: {
-        inicio() {
-            console.log("INICIADO")
+        INICIO() {
             this.mostrar = false;
         }
     }
