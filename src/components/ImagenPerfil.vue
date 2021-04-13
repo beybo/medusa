@@ -8,7 +8,7 @@ import {alea} from 'seedrandom';
 export default {
     name: "ImagenPerfil",
     props: {
-        ancho: {
+        tam: {
             type: Number,
             default: 90
         },
@@ -48,8 +48,8 @@ export default {
         prepararCanvas() {
             let canvas = document.createElement("canvas");
 
-            canvas.width = Math.round(devicePixelRatio * this.ancho);
-            canvas.height = Math.round(devicePixelRatio * this.ancho);
+            canvas.width = Math.round(devicePixelRatio * this.tam);
+            canvas.height = Math.round(devicePixelRatio * this.tam);
 
             let ctx = canvas.getContext("2d");
             ctx.scale(devicePixelRatio,devicePixelRatio);
@@ -58,10 +58,10 @@ export default {
         },
         pintarPerfil(ctx) {
 
-            ctx.clearRect(0,0,this.ancho,this.ancho);
+            ctx.clearRect(0,0,this.tam,this.tam);
 
             const CUADRADOS = 6,
-                  TAM = this.ancho / CUADRADOS,
+                  TAM = this.tam / CUADRADOS,
                   MIN_CUADRADOS = 8;
 
             let arng = new alea(this.nombreUsuario);
@@ -104,8 +104,8 @@ export default {
         },
         cargarImagen(canvas) {
 
-            this.$refs.imagen.style.width = this.ancho + "px";
-            this.$refs.imagen.style.height = this.ancho + "px";
+            this.$refs.imagen.style.width = this.tam + "px";
+            this.$refs.imagen.style.height = this.tam + "px";
 
             this.$refs.imagen.src = canvas.toDataURL();
 

@@ -27,6 +27,14 @@ export let state = {
         transacciones: []
     },
 
+    ranking:[
+        {
+            nombre:'',
+            resets:0,
+            total:0
+        }
+    ],
+
     divisas: modeloDivisas,
 
     conectado: false,

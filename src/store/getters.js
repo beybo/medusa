@@ -11,6 +11,7 @@ export let getters = {
     getNombreUsuario: (state) => state.usuario.nombre,
     getResets: (state) => state.usuario.resets,
     getFechaRegistro: (state) => state.usuario.fecha_registro,
+    getRanking: (state)=> state.ranking,
 
     // Getters de divisas
 

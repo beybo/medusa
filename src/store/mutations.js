@@ -33,6 +33,11 @@ export let mutations = {
 
     },
 
+    // Ranking
+    RANKING(state, ranking){
+        this.state.ranking = {...ranking};
+    },
+
 
     // Sockets
     SOCKET_TRANSACCION:(state,transacciones)=>{
@@ -49,13 +54,19 @@ export let mutations = {
 
     SOCKET_INICIO(state, datos) {
         console.log(JSON.parse(JSON.stringify(datos)))
-        state.conectado = true;
+
         state.usuario = {...datos.usuario};
-        state.divisas = {...datos.divisas};
+
+        if(!datos.divisas.precio){
+            state.divisas = {...datos.divisas};
+            state.conectado = true;
+        }
+
     },
 
     SOCKET_DIVISAS(state,divisas){
         state.divisas = {...divisas};
+        state.conectado = true;
     },
 
     SOCKET_PRECIO(state, params) {

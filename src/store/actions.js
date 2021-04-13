@@ -30,6 +30,24 @@ export let actions = {
         context.commit("SET_CONECTADO",conectado)
     },
 
+    // Ranking
+
+    actualizarRanking(context){
+
+        return new Promise((resolve,reject)=>{
+
+            this._vm.$socket.emit("RANKING",(error,datos)=>{
+                if(error){
+                    reject(datos);
+                }else{
+                    context.commit("RANKING",datos);
+                }
+            });
+
+        });
+
+    },
+
     // Divisas
 
     nuevaTransaccion(context,transaccion){
@@ -52,8 +70,6 @@ export let actions = {
             });
 
         });
-
-
 
     }
 

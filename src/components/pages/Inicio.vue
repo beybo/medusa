@@ -79,5 +79,6 @@ export default {
 
 .area-grafico .altura
   height: 250px
+  width: 500px
 
 </style>

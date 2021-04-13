@@ -131,7 +131,6 @@ $margen-grafico: 20px
 .grafico
   position: relative
   margin: $margen-grafico
-  height: calc(100% - #{$margen-grafico * 2})
 
 .altura
   height: 100%
