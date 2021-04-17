@@ -27,7 +27,7 @@
 import {mapGetters} from 'vuex'
 import GraficoDivisa from "@/components/graficos/GraficoDivisa";
 import ImagenDivisa from "@/components/ImagenDivisa";
-import PrecioDivisa from "@/components/PrecioDivisa";
+import PrecioDivisa from "@/components/cartera/PrecioDivisa";
 
 export default {
     name: 'Inicio',
@@ -79,6 +79,17 @@ export default {
 
 .area-grafico .altura
   height: 250px
-  width: 500px
+  max-width: 500px
+  width: 100%
+
+@media (max-width: $mobile)
+  .grid
+    grid-template-columns: repeat(1, 1fr)
+    grid-template-rows: auto 1fr 1fr
+    grid-template-areas: "grafico" "precio" "selector"
+
+  .area-grafico .altura
+    max-width: 70vw
+    height: 200px
 
 </style>

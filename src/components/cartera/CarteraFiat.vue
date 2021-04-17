@@ -25,7 +25,7 @@
 <script>
 import Numero from "@/components/Numero";
 import {mapGetters} from "vuex";
-import Transacciones from "@/components/Transacciones";
+import Transacciones from "@/components/cartera/Transacciones";
 
 export default {
     name: "CarteraFiat",

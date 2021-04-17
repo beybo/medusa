@@ -24,11 +24,11 @@
 import {mapGetters} from "vuex";
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faCheck, faExchangeAlt} from '@fortawesome/free-solid-svg-icons'
-import CrearTransaccion from "@/components/CrearTransaccion";
-import Transacciones from "@/components/Transacciones";
+import CrearTransaccion from "@/components/cartera/CrearTransaccion";
+import Transacciones from "@/components/cartera/Transacciones";
 import GraficoDivisa from "@/components/graficos/GraficoDivisa";
-import PrecioDivisa from "@/components/PrecioDivisa";
-import PrecioCartera from "@/components/PrecioCartera";
+import PrecioDivisa from "@/components/cartera/PrecioDivisa";
+import PrecioCartera from "@/components/cartera/PrecioCartera";
 
 library.add(faCheck, faExchangeAlt);
 
@@ -75,8 +75,25 @@ export default {
   @include grid-areas(["grafico","balance","precio","comprar","vender","transacciones"])
 
 // Para la parte del balance
+$margen-grafico: 20px
 
 .area-grafico
-  max-height: 300px
+  max-height: 300px + $margen-grafico*2
+
+.grafico
+  height: calc(100% - #{$margen-grafico * 2})
+  margin: $margen-grafico
+
+
+@media (max-width: $mobile)
+
+  .grid
+    display: flex
+    flex-flow: column
+
+  .area-grafico
+    max-height: 180px + $margen-grafico*2
+
+
 
 </style>

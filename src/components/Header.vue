@@ -89,5 +89,35 @@ a
 .marcador
   @include marcador($tam-boton, $tam-boton)
 
+@media (max-width: $mobile)
+  nav.caja
+    height: $nav-mobile-height
+    position: fixed
+    bottom: 0
+    z-index: 100000
+    left: 0
+    margin: 0
+    border-radius: 0
+    padding: 0
+    width: 100%
+
+  .fila
+    height: 100%
+    width: 100%
+
+  h1
+    display: none
+
+  .marcador
+    display: none
+
+  a
+    width: 60px
+    height: 60px
+
+    p
+      font-size: 0.9em
+    svg
+      font-size: 1.5em
 
 </style>

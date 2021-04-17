@@ -5,8 +5,8 @@ import Perfil from "@/components/pages/Perfil";
 import Error404 from "@/components/pages/Error404";
 import Vue from "vue";
 import Carteras from "@/components/pages/Carteras";
-import Cartera from "@/components/subpages/Cartera";
-import CarteraFiat from "@/components/subpages/CarteraFiat";
+import Cartera from "@/components/cartera/Cartera";
+import CarteraFiat from "@/components/cartera/CarteraFiat";
 import Ranking from "@/components/pages/Ranking";
 import Registro from "@/components/pages/Registro";
 

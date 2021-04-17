@@ -87,4 +87,5 @@ export default {
 
   p, span
     text-align: center
+
 </style>

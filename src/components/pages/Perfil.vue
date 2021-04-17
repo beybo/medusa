@@ -3,15 +3,15 @@
 
         <div class="caja fila area-info">
 
-            <imagen-perfil class="caja" v-bind:nombre-usuario="getNombreUsuario"/>
+            <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
 
-            <div class="columna">
+            <div class="columna area-etiquetas">
                 <p>Nombre:</p>
                 <p>Reseteos:</p>
                 <p>Registro:</p>
             </div>
 
-            <div class="columna">
+            <div class="columna area-datos">
                 <b class="area-nombre">{{getNombreUsuario}}</b>
                 <b>{{getResets}}</b>
                 <b>{{getFechaRegistro | fecha}}</b>
@@ -33,14 +33,14 @@
         </div>
 
         <div class="caja columna area-reset">
-            <h4 class="margen-inf">Resetear Cartera</h4>
+            <h4 class="margen-inf">Resetear <span class="texto-extra">Cartera</span></h4>
             <button class="btn-icon sm">
                 <font-awesome-icon :icon="['fas','undo-alt']"/>
             </button>
         </div>
 
         <div class="caja columna area-borrar">
-            <h4 class="margen-inf">Borrar Cuenta</h4>
+            <h4 class="margen-inf">Borrar <span class="texto-extra">Cuenta</span></h4>
             <button class="btn-icon sm area-bot-3" @click="borrarCuenta">
                 <font-awesome-icon :icon="['fas','trash']"/>
             </button>
@@ -148,4 +148,26 @@ export default {
 .btn-icon
   transform: scale(1.3,1.3)
 
+
+@media (max-width: $mobile)
+  .area-info
+    display: grid
+    grid-template-columns: repeat(3,1fr)
+    gap: 0 0
+    grid-template-areas: "imagen imagen imagen" "etiquetas datos datos"
+
+    @include grid-areas(["imagen", "etiquetas", "datos"])
+
+  .imagen-perfil
+    justify-self: center
+
+  .area-etiquetas,.area-datos
+    margin-top: $margen*1.5
+
+  .texto-extra
+    display: none
+
+  h4
+    font-size: 0.86em
+    text-align: center
 </style>

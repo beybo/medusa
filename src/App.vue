@@ -91,4 +91,10 @@ export default {
 #app.centrar
   justify-content: center
 
+
+@media (max-width: $mobile)
+  #app
+    overflow-x: hidden
+    height: calc(100vh - #{$nav-mobile-height})
+    margin-bottom: $nav-mobile-height
 </style>

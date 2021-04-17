@@ -1,6 +1,6 @@
 <template>
     <div class="columna">
-        <div class="caja columna">
+        <div class="caja columna" id="total">
             <h3>Total: <numero animar negrita v-bind:valor="getValorTodasCartera" /></h3>
         </div>
 
@@ -71,5 +71,10 @@ export default {
   .cantidad
     font-size: 0.8rem
     font-weight: normal !important
+
+@media (max-width: $mobile)
+  .caja
+    width: calc(100% - #{$margen*4})
+
 
 </style>

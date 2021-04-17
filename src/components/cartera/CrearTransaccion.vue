@@ -7,6 +7,10 @@
             <input type="number" placeholder="Cantidad..." v-model="valor" @keypress="esNumero($event)">
         </div>
 
+
+
+        <p class="balance">Balance: <numero negrita :valor="modo === 'vender' ? getCantidadCartera(idDivisa) : getCantidadFiat" :simbolo="getSimbolo(idDivisa)" :tipo="modo === 'vender' ? 'criptodivisa' : 'dinero'"/></p>
+
         <div class="fila">
 
             <button class="btn-icon sm margen" @click="operarEnFiat = !operarEnFiat">
@@ -18,7 +22,7 @@
         </div>
 
         <div class="margen-inf columna estimacion">
-            <numero negrita v-bind:valor="valorConvertido" v-bind:simbolo="getSimbolo(idDivisa)" v-bind:tipo="operarEnFiat ? 'criptodivisa' : 'dinero'"/>
+            <numero negrita v-bind:valor="valorConvertido" :simbolo="getSimbolo(idDivisa)" :tipo="operarEnFiat ? 'criptodivisa' : 'dinero'"/>
         </div>
 
         <button class="btn" @click="crearOperacion" :disabled="deshabilitarBotonOperar">{{ modo | capitalizar }}</button>
@@ -115,7 +119,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera','getCargando']),
+        ...mapGetters(['getPrecioValor','getSimbolo','getCantidadFiat','getCantidadCartera','getValorCartera','getCargando','getNombre']),
 
         simboloDivisaMostrar() {
             return this.operarEnFiat ? "EUR" : this.simboloDivisa;
@@ -194,4 +198,16 @@ input[type="number"]
   height: 42px
   margin-left: $margen
 
+.balance
+  margin-top: $margen
+
+@media (max-width: $mobile)
+  input[type="number"]
+    width: 123px
+    padding-right: 52px
+
+  .menos-width
+    input[type="number"]
+      width: 120px
+      padding-right: 55px
 </style>

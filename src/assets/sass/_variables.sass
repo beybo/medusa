@@ -17,6 +17,11 @@ $radio-borde-boton: 10px
 $padding: 20px
 $padding-boton: ($padding/3)*2 ($padding/3)*4
 
+$nav-mobile-height: 70px
+
+// Puntos de ruptura
+$mobile: 500px
+
 // Mixins
 
 @mixin marcador($w,$h) // Para el marcador de un pestaña
@@ -67,58 +72,3 @@ $padding-boton: ($padding/3)*2 ($padding/3)*4
   &::-webkit-scrollbar-thumb
     border-radius: 10px
     background-color: var(--fondo-claro)
-
-// Variables CSS
-
-
-\:root
-  --fondo: #E4EBF5
-  --fondo-claro: #9baacf
-  --fondo-carga: #E4EBF5cc
-
-  --acento: #fc651f
-  --acento-oscuro: #{darken(#fc651f,15%)}
-  --acento-claro: #{lighten(#fc651f,15%)}
-
-  --opacidad-seleccionado: 0.9
-
-  --sombra: 0.8rem 0.8rem 1.4rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
-  --sombra-boton: inset 0.2rem 0.2rem 1rem var(--acento-claro), inset -0.2rem -0.2rem 1rem var(--acento-oscuro), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
-  --sombra-boton-error: inset 0.2rem 0.2rem 1rem var(--error-claro), inset -0.2rem -0.2rem 1rem var(--error), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
-  --sombra-boton-info: inset 0.2rem 0.2rem 1rem var(--info-claro), inset -0.2rem -0.2rem 1rem var(--info), 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #fff
-
-  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #fff
-  --sombra-interior-boton: inset .2rem .2rem 1rem var(--acento-oscuro), inset -.2rem -.2rem 1rem var(--acento-claro)
-  --sombra-interior-boton-error: inset .2rem .2rem 1rem var(--error), inset -.2rem -.2rem 1rem var(--error-claro)
-  --sombra-interior-boton-info: inset .2rem .2rem 1rem var(--info), inset -.2rem -.2rem 1rem var(--info-claro)
-
-  --letra: #{darken(#9baacf,10%)}
-  --letra-clara: #9baacf
-  --letra-boton: #fff
-  --letra-secundario: #{darken(#9baacf,15%)}
-  --letra-oscura: #{darken(#9baacf,50%)}
-
-  --exito: #4cd964
-  --error: #ff3b30
-  --error-claro: #ff6b63
-  --info: #309eff
-  --info-claro: #{lighten(#309eff,10%)}
-
-
-body[data-tema="oscuro"]
-  --fondo: #221f28
-  --fondo-claro: #555
-  --fondo-carga: #221f28cc
-
-  --opacidad-seleccionado: 1
-
-  --sombra: 0.8rem 0.8rem 1.4rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
-  --sombra-boton: inset 0.2rem 0.2rem 1rem #{lighten(#fc651f,15%)}, inset -0.2rem -0.2rem 1rem #{darken(#fc651f,15%)}, 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
-  --sombra-boton-error: inset 0.2rem 0.2rem 1rem var(--error-claro), inset -0.2rem -0.2rem 1rem var(--error), 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
-  --sombra-boton-info: inset 0.2rem 0.2rem 1rem var(--info-claro), inset -0.2rem -0.2rem 1rem var(--info), 0.3rem 0.3rem 0.6rem #0d0c0f, -0.2rem -0.2rem 0.5rem #312d38
-
-  --sombra-interior: inset 0.2rem 0.2rem 0.5rem #0d0c0f, inset -0.2rem -0.2rem 0.5rem #312d38
-
-  --letra: #ccc
-  --letra-secundario: #fff
-  --letra-oscura: #fff
