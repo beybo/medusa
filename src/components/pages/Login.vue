@@ -17,10 +17,14 @@
 
 <script>
 
+import axios from 'axios'
+
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faGoogle} from '@fortawesome/free-brands-svg-icons'
 
 library.add(faGoogle);
+
+
 
 let urlLogin = process.env.VUE_APP_MEDUSA_SERVIDOR_URL + "/login";
 
@@ -57,16 +61,24 @@ export default {
 
             this.$gAuth.signIn().then(async GoogleUser => {
 
-                let respuesta = await this.$http.post(urlLogin + "/google", {google: GoogleUser});
+                let respuesta = await axios({
+                    method:'post',
+                    url:urlLogin + "/google",
+                    data:{google:GoogleUser},
+                    options:{
+                        headers:[]
+                    }
+                });
 
-                if (respuesta.body.error) {
-                    this.$toast.error(respuesta.body.mensaje);
+
+                if (respuesta.data.error) {
+                    this.$toast.error(respuesta.data.mensaje);
                     return;
                 }
 
-                let token = respuesta.body.token;
+                let token = respuesta.data.token;
 
-                if (respuesta.body.registrado) {
+                if (respuesta.data.registrado) {
                     this.finalizar(token);
                 } else {
                     this.$toast.info("Es necesario que finalices el registro");

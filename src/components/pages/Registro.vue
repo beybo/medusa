@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import ImagenPerfil from "@/components/ImagenPerfil";
 
 let urlLogin = process.env.VUE_APP_MEDUSA_SERVIDOR_URL + "/login";
@@ -61,7 +62,14 @@ export default {
 
             try {
 
-                respuesta = await this.$http.post(urlLogin + "/registro", {token: this.token, nombre: nombre});
+                respuesta = await axios({
+                    method:'post',
+                    url:urlLogin + "/registro",
+                    data:{token: this.token, nombre: nombre},
+                    options:{
+                        headers:[]
+                    }
+                });
 
                 if (!respuesta.body.error) {
 
