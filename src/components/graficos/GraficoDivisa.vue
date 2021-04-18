@@ -54,6 +54,11 @@ export default {
                 restar *= 1.5;
             }
 
+
+            if(porcentaje<2){
+                restar *= .5;
+            }
+
             porcentaje = porcentaje.toFixed(2)-restar;
 
             return `left: ${porcentaje}%;`

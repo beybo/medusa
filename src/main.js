@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import Router from './router/index'
 
+Vue.config.productionTip = process.env.NODE_ENV === 'production'
+
 // Plugins
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
@@ -70,9 +72,22 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component("VueElementLoading", VueElementLoading);
 Vue.component('v-select', vSelect)
 
-// Iniciamos la App
+// Error handling
+import * as Sentry from "@sentry/vue"
+import { Integrations } from "@sentry/tracing"
 
-Vue.config.productionTip = process.env.NODE_ENV === 'production'
+if(Vue.config.productionTip && process.env.VUE_APP_SENTRY_DSN){
+
+    Sentry.init({
+        Vue,
+        dsn: process.env.VUE_APP_SENTRY_DSN,
+        integrations: [new Integrations.BrowserTracing()],
+        tracesSampleRate: 1.0,
+    });
+
+}
+
+// Iniciamos la App
 
 new Vue({
     store: index,
