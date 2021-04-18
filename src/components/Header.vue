@@ -94,7 +94,7 @@ a
     height: $nav-mobile-height
     position: fixed
     bottom: 0
-    z-index: 100000
+    z-index: 100
     left: 0
     margin: 0
     border-radius: 0

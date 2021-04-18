@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/public/icon/apple-icon.png" />
+  <img src="/src/assets/img/LogoMedusa.svg" />
 </p>
 
 <h1 align="center">Medusa</h1>
@@ -12,6 +12,7 @@ Es necesario que definas las siguientes variables de entorno:
 |------|-----|
 |VUE_APP_G_AUTH_ID|ID de autorización de la APP de Google|
 |VUE_APP_MEDUSA_SERVER_URL|Url del servidor de medusa|
+|VUE_APP_SENTRY_DSN|Url para la integración con Sentry, no es obligatorio.|
 
 ## Project setup
 

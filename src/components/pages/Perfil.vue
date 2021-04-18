@@ -98,7 +98,19 @@ export default {
                 inputValidator(inputValue) {
                     return inputValue !== nombreUsuario ? 'Tienes que escribir el nombre correctamente' : false;
                 },
-                html: `<p>Para borrar la cuenta por favor escribe: '<b>${nombreUsuario}</b>'</p>`
+                html: `<p>Para borrar la cuenta por favor escribe: '<b>${nombreUsuario}</b>'</p>`,
+                onOpen: (s)=>{
+
+                    let confirmButton = s.querySelector(".swal2-confirm"),
+                        input = s.querySelector(".swal2-input");
+
+                    confirmButton.disabled = true;
+
+                    input.addEventListener("keyup",()=>{
+                        confirmButton.disabled = input.value !== nombreUsuario;
+                    })
+
+                }
             });
 
             if(respuesta.isConfirmed === true){
