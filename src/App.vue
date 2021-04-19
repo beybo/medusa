@@ -34,7 +34,8 @@ export default {
 
         if (localStorage.getItem("token")) {
             this.$socket.connect();
-        } else if (["Login", "Politica", "Condiciones"].indexOf(this.$router.history.current.name) !== -1) {
+        } else if (["Login", "Politica", "Condiciones"].indexOf(this.$router.history.current.name) === -1) {
+            console.log(this.$router.history.current.name)
             this.$router.replace({name: "Login"});
         }
 

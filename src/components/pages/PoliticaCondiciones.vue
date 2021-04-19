@@ -29,7 +29,7 @@
 
         </div>
 
-        <router-link to="Inicio" class="btn" replace>Volver al Inicio</router-link>
+        <router-link to="login" class="btn" replace>Volver al Inicio</router-link>
 
     </div>
 </template>
