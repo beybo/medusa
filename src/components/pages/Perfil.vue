@@ -162,6 +162,9 @@ export default {
 
 
 @media (max-width: $mobile)
+  .grid
+    width: 100%
+
   .area-info
     display: grid
     grid-template-columns: repeat(3,1fr)

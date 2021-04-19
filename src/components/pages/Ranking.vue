@@ -1,15 +1,27 @@
 <template>
-  <div v-if="getConectado">
-      <div v-for="usuario in getRanking" :key="usuario.nombre" class="fila caja perfil">
+  <div v-if="getConectado" class="columna">
+      <div v-for="usuario in getRanking" :key="usuario.nombre" class="fila caja perfil fila">
 
-          <imagen-perfil class="caja" v-bind:nombre-usuario="usuario.nombre"/>
-
-          <div>
-
+          <div class="columna">
+              <div class="contenedor-imagen columna">
+                <imagen-perfil class="caja" v-bind:nombre-usuario="usuario.nombre"/>
+              </div>
+              <p class="margen">{{usuario.nombre}}</p>
           </div>
-          <p class="margen">{{usuario.nombre}}</p>
 
-          <numero :valor="usuario.total" class="margen" negrita/>
+          <div class="columna margen datos">
+              <div class="fila">
+                  <h4 class="margen">Resets</h4>
+                  <div>{{usuario.resets}}</div>
+              </div>
+              <div class="fila">
+                  <h4 class="margen">Total</h4>
+                  <numero :valor="usuario.total" negrita/>
+              </div>
+          </div>
+
+
+
 
       </div>
   </div>
@@ -44,9 +56,15 @@ export default {
   width: 100%
   max-width: 300px
 
+.contenedor-imagen
+  width: 76px
+  height: 76px
+
 .imagen-perfil
-  width: 45px !important
-  height: 45px !important
+  transform: scale(0.6)
+
+.datos .fila
+  justify-content: flex-start
 
 @media (max-width: $mobile)
   .perfil

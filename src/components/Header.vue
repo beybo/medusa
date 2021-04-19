@@ -104,6 +104,7 @@ a
   .fila
     height: 100%
     width: 100%
+    justify-content: space-around
 
   h1
     display: none

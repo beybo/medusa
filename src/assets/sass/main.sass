@@ -261,11 +261,14 @@ h2.texto
   .vs__open-indicator
     fill: var(--letra)
 
-  .vs__dropdown-menu
-    @include scroll-bar
-    background: var(--fondo)
-    box-shadow: var(--sombra-interior)
-    border: 0
+  .imagen-divisa
+    margin-right: $margen
+
+.vs__dropdown-menu
+  @include scroll-bar
+  background: var(--fondo) !important
+  box-shadow: var(--sombra-interior) !important
+  border: 0 !important
 
   .vs__dropdown-option
     display: flex

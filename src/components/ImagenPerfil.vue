@@ -48,11 +48,11 @@ export default {
         prepararCanvas() {
             let canvas = document.createElement("canvas");
 
-            canvas.width = Math.round(devicePixelRatio * this.tam);
-            canvas.height = Math.round(devicePixelRatio * this.tam);
+            canvas.width = Math.round(4 * this.tam);
+            canvas.height = Math.round(4 * this.tam);
 
             let ctx = canvas.getContext("2d");
-            ctx.scale(devicePixelRatio,devicePixelRatio);
+            ctx.scale(4,4);
 
             return {canvas,ctx};
         },
@@ -86,7 +86,7 @@ export default {
                 for(let x = 0; x < CUADRADOS; x++){
 
                     if(!pos[(y*10) + x] && Math.round(arng())===1){
-                        ctx.fillRect(x*TAM,y*TAM,TAM,TAM);
+                        ctx.fillRect(x*TAM ,y*TAM,TAM,TAM);
                         pos[(y*10) + x] = true;
                         total++;
                     }

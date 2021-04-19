@@ -5,16 +5,16 @@
         </div>
         <div class="area-selector caja">
             <h2 class="texto">Divisa</h2>
-                <v-select class="select margen" :options="getIdsDivisa" v-model="idDivisa" :clearable="false" :searchable="false">
-                    <template v-slot:option="option" class="fila">
-                        <imagen-divisa :id-divisa="option.label" tam="35" />
-                        {{ getNombre(option.label) }}
-                    </template>
-                    <template v-slot:selected-option="option" class="fila">
-                        <imagen-divisa :id-divisa="option.label" tam="35"/>
-                        {{ getNombre(option.label) }}
-                    </template>
-                </v-select>
+            <v-select class="select margen" :options="getIdsDivisa" v-model="idDivisa" :clearable="false" :searchable="false" :calculate-position="posicionamiento" append-to-body>
+                <template v-slot:option="option" class="fila">
+                    <imagen-divisa :id-divisa="option.label" tam="35" />
+                    {{ getNombre(option.label) }}
+                </template>
+                <template v-slot:selected-option="option" class="fila">
+                    <imagen-divisa :id-divisa="option.label" tam="35"/>
+                    {{ getNombre(option.label) }}
+                </template>
+            </v-select>
         </div>
 
         <precio-divisa class="area-precio" :id-divisa="idDivisa" />
@@ -28,6 +28,7 @@ import {mapGetters} from 'vuex'
 import GraficoDivisa from "@/components/graficos/GraficoDivisa";
 import ImagenDivisa from "@/components/ImagenDivisa";
 import PrecioDivisa from "@/components/cartera/PrecioDivisa";
+import { createPopper } from '@popperjs/core';
 
 export default {
     name: 'Inicio',
@@ -41,6 +42,29 @@ export default {
         ...mapGetters(['getConectado','getPrecioValor','getIdsDivisa','getNombre']),
     },
     methods: {
+        posicionamiento(dropdownList, component, {width}){
+            dropdownList.style.width = width;
+
+            const popper = createPopper(component.$refs.toggle, dropdownList, {
+                placement: 'bottom',
+                modifiers: [
+                    {
+                        name: 'offset', options: {
+                            offset: [0, -1]
+                        }
+                    },
+                    {
+                        name: 'toggleClass',
+                        enabled: true,
+                        phase: 'write',
+                        fn ({state}) {
+                            component.$el.classList.toggle('drop-up', state.placement === 'top')
+                        },
+                    }]
+            });
+
+            return () => popper.destroy();
+        },
         siguiente() {
             let divisas = this.getIdsDivisa;
 
