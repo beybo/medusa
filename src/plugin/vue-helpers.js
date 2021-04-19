@@ -1,6 +1,6 @@
 const vueHelpers = {
     mostrarHeaderInicial(name) {
-        return ["Login", "Registro", "404"].indexOf(name) === -1;
+        return ["Login", "Registro", "404", "Politica", "Condiciones"].indexOf(name) === -1;
     }
 }
 

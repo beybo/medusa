@@ -9,6 +9,7 @@ import Cartera from "@/components/cartera/Cartera";
 import CarteraFiat from "@/components/cartera/CarteraFiat";
 import Ranking from "@/components/pages/Ranking";
 import Registro from "@/components/pages/Registro";
+import PoliticaCondiciones from "@/components/pages/PoliticaCondiciones";
 
 const TITULO = "Medusa";
 
@@ -91,6 +92,29 @@ const routes = [
         component: Perfil,
         meta: {
             title: `Perfil - ${TITULO}`
+        }
+    },
+
+
+
+    {
+        name: "Politica",
+        path:'/politica',
+        component: PoliticaCondiciones,
+        meta: {
+            title: `Política de Privacidad - ${TITULO}`
+        }
+    },
+
+    {
+        name: "Condiciones",
+        path:'/condiciones',
+        component: PoliticaCondiciones,
+        props: {
+            modo:'condiciones'
+        },
+        meta: {
+            title: `Condiciones de Servicio - ${TITULO}`
         }
     },
 

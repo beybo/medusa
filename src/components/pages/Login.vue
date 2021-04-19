@@ -32,7 +32,7 @@ export default {
     name: "Login",
     data() {
         return {
-            mostrar: true
+            mostrar: true,
         };
     },
     mounted() {
