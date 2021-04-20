@@ -33,8 +33,8 @@
         </div>
 
         <div class="caja columna area-reset">
-            <h4 class="margen-inf">Resetear <span class="texto-extra">Cartera</span></h4>
-            <button class="btn-icon sm">
+            <h4 class="margen-inf">Resetear <span class="texto-extra">Cuenta</span></h4>
+            <button class="btn-icon sm" @click="resetearCuenta">
                 <font-awesome-icon :icon="['fas','undo-alt']"/>
             </button>
         </div>
@@ -78,15 +78,35 @@ export default {
             this.setTema(nuevoTema);
         },
 
+        async resetearCuenta(){
+            let respuesta = await this.getSwalAccion('¿Quieres resetear la cuenta?','Resetear');
+
+            if(respuesta.isConfirmed === true){
+                this.$socket.emit('resetear');
+                this.$toast.success("Cuenta reseteada con éxito!");
+            }
+        },
+
         async borrarCuenta(){
 
-            let nombreUsuario = this.getNombreUsuario;
+            let respuesta = await this.getSwalAccion('¿Quieres borrar la cuenta?','Borrar');
 
-            let respuesta = await this.$swal({
-                title: '¿Quieres borrar la cuenta?',
+            if(respuesta.isConfirmed === true){
+                this.$socket.emit('borrar-cuenta');
+            }
+
+        },
+
+        async getSwalAccion(titulo,boton){
+
+            let nombreUsuario = this.getNombreUsuario
+
+            return await this.$swal({
+                title: titulo,
+                html: `<p>Para ${boton.toLowerCase()} la cuenta por favor escribe: '<b>${nombreUsuario}</b>'</p>`,
                 input: 'text',
                 showDenyButton:true,
-                confirmButtonText: 'Borrar',
+                confirmButtonText: boton,
                 denyButtonText: 'Cancelar',
                 customClass: {
                     confirmButton: 'btn error',
@@ -98,7 +118,6 @@ export default {
                 inputValidator(inputValue) {
                     return inputValue !== nombreUsuario ? 'Tienes que escribir el nombre correctamente' : false;
                 },
-                html: `<p>Para borrar la cuenta por favor escribe: '<b>${nombreUsuario}</b>'</p>`,
                 onOpen: (s)=>{
 
                     let confirmButton = s.querySelector(".swal2-confirm"),
@@ -112,12 +131,8 @@ export default {
 
                 }
             });
-
-            if(respuesta.isConfirmed === true){
-                this.$socket.emit('borrar-cuenta');
-            }
-
         }
+
     },
     computed:{
         ...mapGetters(['getConectado', 'getTema','getNombreUsuario','getResets','getFechaRegistro']),

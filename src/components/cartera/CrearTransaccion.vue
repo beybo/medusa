@@ -83,8 +83,8 @@ export default {
                 this.valor = 0;
                 this.cargando = false;
                 this.$toast.success(msg);
-            }).catch(err => {
-                this.$toast.error(err);
+            }).catch(() => {
+                this.$toast.error('Ha ocurrido un error al procesar la transacción');
             });
 
         },
