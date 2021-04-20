@@ -81,7 +81,8 @@ export let mutations = {
         // solo estén las últimas 24h
         let fechaNueva = divisa.precio.fecha;
         if(fechaNueva-ultFecha > 250000){
-            divisa.precios.splice(0,1).push([fechaNueva,divisa.precio.valor]);
+            divisa.precios.splice(0,1);
+            divisa.precios.push([fechaNueva,divisa.precio.valor]);
         }
 
     }

@@ -71,13 +71,13 @@ export default {
                     }
                 });
 
-                if (!respuesta.body.error) {
+                if (!respuesta.data.error) {
 
                     this.mostrar = false;
-                    this.finalizar(respuesta.body.token);
+                    this.finalizar(respuesta.data.token);
 
                 } else {
-                    this.$toast.error(respuesta.body.mensaje);
+                    this.$toast.error(respuesta.data.mensaje);
                 }
 
             } catch (err) {

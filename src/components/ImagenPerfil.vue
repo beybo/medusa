@@ -117,5 +117,6 @@ export default {
 
 .imagen-perfil
   background: #E4EBF5
+  image-rendering: pixelated
 
 </style>
