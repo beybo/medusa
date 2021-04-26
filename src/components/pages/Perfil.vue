@@ -62,6 +62,12 @@ library.add(faTrash,faUndoAlt,faDoorClosed);
 export default {
     name: "Perfil",
     components: {ImagenPerfil},
+    computed:{
+        ...mapGetters(['getConectado', 'getTema','getNombreUsuario','getResets','getFechaRegistro']),
+        esTemaOscuro(){
+            return this.getTema === 'oscuro';
+        }
+    },
     methods:{
 
         ...mapActions(['setTema']),
@@ -133,12 +139,6 @@ export default {
             });
         }
 
-    },
-    computed:{
-        ...mapGetters(['getConectado', 'getTema','getNombreUsuario','getResets','getFechaRegistro']),
-        esTemaOscuro(){
-            return this.getTema === 'oscuro';
-        }
     }
 }
 </script>

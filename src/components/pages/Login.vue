@@ -1,9 +1,9 @@
 <template>
     <div class="columna caja" v-if="mostrar">
-        <div class="columna">
+        <div class="columna" >
             <img svg-inline src="../../assets/img/LogoMedusa.svg" class="logo-grande"/>
         </div>
-        <div class="columna">
+        <div class="columna"  >
             <p class="margen-top">Bienvenido a Medusa, el simulador de criptodivisas más fácil de usar.</p>
             <p>Para continuar inicia sesión</p>
             <button class="btn margen" @click.prevent="loginGoogle">
@@ -35,7 +35,7 @@ export default {
             mostrar: true,
         };
     },
-    mounted() {
+    created() {
         this.$emit("mostrar-header", false);
 
         if(localStorage.getItem("token")){

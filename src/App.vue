@@ -29,7 +29,7 @@ export default {
             mensaje: ""
         }
     },
-    mounted() {
+    created() {
         this.cargarTema();
 
         if (localStorage.getItem("token")) {
@@ -96,5 +96,5 @@ export default {
   #app
     overflow-x: hidden
     height: calc(100vh - #{$nav-mobile-height})
-    margin-bottom: $nav-mobile-height
+    padding-bottom: $nav-mobile-height
 </style>

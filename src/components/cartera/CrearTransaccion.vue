@@ -4,7 +4,7 @@
         <h2 class="margen-inf texto">{{ modo | capitalizar }}</h2>
 
         <div :data-simbolo="simboloDivisaMostrar" :class="claseExtra">
-            <input type="number" placeholder="Cantidad..." v-model="valor" @keypress="esNumero($event)">
+            <input step="any" type="number" placeholder="Cantidad..." v-model="inputValor" @keypress="esNumero($event)">
         </div>
 
 
@@ -56,36 +56,81 @@ export default {
         let simbolo = this.$store.getters.getSimbolo(this.idDivisa).toUpperCase();
 
         return {
-            operarEnFiat: false,
+            operarEnFiat: true,
             simboloDivisa: simbolo,
-            valor:0,
+            inputValor:"0",
         }
     },
     methods: {
         ...mapActions(['nuevaTransaccion']),
 
-        crearOperacion(){
-
-            this.cargando = true;
+        async crearOperacion(){
 
             let precioActual = this.getPrecioValor(this.idDivisa);
 
             let cantidad = this.operarEnFiat ? this.valorConvertido : this.valor;
 
-            let transaccion = {
-                tipo:this.modo,
-                cantidad:parseFloat(cantidad),
-                divisa:this.idDivisa,
-                precio:precioActual
-            };
+            let total = precioActual * parseFloat(cantidad);
 
-            this.nuevaTransaccion(transaccion).then(msg => {
-                this.valor = 0;
-                this.cargando = false;
-                this.$toast.success(msg);
-            }).catch(() => {
-                this.$toast.error('Ha ocurrido un error al procesar la transacción');
+            let comision = (total * 0.01) * (this.modo==="comprar" ? 1 : -1);
+
+            let cantidadFormateada = this.$helpers.formatNumero("criptodivisa",cantidad,this.simboloDivisa),
+                precioUnidadFormateado = this.$helpers.formatNumero("dinero",precioActual),
+                comisionFormateado = this.$helpers.formatNumero("dinero",comision),
+                totalFormateado = this.$helpers.formatNumero("dinero",(comision + total));
+
+            let textoBoton = this.$options.filters.capitalizar(this.modo);
+
+            let respuesta = await this.$swal({
+                title: '¿Quieres confirmar la transacción?',
+                html: `
+                    <div class="columna">
+                        <div class="caja columna">
+                            <p class="margen">
+                                <b>${cantidadFormateada}</b> a <b>${precioUnidadFormateado}</b>
+                            </p>
+                            <p>Comisión: <b>${comisionFormateado}</b></p>
+                            <hr class="margen" style="width: 120px">
+                            <p>Total: <b>${totalFormateado}</b></p>
+                        </div>
+                    </div>
+                `,
+                showDenyButton:true,
+                confirmButtonText: textoBoton,
+                denyButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'btn info',
+                    denyButton: 'btn error'
+                },
+                timer:30000
             });
+
+            if(respuesta.isConfirmed === true){
+
+                let transaccion = {
+                    tipo:this.modo,
+                    cantidad:parseFloat(cantidad),
+                    divisa:this.idDivisa,
+                    precio:precioActual
+                };
+
+                this.nuevaTransaccion(transaccion).then(msg => {
+                    this.valor = 0;
+                    this.$toast.success(msg);
+                }).catch(() => {
+                    this.$toast.error('Ha ocurrido un error al procesar la transacción');
+                });
+
+            }else if(respuesta.isDismissed && respuesta.dismiss==="timer"){
+                this.$swal({
+                    title:"Operación Cancelada",
+                    html:"Confirma la operación antes de 30 segundos para poder realizarla.",
+                    confirmButtonText:"Cerrar",
+                    customClass: {
+                        confirmButton: 'btn error'
+                    }
+                })
+            }
 
         },
         esNumero(evt){
@@ -101,7 +146,8 @@ export default {
             if(this.modo === "comprar"){
 
                 if(this.operarEnFiat){
-                    this.valor = this.getCantidadFiat;
+                    this.valor = this.getCantidadFiat ;
+                    this.valor = this.$helpers.truncarDecimales(this.valor - this.comision)
                 }else{
                     this.valor = this.getCantidadFiat / this.getPrecioValor(this.idDivisa);
                 }
@@ -110,6 +156,7 @@ export default {
 
                 if(this.operarEnFiat){
                     this.valor = this.getPrecioValor(this.idDivisa) * this.getCantidadCartera(this.idDivisa);
+                    this.valor = this.$helpers.truncarDecimales(this.valor);
                 }else{
                     this.valor = this.getCantidadCartera(this.idDivisa);
                 }
@@ -137,6 +184,10 @@ export default {
             return this.getCantidadCartera(this.idDivisa) === 0;
         },
 
+        comision(){
+            return (this.operarEnFiat ? this.valor : this.valorConvertido) * 0.01;
+        },
+
         deshabilitarBotonOperar(){
 
             if(this.valor<=0 || isNaN(this.valor))
@@ -146,7 +197,8 @@ export default {
                 valorCripto = this.operarEnFiat ? this.valorConvertido : this.valor;
 
             if(this.modo === 'comprar'){
-                return valorEuros > this.getCantidadFiat;
+                console.log((valorEuros + this.comision))
+                return (valorEuros + this.comision) > this.getCantidadFiat;
             }
 
             return valorCripto > this.getCantidadCartera(this.idDivisa);
@@ -158,6 +210,23 @@ export default {
                 return this.valor / this.getPrecioValor(this.idDivisa);
             }
             return this.getPrecioValor(this.idDivisa) * this.valor;
+        },
+
+        valor: {
+
+            get(){
+                if(this.inputValor)
+                    return parseFloat(this.inputValor.toString().replace(",","."))
+                else
+                    return 0
+            },
+
+            set(newValue){
+                this.inputValor = newValue
+            }
+
+
+
         }
 
     },
@@ -200,6 +269,7 @@ input[type="number"]
 
 .balance
   margin-top: $margen
+
 
 @media (max-width: $mobile)
   input[type="number"]

@@ -55,7 +55,12 @@ export let getters = {
 
     getCartera: (state) => (id) => state.usuario.cartera[id],
 
-    getValorCartera: (state, getters) => (id) => getters.getCartera(id).cantidad * (id==='fiat' ? 1 : getters.getDivisa(id).precio.valor),
+    getValorCartera: (state, getters) => (id) => {
+        if(!getters.getCartera(id)){
+            return 0;
+        }
+        return getters.getCartera(id).cantidad * (id==='fiat' ? 1 : getters.getDivisa(id).precio.valor)
+    },
 
     getCantidadCartera: (state,getters) => (id) => getters.getCartera(id).cantidad,
 

@@ -1,6 +1,36 @@
 const vueHelpers = {
     mostrarHeaderInicial(name) {
         return ["Login", "Registro", "404", "Politica", "Condiciones"].indexOf(name) === -1;
+    },
+    formatNumero(tipo,valor,simbolo){
+        let opciones = {
+            style: 'currency',
+            currency: 'EUR'
+        };
+
+        if (tipo === "porcentaje") {
+            opciones = {
+                style: 'percent',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        } else if (tipo === "criptodivisa") {
+            opciones = {
+                style: 'currency',
+                currency: "MED",
+                currencyDisplay: 'symbol',
+                maximumFractionDigits: 8,
+                minimumFractionDigits: 0
+            }
+        }
+
+        let formatter = new Intl.NumberFormat('es-ES', opciones);
+
+        return formatter.format(valor).replace("MED",simbolo);
+    },
+    truncarDecimales(numero, dec = 2) {
+        const decimales = Math.pow(10, dec);
+        return Math.trunc(numero * decimales)/decimales;
     }
 }
 

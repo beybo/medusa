@@ -21,11 +21,11 @@ export default {
             type: Boolean,
             default: false
         },
-        duracion: {
-            type: Number,
-            default: 2
+        ocultar: {
+            type: Boolean,
+            default: false
         },
-        decimales: {
+        duracion: {
             type: Number,
             default: 2
         },
@@ -50,7 +50,7 @@ export default {
             this.counter = new CountUp(this.$el, this.valor, {
                 formattingFn: this.format,
                 duration: this.duracion,
-                decimalPlaces: this.decimales
+                decimalPlaces: 2
             });
             this.counter.start();
         }
@@ -67,8 +67,10 @@ export default {
             let clase = this.tipo;
             if (this.valor > 0) {
                 clase += " positivo";
-            } else {
+            } else if(this.valor !==0){
                 clase += " negativo";
+            }else{
+                clase += this.ocultar ? " oculto" : "";
             }
             if(this.negrita){
                 clase+=" negrita";
@@ -78,31 +80,7 @@ export default {
     },
     methods: {
         format(valor) {
-
-            let opciones = {
-                style: 'currency',
-                currency: 'EUR'
-            };
-
-            if (this.tipo === "porcentaje") {
-                opciones = {
-                    style: 'percent',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }
-            } else if (this.tipo === "criptodivisa") {
-                opciones = {
-                    style: 'currency',
-                    currency: "MED",
-                    currencyDisplay: 'symbol',
-                    maximumFractionDigits: 8,
-                    minimumFractionDigits: 0
-                }
-            }
-
-            let formatter = new Intl.NumberFormat('es-ES', opciones);
-
-            return formatter.format(valor).replace("MED",this.simbolo);
+            return this.$helpers.formatNumero(this.tipo,valor,this.simbolo);
         }
     }
 }
@@ -117,4 +95,6 @@ export default {
   &.negativo
     color: var(--error)
 
+  &.oculto
+    display: none
 </style>

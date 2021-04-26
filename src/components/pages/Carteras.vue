@@ -7,10 +7,10 @@
         <div class="caja columna">
             <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
                 <imagen-divisa :id-divisa="id" />
-                <p>{{ getNombre(id) }}</p>
+                <p>{{ getNombre(id) }} <br><numero v-if="id!=='fiat'" negrita class="letra-peque" v-bind:valor="getCantidadCartera(id)" v-bind:simbolo="getSimbolo(id)" tipo="criptodivisa"/></p>
                 <div class="columna valor">
-                    <numero v-bind:valor="getValorCartera(id)" negrita></numero>
-                    <numero v-if="id!=='fiat'" class="cantidad" v-bind:valor="getCantidadCartera(id)" v-bind:simbolo="getSimbolo(id)" tipo="criptodivisa"></numero>
+                    <numero v-bind:valor="getValorCartera(id)" negrita/>
+                    <numero v-if="id!=='fiat'" class="letra-peque" negrita ocultar :valor="getPrecioCambio(id)" tipo="porcentaje" />
                 </div>
             </div>
         </div>
@@ -26,7 +26,25 @@ export default {
     name: "Carteras",
     components: {ImagenDivisa, Numero},
     computed: {
-        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera','getNombre']),
+        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera']),
+        getPrecioCambio:(state) => (id) => {
+
+            let valorActual = state.getValorCartera(id);
+
+            if(valorActual === 0){
+                return 0;
+            }
+
+            let valorPasado = state.getCartera(id).transacciones.reduce((acu,transaccion) => {
+                return acu + ((transaccion.cantidad * transaccion.precio) * (transaccion.tipo === 'compra' ? 1 : -1))
+            },0);
+
+            return ((valorActual - valorPasado) / valorPasado);
+
+        },
+        getPorcentajeTotal(){
+            return (this.getValorTodasCartera - 10000) / 10000;
+        }
     },
     methods: {
         abrirCartera(id) {
@@ -36,7 +54,7 @@ export default {
                 this.$router.push(`/cartera/${id}`);
             }
 
-        }
+        },
     }
 }
 </script>
@@ -68,9 +86,8 @@ export default {
   .valor
     align-items: flex-end
 
-  .cantidad
+  .letra-peque
     font-size: 0.8rem
-    font-weight: normal !important
 
 @media (max-width: $mobile)
   .caja

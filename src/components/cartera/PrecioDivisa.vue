@@ -37,6 +37,7 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="sass">
+    .texto
+      margin-top: 0
 </style>

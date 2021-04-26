@@ -16,21 +16,21 @@ const TITULO = "Medusa";
 const routes = [
 
     {
-        path: "/",
-        redirect: () => {
-            if(localStorage.getItem("token")){
-                return "/inicio";
-            }
-            return "/login"
+        name: 'Login',
+        path: '/',
+        component: Login,
+        meta: {
+            title: `Login - ${TITULO}`
         }
     },
 
     {
-        name: 'Login',
-        path: '/login',
-        component: Login,
-        meta: {
-            title: `Login - ${TITULO}`
+        path: "/login",
+        redirect: () => {
+            if(localStorage.getItem("token")){
+                return "/inicio";
+            }
+            return "/"
         }
     },
     {
