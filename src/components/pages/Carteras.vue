@@ -1,6 +1,7 @@
 <template>
     <div class="columna">
         <div class="caja columna" id="total">
+
             <h3>Total: <numero animar negrita v-bind:valor="getValorTodasCartera" /></h3>
         </div>
 
@@ -36,8 +37,10 @@ export default {
             }
 
             let valorPasado = state.getCartera(id).transacciones.reduce((acu,transaccion) => {
-                return acu + ((transaccion.cantidad * transaccion.precio) * (transaccion.tipo === 'compra' ? 1 : -1))
+                return acu + (((transaccion.cantidad * transaccion.precio)) * (transaccion.tipo === 'compra' ? 1 : -1));
             },0);
+
+            console.log(valorPasado);
 
             return ((valorActual - valorPasado) / valorPasado);
 

@@ -1,13 +1,28 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Router from './router/index'
-
-Vue.config.productionTip = process.env.NODE_ENV === 'production'
-
 // Plugins
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import GAuth from 'vue-google-oauth2'
+import VueToastMixin from "./plugin/vue-toast-notification-mixin";
+import VueHelper from '@/plugin/vue-helpers'
+import {index} from './store'
+
+// Socket y alertas
+import VueSocketIO from "vue-socket.io";
+import SocketIO from "socket.io-client";
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import VueElementLoading from "vue-element-loading";
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+// Error handling
+import * as Sentry from "@sentry/vue"
+import {Integrations} from "@sentry/tracing"
+
+Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -21,19 +36,8 @@ Vue.use(GAuth, {
 
 // Propios
 
-import VueToastMixin from "./plugin/vue-toast-notification-mixin";
-import VueHelper from '@/plugin/vue-helpers'
-
 Vue.use(VueToastMixin);
 Vue.use(VueHelper);
-
-import {index} from './store'
-
-// Socket y alertas
-import VueSocketIO from "vue-socket.io";
-import SocketIO from "socket.io-client";
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.use(new VueSocketIO({
     debug: false,
@@ -63,18 +67,9 @@ Vue.use(VueSweetalert2,{
 
 // Componentes
 
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import VueElementLoading from "vue-element-loading";
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css';
-
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component("VueElementLoading", VueElementLoading);
 Vue.component('v-select', vSelect)
-
-// Error handling
-import * as Sentry from "@sentry/vue"
-import { Integrations } from "@sentry/tracing"
 
 if(Vue.config.productionTip && process.env.VUE_APP_SENTRY_DSN){
 

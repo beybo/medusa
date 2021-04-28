@@ -55,7 +55,7 @@
 import ImagenPerfil from "@/components/ImagenPerfil";
 import {mapActions, mapGetters} from "vuex";
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faTrash,faUndoAlt,faDoorClosed} from '@fortawesome/free-solid-svg-icons'
+import {faDoorClosed, faTrash, faUndoAlt} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faTrash,faUndoAlt,faDoorClosed);
 

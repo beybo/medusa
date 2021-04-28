@@ -178,14 +178,15 @@ export default {
 
         deshabilitarBotonMax(){
             if(this.modo === 'comprar'){
-                return this.getCantidadFiat === 0;
+                return this.getCantidadFiat === 0 || (this.getCantidadFiat - this.comision) <= 0;
             }
 
             return this.getCantidadCartera(this.idDivisa) === 0;
         },
 
         comision(){
-            return (this.operarEnFiat ? this.valor : this.valorConvertido) * 0.01;
+            let actual = (this.operarEnFiat ? this.valor : this.valorConvertido) * 0.01;
+            return actual < 1 ? 1 : actual;
         },
 
         deshabilitarBotonOperar(){
@@ -197,7 +198,6 @@ export default {
                 valorCripto = this.operarEnFiat ? this.valorConvertido : this.valor;
 
             if(this.modo === 'comprar'){
-                console.log((valorEuros + this.comision))
                 return (valorEuros + this.comision) > this.getCantidadFiat;
             }
 
@@ -225,16 +225,8 @@ export default {
                 this.inputValor = newValue
             }
 
-
-
         }
 
-    },
-    sockets:{
-        TRANSACCION(datos){
-            console.log(datos);
-            console.log("funciona")
-        }
     }
 }
 </script>

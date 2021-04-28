@@ -27,7 +27,7 @@
 
 
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faHome, faWallet, faUser, faTrophy} from '@fortawesome/free-solid-svg-icons'
+import {faHome, faTrophy, faUser, faWallet} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faHome, faWallet, faUser, faTrophy);
 

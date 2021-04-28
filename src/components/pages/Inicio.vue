@@ -34,18 +34,22 @@
                 <h4 class="texto margen-inf">Enlaces Relevantes</h4>
 
                 <div class="fila margen enlaces">
-                    <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.pagina" class="btn-icon">
-                        <font-awesome-icon :icon="['fas','home']" size="2x"/>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" :href="'https://twitter.com/'+getEnlaces.twitter" class="btn-icon">
-                        <font-awesome-icon :icon="['fab','twitter']" size="2x"/>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.reddit" class="btn-icon">
-                        <font-awesome-icon :icon="['fab','reddit']" size="3x"/>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.github" class="btn-icon">
-                        <font-awesome-icon :icon="['fab','github']" size="3x"/>
-                    </a>
+                    <div class="fila">
+                        <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.pagina" class="btn-icon" title="Página del Proyecto" tooltip>
+                            <font-awesome-icon :icon="['fas','home']" size="2x"/>
+                        </a>
+                        <a target="_blank" rel="noopener noreferrer" :href="'https://twitter.com/'+getEnlaces.twitter" class="btn-icon" title="Twitter" tooltip>
+                            <font-awesome-icon :icon="['fab','twitter']" size="2x"/>
+                        </a>
+                    </div>
+                    <div class="fila">
+                        <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.reddit" class="btn-icon" title="Reddit" tooltip>
+                            <font-awesome-icon :icon="['fab','reddit']" size="3x"/>
+                        </a>
+                        <a target="_blank" rel="noopener noreferrer" :href="getEnlaces.github" class="btn-icon" title="Github" tooltip>
+                            <font-awesome-icon :icon="['fab','github']" size="3x"/>
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -60,9 +64,9 @@ import {mapGetters} from 'vuex'
 import GraficoDivisa from "@/components/graficos/GraficoDivisa";
 import ImagenDivisa from "@/components/ImagenDivisa";
 import PrecioDivisa from "@/components/cartera/PrecioDivisa";
-import { createPopper } from '@popperjs/core';
+import {createPopper} from '@popperjs/core';
 import {library} from '@fortawesome/fontawesome-svg-core'
-import {faGithub,faWikipediaW,faTwitter,faReddit} from '@fortawesome/free-brands-svg-icons'
+import {faGithub, faReddit, faTwitter, faWikipediaW} from '@fortawesome/free-brands-svg-icons'
 import {faHome} from '@fortawesome/free-solid-svg-icons'
 
 library.add(faGithub,faWikipediaW,faTwitter,faReddit,faHome);

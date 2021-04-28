@@ -217,6 +217,32 @@ h2.texto
 .velmld-overlay
   border-radius: $radio-borde
 
+// Tooltip
+[title][tooltip]
+  position: relative
+  z-index: 2
+
+  &:before
+    opacity: 0
+    transition: opacity $tiempo-transicion-c linear
+    content: attr(title)
+    display: block
+    left: 50%
+    transform: translateX(-50%)
+    top: 0
+    position: absolute
+    white-space: nowrap
+    width: 0
+    overflow: hidden
+
+  &:hover:before
+    opacity: 1
+    top: -20px
+    width: auto
+    overflow: auto
+
+
+
 // Swal2
 .swal2-container
 

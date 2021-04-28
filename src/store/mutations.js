@@ -31,6 +31,8 @@ export let mutations = {
 
         });
 
+        state.usuario.cartera.fiat.cantidad -= transacciones.fiat.comision;
+
     },
 
     // Ranking
