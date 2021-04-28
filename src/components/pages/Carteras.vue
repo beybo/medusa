@@ -1,9 +1,7 @@
 <template>
     <div class="columna">
-        <div class="caja columna" id="total">
 
-            <h3>Total: <numero animar negrita v-bind:valor="getValorTodasCartera" /></h3>
-        </div>
+        <titulo-carteras/>
 
         <div class="caja columna">
             <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
@@ -22,12 +20,17 @@
 import {mapGetters} from "vuex";
 import Numero from "@/components/Numero";
 import ImagenDivisa from "@/components/ImagenDivisa";
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {faChartPie,faSortAmountDown} from '@fortawesome/free-solid-svg-icons';
+import TituloCarteras from "@/components/cartera/TituloCarteras";
+
+library.add(faChartPie,faSortAmountDown)
 
 export default {
     name: "Carteras",
-    components: {ImagenDivisa, Numero},
+    components: {TituloCarteras, ImagenDivisa, Numero},
     computed: {
-        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getValorTodasCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera']),
+        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera']),
         getPrecioCambio:(state) => (id) => {
 
             let valorActual = state.getValorCartera(id);
@@ -40,13 +43,8 @@ export default {
                 return acu + (((transaccion.cantidad * transaccion.precio)) * (transaccion.tipo === 'compra' ? 1 : -1));
             },0);
 
-            console.log(valorPasado);
-
             return ((valorActual - valorPasado) / valorPasado);
 
-        },
-        getPorcentajeTotal(){
-            return (this.getValorTodasCartera - 10000) / 10000;
         }
     },
     methods: {
@@ -66,6 +64,9 @@ export default {
 
 .caja
   width: 360px
+
+#total
+  justify-content: space-between
 
 .divisa
   display: grid

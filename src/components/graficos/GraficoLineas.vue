@@ -7,13 +7,7 @@ import DownsamplePlugin from 'chartjs-plugin-downsample';
 
 Chart.pluginService.register(DownsamplePlugin);
 
-function formatearDinero(valor){
-    let formatter = new Intl.NumberFormat('es-ES', {
-        style: 'currency',
-        currency: 'EUR'
-    });
-    return formatter.format(valor);
-}
+
 
 export default {
     extends: Line,
@@ -26,6 +20,10 @@ export default {
 
                 let colorLetra = estilos.getPropertyValue('--letra-boton'),
                     colorFondo = estilos.getPropertyValue('--fondo-claro');
+
+                let formatearDinero = (numero)=>{
+                    return this.$helpers.formatNumero("dinero",numero)
+                }
 
                 return {
                     responsive: true,

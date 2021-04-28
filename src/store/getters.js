@@ -29,6 +29,10 @@ export let getters = {
 
     getColorDivisa: (state,getters) => (id) => {
 
+        if(id==="fiat"){
+            return "#1da1f9";
+        }
+
         if(getters.getTema === 'oscuro' && state.divisas[id].colorOscuro){
             return state.divisas[id].colorOscuro;
         }

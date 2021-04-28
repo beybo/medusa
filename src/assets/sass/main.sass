@@ -341,6 +341,17 @@ h2.texto
 .sin-animacion
   animation: none !important
 
+.altura-corto-enter-active,
+.altura-corto-leave-active
+  transition: all 0.2s
+  height: 200px
+
+.altura-corto-enter,
+.altura-corto-leave-to
+  opacity: 0
+  height: 0
+
+
 @keyframes ocultar
   0%
     opacity: 0
