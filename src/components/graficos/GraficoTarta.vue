@@ -1,22 +1,18 @@
 <script>
 
-import {Pie, mixins} from 'vue-chartjs';
+import {Doughnut, mixins} from 'vue-chartjs';
 
 export default {
-    extends: Pie,
+    extends: Doughnut,
     name: "GraficoTarta",
     mixins: [mixins.reactiveProp],
     props: {
         options: {
             default() {
-                let estilos = getComputedStyle(document.body);
 
-                let colorLetra = estilos.getPropertyValue('--letra-boton'),
-                    colorFondo = estilos.getPropertyValue('--fondo-claro');
+                let ids = this.chartData.datasets[0].ids;
 
-                let formatearDinero = (numero)=>{
-                    return this.$helpers.formatNumero("dinero",numero)
-                }
+                let self = this;
 
                 return {
                     responsive: true,
@@ -32,33 +28,26 @@ export default {
                             bottom: 0
                         }
                     },
-                    animations:{
-                        y:false
-                    },
                     tooltips: {
-                        yPadding: 10,
-                        xPadding: 10,
-                        position: 'nearest',
-                        caretSize: 10,
-                        callbacks: {
-                            label: function(t,d) {
-                                return formatearDinero(d.datasets[0].data[t.index]);
-                            },
-                            footer(t,d){
-                                return d.labels[t[0].index];
-                            },
-                            title(){}
-                        },
-                        bodyFontSize: 14,
-                        backgroundColor: colorFondo,
-                        bodyFontColor: colorLetra,
-                        bodyFontStyle: 'bold',
-                        bodyFontFamily: 'QuickSand',
-                        bodyAlign: 'center',
-                        footerFontColor: colorLetra,
-                        footerFontFamily: 'QuickSand',
-                        footerFontStyle: 'bold',
-                        displayColors: false
+                        enabled: false
+                    },
+                    hover: {
+                        onHover: function (e, item) {
+                            if (item.length) {
+                                let id = ids[item[0]._index];
+                                self.$emit("hover",id);
+                            }else{
+                                self.$emit("hover","");
+                            }
+                        }
+                    },
+                    onClick: (e,item)=>{
+                        if (item.length) {
+                            let id = ids[item[0]._index];
+                            self.$emit("click",id);
+                        }else{
+                            self.$emit("click","");
+                        }
                     }
                 };
             }
@@ -69,3 +58,8 @@ export default {
     }
 }
 </script>
+<style scoped lang="sass">
+canvas
+    position: relative
+    z-index: 3
+</style>

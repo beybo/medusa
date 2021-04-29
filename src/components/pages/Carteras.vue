@@ -1,10 +1,10 @@
 <template>
     <div class="columna">
 
-        <titulo-carteras/>
+        <titulo-carteras :orden="orden" @siguiente-orden="siguienteOrden"/>
 
         <div class="caja columna">
-            <div v-for="id in getIdsCartera" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
+            <div v-for="id in getListadoDivisas" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
                 <imagen-divisa :id-divisa="id" />
                 <p>{{ getNombre(id) }} <br><numero v-if="id!=='fiat'" negrita class="letra-peque" v-bind:valor="getCantidadCartera(id)" v-bind:simbolo="getSimbolo(id)" tipo="criptodivisa"/></p>
                 <div class="columna valor">
@@ -20,15 +20,46 @@
 import {mapGetters} from "vuex";
 import Numero from "@/components/Numero";
 import ImagenDivisa from "@/components/ImagenDivisa";
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {faChartPie,faSortAmountDown} from '@fortawesome/free-solid-svg-icons';
 import TituloCarteras from "@/components/cartera/TituloCarteras";
-
-library.add(faChartPie,faSortAmountDown)
 
 export default {
     name: "Carteras",
     components: {TituloCarteras, ImagenDivisa, Numero},
+    data(){
+        return {
+            orden: this.getOrdenStorage()
+        }
+    },
+    methods: {
+        getOrdenStorage(){
+            let valor = localStorage.getItem("orden");
+            return valor ? valor : "precio";
+        },
+        abrirCartera(id) {
+            if (id === "fiat") {
+                this.$router.push(`/cartera-fiat`);
+            } else {
+                this.$router.push(`/cartera/${id}`);
+            }
+
+        },
+        siguienteOrden(){
+
+            let valores = ["precio","precio-rev","alfabetico","alfabetico-rev"];
+
+            let pos = valores.indexOf(this.orden);
+
+            pos++
+
+            if(pos >= valores.length){
+                pos = 0;
+            }
+
+            this.orden = valores[pos];
+
+            localStorage.setItem("orden",this.orden);
+        }
+    },
     computed: {
         ...mapGetters(['getIdsCartera', 'getValorCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera']),
         getPrecioCambio:(state) => (id) => {
@@ -45,17 +76,43 @@ export default {
 
             return ((valorActual - valorPasado) / valorPasado);
 
-        }
-    },
-    methods: {
-        abrirCartera(id) {
-            if (id === "fiat") {
-                this.$router.push(`/cartera-fiat`);
-            } else {
-                this.$router.push(`/cartera/${id}`);
+        },
+        getListadoDivisas(){
+
+            let ids = this.getIdsCartera;
+
+            switch (this.orden){
+                case "alfabetico-rev":
+                case "alfabetico":
+                    ids.sort()
+                    break;
+                case "precio-rev":
+                case "precio":
+
+                    ids = ids.map((id)=>{
+                        return {
+                            valor:this.getValorCartera(id),
+                            id:id
+                        }
+                    })
+
+                    ids.sort((a,b)=>{
+                        return b.valor - a.valor;
+                    })
+
+                    ids = ids.map((obj)=>{
+                        return obj.id;
+                    })
+
+                    break;
             }
 
-        },
+            if(this.orden.includes("-rev")){
+                ids = ids.reverse();
+            }
+
+            return ids;
+        }
     }
 }
 </script>
