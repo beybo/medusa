@@ -55,8 +55,8 @@ export default {
                         hoverBorderColor:[],
                         backgroundColor:[],
                         hoverBackgroundColor:[],
-                        hoverOffset: 2,
-                        hoverBorderWidth:3,
+                        borderWidth:2,
+                        borderAlign:'inner',
                         ids:[]
                     },
                 ]

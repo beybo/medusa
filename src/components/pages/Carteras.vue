@@ -1,10 +1,11 @@
 <template>
-    <div class="columna">
+    <div class="columna" v-if="getConectado">
 
         <titulo-carteras :orden="orden" @siguiente-orden="siguienteOrden"/>
 
-        <div class="caja columna">
-            <div v-for="id in getListadoDivisas" v-bind:key="id" class="divisa" v-on:click="abrirCartera(id)">
+
+        <transition-group name="flip-list" class="caja columna flip-list" tag="div">
+            <div v-for="id in getIdsOrdenados" :key="id" class="divisa" @click="abrirCartera(id)">
                 <imagen-divisa :id-divisa="id" />
                 <p>{{ getNombre(id) }} <br><numero v-if="id!=='fiat'" negrita class="letra-peque" v-bind:valor="getCantidadCartera(id)" v-bind:simbolo="getSimbolo(id)" tipo="criptodivisa"/></p>
                 <div class="columna valor">
@@ -12,7 +13,8 @@
                     <numero v-if="id!=='fiat'" class="letra-peque" negrita ocultar :valor="getPrecioCambio(id)" tipo="porcentaje" />
                 </div>
             </div>
-        </div>
+        </transition-group>
+
     </div>
 </template>
 
@@ -58,10 +60,11 @@ export default {
             this.orden = valores[pos];
 
             localStorage.setItem("orden",this.orden);
+
         }
     },
     computed: {
-        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera']),
+        ...mapGetters(['getIdsCartera', 'getValorCartera', 'getSimbolo', 'getCantidadCartera','getNombre','getCartera','getConectado']),
         getPrecioCambio:(state) => (id) => {
 
             let valorActual = state.getValorCartera(id);
@@ -77,8 +80,7 @@ export default {
             return ((valorActual - valorPasado) / valorPasado);
 
         },
-        getListadoDivisas(){
-
+        getIdsOrdenados(){
             let ids = this.getIdsCartera;
 
             switch (this.orden){
@@ -149,6 +151,10 @@ export default {
 
   .letra-peque
     font-size: 0.8rem
+
+
+.flip-list-move
+  transition: transform 1s
 
 @media (max-width: $mobile)
   .caja
