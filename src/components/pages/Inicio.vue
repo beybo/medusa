@@ -1,7 +1,7 @@
 <template>
     <div class="columna grid" v-if="getConectado">
         <div class="area-grafico caja">
-            <grafico-divisa class="altura" :id-divisa="idDivisa"/>
+            <grafico-divisa :id-divisa="idDivisa"/>
         </div>
         <div class="area-selector caja">
             <h2 class="texto">Divisa</h2>
@@ -16,7 +16,7 @@
                 </template>
             </v-select>
             <div class="columna">
-                <router-link :to="{name:'Cartera',params:{id:idDivisa}}" class="enlace-transparente" :style="estiloEnlace">Crear Transacción</router-link>
+                <router-link :to="{name:'Cartera',params:{id:idDivisa}}" class="btn-transparente" :style="estiloEnlace">Crear Transacción</router-link>
             </div>
         </div>
 
@@ -29,7 +29,7 @@
 
                 <div class="descripcion margen">{{getDivisa(idDivisa).descripcion}}</div>
 
-                <a class="enlace-transparente margen" target="_blank" rel="noopener noreferrer" :href="getEnlaces.wikipedia" :style="estiloEnlace">Seguir Leyendo en Wikipedia</a>
+                <a class="btn-transparente margen" target="_blank" rel="noopener noreferrer" :href="getEnlaces.wikipedia" :style="estiloEnlace">Seguir Leyendo en Wikipedia</a>
 
                 <h4 class="texto margen-inf">Enlaces Relevantes</h4>
 
@@ -151,11 +151,6 @@ export default {
   text-decoration: underline
   cursor: pointer
 
-.area-grafico .altura
-  height: 250px
-  max-width: 500px
-  width: 100%
-
 .area-info
 
   .descripcion
@@ -176,19 +171,8 @@ export default {
     align-items: center
     margin: 0 $margen
 
-.enlace-transparente
+.btn-transparente
   margin-bottom: $margen * 2
-  font-weight: bold
-  padding: 10px 15px
-  text-decoration: none
-  border: 2px solid
-  transition: transform $tiempo-transicion-c linear
-  border-radius: $radio-borde-boton
-
-  &:hover
-    transform: scale(0.9)
-
-
 
 @media (max-width: $mobile)
   .grid
@@ -196,11 +180,10 @@ export default {
     grid-template-rows: auto 1fr 1fr
     grid-template-areas: "grafico" "precio" "selector" "info"
 
-  .area-grafico .altura
-    max-width: 70vw
-    height: 200px
-
   .area-info
+    width: calc(100vw - #{$margen*4})
+
+  .area-grafico
     width: calc(100vw - #{$margen*4})
 
   .enlaces

@@ -4,7 +4,11 @@ let modeloCripto = {
         fecha: "",
         valor: null
     },
-    precios: [],
+    precios: {
+        dia:[],
+        semana:[],
+        mes:[]
+    },
     simbolo: "",
     color: ''
 }

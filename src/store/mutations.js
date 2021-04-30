@@ -52,6 +52,9 @@ export let mutations = {
             state.usuario.cartera[divisa].cantidad += (transaccion.tipo ==="compra" ? 1 : -1) *  transaccion.cantidad;
 
         });
+
+        state.usuario.cartera.fiat.cantidad -= transacciones.fiat.comision;
+
     },
 
     SOCKET_INICIO(state, datos) {
@@ -76,15 +79,34 @@ export let mutations = {
 
         divisa.precio = params[1];
 
-        let ultFecha = divisa.precios[divisa.precios.length-1][0];
+        let fechaNueva = divisa.precio.fecha;
+        let precioNuevo = divisa.precio.valor;
+
+        let preciosDia = divisa.precios.dia;
+        let preciosSemana = divisa.precios.semana;
+        let preciosMes = divisa.precios.mes;
+
+        let ultFechaDia = preciosDia[preciosDia.length-1][0];
+        let ultFechaSemana = preciosSemana[preciosSemana.length-1][0];
+        let ultFechaMes = preciosMes[preciosMes.length-1][0];
 
         // Eliminamos el primer valor del array si hay una diferencia de más de ~4 minutos
         // Esto lo hacemos para que en el array que tiene el servidor con los último precios,
         // solo estén las últimas 24h
-        let fechaNueva = divisa.precio.fecha;
-        if(fechaNueva-ultFecha > 250000){
-            divisa.precios.splice(0,1);
-            divisa.precios.push([fechaNueva,divisa.precio.valor]);
+        if(fechaNueva-ultFechaDia > 250000){
+            preciosDia.splice(0,1);
+            preciosDia.push([fechaNueva,precioNuevo]);
+        }
+
+        if(fechaNueva-ultFechaSemana > 3570000){
+            preciosSemana.splice(0,1);
+            preciosSemana.push([fechaNueva,precioNuevo]);
+        }
+
+
+        if(fechaNueva-ultFechaMes > 3583600){
+            preciosMes.splice(0,1);
+            preciosMes.push([fechaNueva,precioNuevo]);
         }
 
     }

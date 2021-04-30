@@ -109,6 +109,20 @@ body
   &:not([disabled]):active
     box-shadow: var(--sombra-interior)
 
+.btn-transparente
+  cursor: pointer
+  background: transparent
+  font-size: 1em
+  font-family: $fuente
+  font-weight: bold
+  padding: 10px 15px
+  text-decoration: none
+  border: 2px solid
+  transition: transform $tiempo-transicion-c linear
+  border-radius: $radio-borde-boton
+
+  &:hover
+    transform: scale(0.9)
 
 // Ocultar las flechas de un input number en webkit
 input::-webkit-outer-spin-button,
@@ -372,12 +386,3 @@ h2.texto
     background-position: 100% 50%
   100%
     background-position: 0 50%
-
-
-// Css general movil
-
-@media (max-width: $mobile)
-
-  .grafico .altura
-    max-width: 70vw
-    height: 200px

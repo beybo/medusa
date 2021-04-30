@@ -2571,7 +2571,7 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-chart.js@^2.5.0, chart.js@^2.9.4:
+chart.js@^2.9.4:
   version "2.9.4"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.4.tgz#0827f9563faffb2dc5c06562f8eb10337d5b9684"
   integrity sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A==
@@ -2593,13 +2593,6 @@ chartjs-color@^2.1.0:
   dependencies:
     chartjs-color-string "^0.6.0"
     color-convert "^1.9.3"
-
-chartjs-plugin-downsample@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/chartjs-plugin-downsample/-/chartjs-plugin-downsample-1.1.0.tgz#ab475629e1b688cc17c7016a7b39fc21ce280762"
-  integrity sha512-wU5oonm4zyH50nLWt41+k1PNmzJOZonGVH20PqsiOqmtoC7Ms/QJXsGIeHeICjTCp9K9MEiQGLn4R8bOYY/oFQ==
-  dependencies:
-    chart.js "^2.5.0"
 
 check-types@^8.0.3:
   version "8.0.3"

@@ -91,9 +91,8 @@ $margen-grafico: 20px
     display: flex
     flex-flow: column
 
+
   .area-grafico
-    max-height: 180px + $margen-grafico*2
-
-
+    width: calc(100vw - #{$margen*4})
 
 </style>

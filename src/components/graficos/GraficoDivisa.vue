@@ -1,8 +1,15 @@
 <template>
-    <div class="grafico">
-        <numero :style="porcenataje(pos('max'))" :valor="getPrecio(pos('max'))" animar/>
-        <grafico-lineas class="altura" :chart-data="getDatosGrafica"/>
-        <numero class="minimo" :style="porcenataje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
+    <div class="contenedor-grafico">
+        <div class="grafico">
+            <numero :style="porcenataje(pos('max'))" :valor="getPrecio(pos('max'))" animar/>
+            <grafico-lineas class="altura" :chart-data="getDatosGrafica"/>
+            <numero class="minimo" :style="porcenataje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
+        </div>
+        <div class="fila botones">
+            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'dia'">24h</button>
+            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'semana'">7d</button>
+            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'mes'">30d</button>
+        </div>
     </div>
 </template>
 
@@ -15,53 +22,76 @@ export default {
     name: "GraficoDivisa",
     components: {Numero, GraficoLineas},
     props:{
-        idDivisa:String
+        idDivisa:String,
     },
     data(){
         return {
             max:0,
-            min:0
+            min:0,
+            modo:"dia"
         }
     },
     computed: {
         ...mapGetters(['getDivisa','getColorDivisa']),
 
-        pos: (state) => (modo) => {
-
-            let precios = state.getDivisa(state.idDivisa).precios;
-
-            if(modo === 'max'){
-                return precios.reduce((max,act,pos) => act[1] > precios[max][1] ? pos : max,0);
+        estiloBoton(){
+            let color = this.getColorDivisa(this.idDivisa)
+            return {
+                color
             }
-
-            return precios.reduce((min,act,pos) => act[1] < precios[min][1] ? pos : min,0);
-
         },
 
-        getPrecio: (state) => (posicion) => {
-            return state.getDivisa(state.idDivisa).precios[posicion][1];
+        pos(state){
+
+            let franja = this.modo;
+
+            return (modo) => {
+
+                let precios = state.getDivisa(state.idDivisa).precios[franja];
+
+                if(modo === 'max'){
+                    return precios.reduce((max,act,pos) => act[1] > precios[max][1] ? pos : max,0);
+                }
+
+                return precios.reduce((min,act,pos) => act[1] < precios[min][1] ? pos : min,0);
+
+            }
         },
 
-        porcenataje: (state) => (posicion) =>{
+        getPrecio(state){
 
-            let precios  = state.getDivisa(state.idDivisa).precios;
+            let franja = this.modo;
 
-            let porcentaje = (posicion / precios.length) * 100;
-
-            let restar = precios[posicion][1].toFixed(2).toString().length;
-
-            if(porcentaje+restar>99){
-                restar *= 1.5;
+            return (posicion) => {
+                return state.getDivisa(state.idDivisa).precios[franja][posicion][1];
             }
+        },
+
+        porcenataje(state){
+
+            let franja = this.modo;
+
+            return (posicion) =>{
+
+                let precios  = state.getDivisa(state.idDivisa).precios[franja];
+
+                let porcentaje = (posicion / precios.length) * 100;
+
+                let restar = precios[posicion][1].toFixed(2).toString().length;
+
+                if(porcentaje+restar>99){
+                    restar *= 1.5;
+                }
 
 
-            if(porcentaje<2){
-                restar *= .5;
+                if(porcentaje<2){
+                    restar *= .5;
+                }
+
+                porcentaje = porcentaje.toFixed(2)-restar;
+
+                return `left: ${porcentaje}%;`
             }
-
-            porcentaje = porcentaje.toFixed(2)-restar;
-
-            return `left: ${porcentaje}%;`
         },
 
         getDatosGrafica(){
@@ -90,7 +120,7 @@ export default {
             let min = 0,
                 max = 0;
 
-            divisa.precios.forEach((precio)=>{
+            divisa.precios[this.modo].forEach((precio)=>{
 
                 let f = new Intl.DateTimeFormat('default',{
                     year: 'numeric', month: '2-digit', day: '2-digit',
@@ -133,12 +163,17 @@ export default {
 
 $margen-grafico: 20px
 
+.contenedor-grafico
+  width: 100%
+
 .grafico
   position: relative
-  margin: $margen-grafico
+  margin: $margen-grafico 0
+  width: 100%
 
 .altura
-  height: 100%
+  height: calc(250px - #{$margen-grafico * 2})
+  width: 100%
 
 .dinero
   position: absolute
@@ -148,5 +183,18 @@ $margen-grafico: 20px
   &.minimo
     top: auto
     bottom: -20px
+
+.botones
+  width: 100%
+  justify-content: space-around
+  margin-top: $margen * 3
+
+@media (max-width: $mobile)
+
+  .altura
+    height: 200px
+
+  .grafico
+    width: 100%
 
 </style>
