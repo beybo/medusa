@@ -6,9 +6,9 @@
             <numero class="minimo" :style="porcenataje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
         </div>
         <div class="fila botones">
-            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'dia'">24h</button>
-            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'semana'">7d</button>
-            <button class="btn-transparente" :style="estiloBoton" @click="modo = 'mes'">30d</button>
+            <button class="btn-transparente" :style="estiloBoton('dia')" @click="modo = 'dia'">24h</button>
+            <button class="btn-transparente" :style="estiloBoton('semana')" @click="modo = 'semana'">7d</button>
+            <button class="btn-transparente" :style="estiloBoton('mes')" @click="modo = 'mes'">30d</button>
         </div>
     </div>
 </template>
@@ -28,16 +28,20 @@ export default {
         return {
             max:0,
             min:0,
-            modo:"dia"
+            modo:"mes"
         }
     },
     computed: {
         ...mapGetters(['getDivisa','getColorDivisa']),
 
         estiloBoton(){
-            let color = this.getColorDivisa(this.idDivisa)
-            return {
-                color
+            let color = this.getColorDivisa(this.idDivisa);
+            let modo = this.modo;
+            return (modoBoton)=>{
+                return {
+                    color,
+                    opacity: modo===modoBoton ? 1 : 0.4
+                }
             }
         },
 
@@ -79,12 +83,11 @@ export default {
 
                 let restar = precios[posicion][1].toFixed(2).toString().length;
 
-                if(porcentaje+restar>99){
+                if(porcentaje+restar>97){
                     restar *= 1.5;
                 }
 
-
-                if(porcentaje<2){
+                if(porcentaje<5){
                     restar *= .5;
                 }
 
@@ -120,13 +123,15 @@ export default {
             let min = 0,
                 max = 0;
 
-            divisa.precios[this.modo].forEach((precio)=>{
+            let f = new Intl.DateTimeFormat('default',{
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit',
+                hour12: false,
+            });
 
-                let f = new Intl.DateTimeFormat('default',{
-                    year: 'numeric', month: '2-digit', day: '2-digit',
-                    hour: '2-digit', minute: '2-digit',
-                    hour12: false,
-                });
+            let precios = divisa.precios[this.modo];
+
+            precios.forEach((precio)=>{
 
                 let fecha = f.format(new Date(precio[0]));
 

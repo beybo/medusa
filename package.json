@@ -20,6 +20,7 @@
     "chart.js": "^2.9.4",
     "core-js": "^3.11.0",
     "countup.js": "^2.0.7",
+    "downsample": "^1.4.0",
     "seedrandom": "^3.0.5",
     "socket.io-client": "^4.0.1",
     "vue": "^2.6.12",

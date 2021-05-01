@@ -1,3 +1,7 @@
+import {LTTB} from "downsample";
+
+const TOLERANCIA = 150;
+
 export let mutations = {
 
     // Tema
@@ -65,6 +69,15 @@ export let mutations = {
         if(!datos.divisas.precio){
             state.divisas = {...datos.divisas};
             state.conectado = true;
+
+            Object.keys(state.divisas).forEach(id=>{
+                let precios = state.divisas[id].precios;
+
+                ["dia","semana","mes"].forEach(modo=>{
+                    precios[modo] = LTTB(precios[modo],TOLERANCIA);
+                })
+            });
+
         }
 
     },
@@ -72,6 +85,15 @@ export let mutations = {
     SOCKET_DIVISAS(state,divisas){
         state.divisas = {...divisas};
         state.conectado = true;
+
+        Object.keys(state.divisas).forEach(id=>{
+            let precios = state.divisas[id].precios;
+
+            ["dia","semana","mes"].forEach(modo=>{
+                precios[modo] = LTTB(precios[modo],TOLERANCIA);
+            })
+        });
+
     },
 
     SOCKET_PRECIO(state, params) {
@@ -102,7 +124,6 @@ export let mutations = {
             preciosSemana.splice(0,1);
             preciosSemana.push([fechaNueva,precioNuevo]);
         }
-
 
         if(fechaNueva-ultFechaMes > 3583600){
             preciosMes.splice(0,1);
