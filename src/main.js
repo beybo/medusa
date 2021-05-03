@@ -21,6 +21,7 @@ import 'vue-select/dist/vue-select.css';
 // Error handling
 import * as Sentry from "@sentry/vue"
 import {Integrations} from "@sentry/tracing"
+import './registerServiceWorker'
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
