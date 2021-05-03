@@ -6,6 +6,7 @@ export let actions = {
         context.commit("CAMBIAR_TEMA",tema);
         localStorage.setItem("tema",tema);
         document.body.dataset.tema = tema;
+        document.querySelector("meta[name=theme-color]").setAttribute("content",tema==='oscuro' ? "#312d38" : "#9baacf")
     },
 
     cargarTema(context) {
@@ -22,6 +23,7 @@ export let actions = {
 
         document.body.dataset.tema = tema;
 
+        document.querySelector("meta[name=theme-color]").setAttribute("content",tema==='oscuro' ? "#312d38" : "#9baacf")
     },
 
     // Usuario
