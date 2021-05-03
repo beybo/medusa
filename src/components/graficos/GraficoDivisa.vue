@@ -1,14 +1,15 @@
 <template>
     <div class="contenedor-grafico">
         <div class="grafico">
-            <numero :style="porcenataje(pos('max'))" :valor="getPrecio(pos('max'))" animar/>
+            <numero :style="porcentaje(pos('max'))" :valor="getPrecio(pos('max'))" animar/>
             <grafico-lineas class="altura" :chart-data="getDatosGrafica"/>
-            <numero class="minimo" :style="porcenataje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
+            <numero class="minimo" :style="porcentaje(pos('min'))" :valor="getPrecio(pos('min'))" animar/>
         </div>
         <div class="fila botones">
-            <button class="btn-transparente" :style="estiloBoton('dia')" @click="modo = 'dia'">24h</button>
-            <button class="btn-transparente" :style="estiloBoton('semana')" @click="modo = 'semana'">7d</button>
-            <button class="btn-transparente" :style="estiloBoton('mes')" @click="modo = 'mes'">30d</button>
+            <button class="btn-grafico" :class="{active:modo ==='dia'}" :style="estiloBoton('dia')" @click="modo = 'dia'">24h</button>
+            <button class="btn-grafico" :class="{active:modo ==='semana'}" :style="estiloBoton('semana')" @click="modo = 'semana'">7d</button>
+            <button class="btn-grafico" :class="{active:modo ==='mes'}" :style="estiloBoton('mes')" @click="modo = 'mes'">30d</button>
+            <div class="marcador"></div>
         </div>
     </div>
 </template>
@@ -28,7 +29,7 @@ export default {
         return {
             max:0,
             min:0,
-            modo:"mes"
+            modo:"dia"
         }
     },
     computed: {
@@ -39,8 +40,7 @@ export default {
             let modo = this.modo;
             return (modoBoton)=>{
                 return {
-                    color,
-                    opacity: modo===modoBoton ? 1 : 0.4
+                    color:modo===modoBoton ? color : "var(--letra)"
                 }
             }
         },
@@ -71,7 +71,7 @@ export default {
             }
         },
 
-        porcenataje(state){
+        porcentaje(state){
 
             let franja = this.modo;
 
@@ -81,19 +81,26 @@ export default {
 
                 let porcentaje = (posicion / precios.length) * 100;
 
-                let restar = precios[posicion][1].toFixed(2).toString().length;
+                let numChars = precios[posicion][1].toFixed(2).toString().length;
 
-                if(porcentaje+restar>97){
-                    restar *= 1.5;
+                let restar = (16 + (7.5*numChars)) / 2;
+
+
+                if(porcentaje <= numChars/2){
+                    restar = numChars * (numChars/4);
                 }
 
-                if(porcentaje<5){
-                    restar *= .5;
+                if(porcentaje >=98){
+                    restar *= 1.2;
                 }
 
-                porcentaje = porcentaje.toFixed(2)-restar;
+                porcentaje = this.$helpers.truncarDecimales(porcentaje);
 
-                return `left: ${porcentaje}%;`
+                restar = this.$helpers.truncarDecimales(restar,0);
+
+                return {
+                    left: `min(max(5px,${porcentaje}% - ${restar}px),100% - ${numChars * 8}px)`
+                }
             }
         },
 
@@ -184,6 +191,7 @@ $margen-grafico: 20px
   position: absolute
   top: -20px
   font-size: 0.9rem
+  transition: left $tiempo-transicion linear
 
   &.minimo
     top: auto
@@ -193,6 +201,51 @@ $margen-grafico: 20px
   width: 100%
   justify-content: space-around
   margin-top: $margen * 3
+  position: relative
+
+  .marcador
+    width: 40px
+    padding: 10px
+    height: 20px
+    border-radius: $radio-borde-boton
+    box-shadow: var(--sombra-interior)
+    position: absolute
+    left: 0
+    transition: left $tiempo-transicion-c linear
+    transform: translateX(-50%)
+
+  $long: 16.66%
+
+  .btn-grafico:nth-child(1).active ~ .marcador
+    left: $long
+
+  .btn-grafico:nth-child(2).active ~ .marcador
+    left: 50%
+
+  .btn-grafico:nth-child(3).active ~ .marcador
+    left: 50% + ($long * 2)
+
+
+
+.btn-grafico
+  background: 0
+  font-family: $fuente
+  font-weight: bold
+  border: 0
+  font-size: 1.2em
+  cursor: pointer
+  transition: all $tiempo-transicion-c linear
+  width: 55px
+  padding: 10px
+  text-align: center
+  opacity: 0.5
+
+  &:hover
+    opacity: 1
+    color: inherit
+
+  &.active
+    opacity: 1
 
 @media (max-width: $mobile)
 

@@ -37,28 +37,19 @@ export default {
                     scales: {
                         xAxes: [{
                             gridLines: {
-                                display: false
+                                display: true
                             },
                             display: false
                         }],
                         yAxes: [{
-                            type: 'linear',
-                            position: "right",
                             gridLines: {
                                 display: false
                             },
-                            display: false,
-                            ticks: {
-                                mirror: true,
-                                fontColor: colorLetra,
-                                fontSize: 18,
-                                fontFamily: 'QuickSand',
-                                fontWeight:'bold',
-                                callback: formatearDinero
-                            }
+                            display: false
                         }]
                     },
                     tooltips: {
+                        mode:'x-axis',
                         yPadding: 10,
                         xPadding: 10,
                         position: 'nearest',
@@ -89,15 +80,8 @@ export default {
     },
     mounted() {
 
-        /*this.gradient = this.$refs.canvas.getContext('2d').createLinearGradient(0, 0, 0, 450)
-
-        this.gradient.addColorStop(0, 'rgba(0, 231, 255, 0.9)')
-        this.gradient.addColorStop(0.5, 'rgba(0, 231, 255, 0.25)');
-        this.gradient.addColorStop(1, 'rgba(0, 231, 255, 0)');*/
-
-        //console.log(this.gradient)
-
         this.renderChart(this.chartData, this.options);
+
     }
 }
 </script>

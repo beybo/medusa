@@ -1,6 +1,6 @@
 import {LTTB} from "downsample";
 
-const TOLERANCIA = 150;
+const TOLERANCIA = 190;
 
 export let mutations = {
 
@@ -72,7 +72,6 @@ export let mutations = {
 
             Object.keys(state.divisas).forEach(id=>{
                 let precios = state.divisas[id].precios;
-
                 ["dia","semana","mes"].forEach(modo=>{
                     precios[modo] = LTTB(precios[modo],TOLERANCIA);
                 })
