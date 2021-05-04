@@ -34,15 +34,14 @@ self.addEventListener('fetch', event => {
 
             console.log('Fetch failed; returning offline page instead.', error);
             console.log(event);
-            const cache = await caches.open(CACHE_NAME);
 
-            let valido = await cache.match(event.request);
+            let valido = await caches.match(event.request);
 
             if(valido){
                 return valido;
             }
 
-            return await cache.match(OFFLINE_URL);
+            return await caches.match(OFFLINE_URL);
         }
     })());
 
