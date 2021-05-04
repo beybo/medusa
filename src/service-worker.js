@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
             console.log('Fetch failed; returning offline page instead.', error);
             console.log(event);
 
-            let valido = await caches.match(event.request);
+            let valido = await caches.match(event.request,{ignoreVary: true});
 
             if(valido){
                 return valido;
