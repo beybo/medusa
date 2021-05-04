@@ -45,7 +45,7 @@
             </button>
         </div>
 
-        <div class="caja columna area-instalar">
+        <div class="caja columna area-instalar" v-if="promptInstalar">
             <h4 class="margen-inf">Instalar Aplicación</h4>
             <button class="btn" @click="promptInstalar.prompt()">Instalar</button>
         </div>
