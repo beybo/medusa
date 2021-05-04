@@ -10,14 +10,16 @@
             <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
         </transition>
 
-        <div class="instalar caja columna" v-if="promptInstalar">
-            <b class="margen-inf">¿Quieres instalar Medusa en tu dispositivo?</b>
-            <div>
-                <button class="btn-transparente btn-cancelar">Cancelar</button>
-                <button class="btn-transparente btn-instalar">Instalar</button>
+        <transition name="ocultar-corto" v-if="promptInstalar">
+            <div class="instalar caja columna" >
+                <b class="margen-inf">¿Quieres instalar Medusa en tu dispositivo?</b>
+                <div>
+                    <button class="btn-transparente btn-cancelar" @click="cancelarInstalacion">Cancelar</button>
+                    <button class="btn-transparente btn-instalar" @click="instalar">Instalar</button>
+                </div>
             </div>
-        </div>
-        <div class="instalar-fondo" v-if="promptInstalar"/>
+            <div class="instalar-fondo"/>
+        </transition>
 
     </div>
 </template>
