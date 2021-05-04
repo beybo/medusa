@@ -18,8 +18,36 @@ module.exports = {
         themeColor: "#677eb6",
         msTileColor: "#677eb6",
         appleMobileWebAppCache: "yes",
+        workboxPluginMode: "InjectManifest",
+        workboxOptions:{
+            swSrc: "src/service-worker.js"
+        },
         manifestOptions: {
-            background_color: "#677eb6"
+            background_color: "#677eb6",
+            icons: [
+                {
+                    'src': 'icon/android-icon-192x192.png',
+                    'sizes': '192x192',
+                    'type': 'image/png'
+                },
+                {
+                    'src': 'icon/android-icon-512x512.png',
+                    'sizes': '512x512',
+                    'type': 'image/png'
+                },
+                {
+                    'src': 'icon/maskable-192.png',
+                    'sizes': '192x192',
+                    'type': 'image/png',
+                    'purpose': 'maskable'
+                },
+                {
+                    'src': 'icon/maskable-512.png',
+                    'sizes': '512x512',
+                    'type': 'image/png',
+                    'purpose': 'maskable'
+                }
+            ]
         },
         iconPaths:{
             favicon32: 'icon/favicon-32x32.png',

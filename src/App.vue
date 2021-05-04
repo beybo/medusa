@@ -9,6 +9,16 @@
         <transition name="ocultar-corto" mode="out-in">
             <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
         </transition>
+
+        <div class="instalar caja columna" v-if="promptInstalar">
+            <b class="margen-inf">¿Quieres instalar Medusa en tu dispositivo?</b>
+            <div>
+                <button class="btn-transparente btn-cancelar">Cancelar</button>
+                <button class="btn-transparente btn-instalar">Instalar</button>
+            </div>
+        </div>
+        <div class="instalar-fondo" v-if="promptInstalar"/>
+
     </div>
 </template>
 
@@ -26,7 +36,8 @@ export default {
     data() {
         return {
             mostrarHeader: this.mostrarHeaderInicial(),
-            mensaje: ""
+            mensaje: "",
+            promptInstalar: null
         }
     },
     created() {
@@ -43,6 +54,28 @@ export default {
                 this.mensaje = "Vaya, hay un problema con la conexión...";
             }
         },5000)
+
+        if (this.$workbox) {
+            this.$workbox.addEventListener("waiting", () => {
+                this.$swal({
+                    title:"Nueva versión",
+                    html:"Se ha detectado una nueva versión de la página. Es necesario una actualización",
+                    confirmButtonText: "Continuar",
+                    customClass: {
+                        confirmButton: 'btn info'
+                    },
+                    timer:30000
+                }).then(()=>{
+                    this.$workbox.messageSW({ type: "SKIP_WAITING" });
+                })
+            });
+        }
+
+        window.addEventListener("beforeinstallprompt", e => {
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            this.promptInstalar = e;
+        });
 
     },
     computed:{
@@ -67,6 +100,13 @@ export default {
             this.$socket.disconnect();
             localStorage.removeItem("token");
             this.$router.replace({name: "Login"});
+        },
+
+        async cancelarInstalacion() {
+            this.promptInstalar = null;
+        },
+        async instalar() {
+            this.promptInstalar.prompt();
         }
     },
     watch: {
@@ -91,10 +131,59 @@ export default {
 #app.centrar
   justify-content: center
 
+.instalar
+  position: fixed
+  z-index: 1001
+  top: 10px
+  right: 10px
+
+  .btn-cancelar
+    color: #ff3b30
+    transition: all $tiempo-transicion-c linear
+    margin-right: $margen
+
+    &:hover
+      background-color: #ff3b30
+      color: var(--fondo)
+      border: 2px solid #ff3b30
+
+  .btn-instalar
+    color: #4cd964
+    transition: all $tiempo-transicion-c linear
+
+    &:hover
+      background-color: #4cd964
+      color: var(--fondo)
+      border: 2px solid #4cd964
+
+.instalar-fondo
+  display: none
 
 @media (max-width: $mobile)
   #app
     overflow-x: hidden
     height: calc(100vh - #{$nav-mobile-height})
     padding-bottom: $nav-mobile-height
+
+  .instalar
+    right: auto
+    left: 50%
+    transform: translate(-50%,-50%)
+    max-width: 100%
+    width: calc(100vw - #{$margen * 6})
+    box-shadow: none
+    top: 50%
+    text-align: center
+    margin: 0
+
+
+  .instalar-fondo
+    display: block
+    position: fixed
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100vw
+    z-index: 1000
+    background: rgba(0,0,0,0.4)
 </style>

@@ -21,7 +21,10 @@ import 'vue-select/dist/vue-select.css';
 // Error handling
 import * as Sentry from "@sentry/vue"
 import {Integrations} from "@sentry/tracing"
-import './registerServiceWorker'
+
+import wb from "./registerServiceWorker";
+
+Vue.prototype.$workbox = wb;
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
