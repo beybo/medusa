@@ -1,21 +1,25 @@
 <template>
     <div class="grid" v-if="getConectado">
 
-        <div class="caja fila area-info">
+        <div class="caja columna area-info">
 
-            <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
+            <div class="fila margen-inf">
+                <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
 
-            <div class="columna area-etiquetas">
-                <p>Nombre:</p>
-                <p>Reseteos:</p>
-                <p>Registro:</p>
+                <div class="columna area-etiquetas">
+                    <p>Nombre:</p>
+                    <p>Reseteos:</p>
+                    <p>Registro:</p>
+                </div>
+
+                <div class="columna area-datos">
+                    <b class="area-nombre">{{getNombreUsuario}}</b>
+                    <b>{{getResets}}</b>
+                    <b>{{getFechaRegistro | fecha}}</b>
+                </div>
             </div>
 
-            <div class="columna area-datos">
-                <b class="area-nombre">{{getNombreUsuario}}</b>
-                <b>{{getResets}}</b>
-                <b>{{getFechaRegistro | fecha}}</b>
-            </div>
+            <button class="btn" v-if="promptInstalar" @click="promptInstalar.prompt()">Instalar Aplicación</button>
 
         </div>
 
@@ -62,6 +66,7 @@ library.add(faTrash,faUndoAlt,faDoorClosed);
 export default {
     name: "Perfil",
     components: {ImagenPerfil},
+    props:['promptInstalar'],
     computed:{
         ...mapGetters(['getConectado', 'getTema','getNombreUsuario','getResets','getFechaRegistro']),
         esTemaOscuro(){

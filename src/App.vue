@@ -7,7 +7,7 @@
         <vue-element-loading :active="!getConectado && this.mostrarHeaderInicial()" color="#fc651f" v-bind:text="mensaje"/>
 
         <transition name="ocultar-corto" mode="out-in">
-            <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
+            <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion" :promptInstalar="promptInstalar"/>
         </transition>
 
 

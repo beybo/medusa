@@ -53,7 +53,7 @@ module.exports = {
             favicon32: 'icon/favicon-32x32.png',
             favicon16: 'icon/favicon-16x16.png',
             appleTouchIcon: 'icon/apple-icon-152x152.png',
-            maskIcon: 'img/LogoMedusa.svg',
+            maskIcon: 'icon/LogoMedusa.svg',
             msTileImage: 'icon/ms-icon-144x144.png'
         }
     }
