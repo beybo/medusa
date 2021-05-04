@@ -3,7 +3,7 @@
 
         <div class="caja columna area-info">
 
-            <div class="fila margen-inf">
+            <div class="fila">
                 <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
 
                 <div class="columna area-etiquetas">
@@ -18,8 +18,6 @@
                     <b>{{getFechaRegistro | fecha}}</b>
                 </div>
             </div>
-
-            <button class="btn" v-if="promptInstalar" @click="promptInstalar.prompt()">Instalar Aplicación</button>
 
         </div>
 
@@ -48,6 +46,11 @@
             <button class="btn-icon sm area-bot-3" @click="borrarCuenta">
                 <font-awesome-icon :icon="['fas','trash']"/>
             </button>
+        </div>
+
+        <div class="caja columna area-instalar">
+            <h4 class="margen-inf">Instalar Aplicación</h4>
+            <button class="btn" @click="promptInstalar.prompt()">Instalar</button>
         </div>
 
 
@@ -154,9 +157,9 @@ export default {
   display: grid
   grid-template-columns: repeat(2,1fr)
   gap: 0 0
-  grid-template-areas: "info info" "cerrar tema" "reset borrar"
+  grid-template-areas: "info info" "cerrar tema" "reset borrar" "instalar instalar"
 
-  @include grid-areas(["info", "cerrar", "tema", "reset", "borrar"])
+  @include grid-areas(["info", "cerrar", "tema", "reset", "borrar", "instalar"])
 
 .area-info
 
