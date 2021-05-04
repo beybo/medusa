@@ -10,16 +10,16 @@
             <router-view @mostrar-header="cambiarMostrarHeader" @cerrar-sesion="cerrarSesion"/>
         </transition>
 
-        <transition name="ocultar-corto" v-if="promptInstalar">
-            <div class="instalar caja columna" >
-                <b class="margen-inf">¿Quieres instalar Medusa en tu dispositivo?</b>
-                <div>
-                    <button class="btn-transparente btn-cancelar" @click="cancelarInstalacion">Cancelar</button>
-                    <button class="btn-transparente btn-instalar" @click="instalar">Instalar</button>
-                </div>
+
+        <div class="instalar caja columna" v-if="mostrarInstalar">
+            <b class="margen-inf">¿Quieres instalar Medusa en tu dispositivo?</b>
+            <div>
+                <button class="btn-transparente btn-cancelar" @click="cancelarInstalacion">Cancelar</button>
+                <button class="btn-transparente btn-instalar" @click="instalar">Instalar</button>
             </div>
-            <div class="instalar-fondo"/>
-        </transition>
+        </div>
+        <div class="instalar-fondo" v-if="mostrarInstalar" />
+
 
     </div>
 </template>
@@ -81,7 +81,32 @@ export default {
 
     },
     computed:{
-        ...mapGetters(['getTema','getConectado'])
+        ...mapGetters(['getTema','getConectado']),
+        mostrarInstalar(){
+
+            if(this.promptInstalar){
+
+                let stringFecha = localStorage.getItem("fecha_no_instalar");
+
+                if(stringFecha){
+
+                    let antigua = new Date(stringFecha),
+                        ahora = new Date();
+
+                    const utc1 = Date.UTC(antigua.getFullYear(), antigua.getMonth(), antigua.getDate());
+                    const utc2 = Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+
+                    let diferenciaDias =  Math.floor((utc2 - utc1) / 1000 * 60 * 60 * 24);
+
+                    return diferenciaDias > 10;
+                }
+
+                return true;
+
+            }
+
+            return false;
+        }
     },
     methods: {
 
@@ -105,10 +130,12 @@ export default {
         },
 
         async cancelarInstalacion() {
+            localStorage.setItem("fecha_no_instalar",new Date().toString())
             this.promptInstalar = null;
         },
         async instalar() {
             this.promptInstalar.prompt();
+            this.promptInstalar = null;
         }
     },
     watch: {
@@ -171,8 +198,8 @@ export default {
     right: auto
     left: 50%
     transform: translate(-50%,-50%)
-    max-width: 100%
-    width: calc(100vw - #{$margen * 6})
+    max-width: calc(100vw - #{$margen * 6})
+    width: 340px
     box-shadow: none
     top: 50%
     text-align: center

@@ -15,15 +15,15 @@ module.exports = {
     },
     pwa: {
         name:"Medusa",
-        themeColor: "#677eb6",
-        msTileColor: "#677eb6",
+        themeColor: "#fff",
+        msTileColor: "#fff",
         appleMobileWebAppCache: "yes",
         workboxPluginMode: "InjectManifest",
         workboxOptions:{
             swSrc: "src/service-worker.js"
         },
         manifestOptions: {
-            background_color: "#677eb6",
+            background_color: "#fff",
             icons: [
                 {
                     'src': 'icon/android-icon-192x192.png',
