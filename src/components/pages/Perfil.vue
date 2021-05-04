@@ -2,21 +2,18 @@
     <div class="grid" v-if="getConectado">
 
         <div class="caja columna area-info">
+            <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
 
-            <div class="fila">
-                <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
+            <div class="columna area-etiquetas">
+                <p>Nombre:</p>
+                <p>Reseteos:</p>
+                <p>Registro:</p>
+            </div>
 
-                <div class="columna area-etiquetas">
-                    <p>Nombre:</p>
-                    <p>Reseteos:</p>
-                    <p>Registro:</p>
-                </div>
-
-                <div class="columna area-datos">
-                    <b class="area-nombre">{{getNombreUsuario}}</b>
-                    <b>{{getResets}}</b>
-                    <b>{{getFechaRegistro | fecha}}</b>
-                </div>
+            <div class="columna area-datos">
+                <b class="area-nombre">{{getNombreUsuario}}</b>
+                <b>{{getResets}}</b>
+                <b>{{getFechaRegistro | fecha}}</b>
             </div>
 
         </div>
