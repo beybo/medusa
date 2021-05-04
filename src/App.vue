@@ -61,7 +61,7 @@ export default {
             this.$workbox.addEventListener("waiting", () => {
                 this.$swal({
                     title:"Nueva versión",
-                    html:"Se ha detectado una nueva versión de la página. Es necesario una actualización",
+                    html:"Se ha detectado una nueva versión de la página. Es necesario refrescar la página",
                     confirmButtonText: "Continuar",
                     customClass: {
                         confirmButton: 'btn info'

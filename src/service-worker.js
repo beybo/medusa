@@ -4,7 +4,11 @@ const OFFLINE_URL = 'offline.html';
 
 const FILES_TO_CACHE = [
     '/offline.html',
-    '/fonts/Quicksand-VariableFont_wght.ttf'
+    '/fonts/Quicksand-VariableFont_wght.ttf',
+    '/icon/favicon.ico',
+    '/icon/favicon-16x16.png',
+    '/icon/favicon-32x32.png',
+    '/icon/favicon-96x96.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -14,14 +18,12 @@ self.addEventListener('install', (event) => {
         // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
         await cache.addAll(FILES_TO_CACHE);
     })());
-
-    self.skipWaiting();
 });
 
 self.addEventListener('fetch', event => {
     event.respondWith((async () => {
         try {
-            // First, try to use the navigation preload response if it's supported.
+
             const preloadResponse = await event.preloadResponse;
             if (preloadResponse) {
                 return preloadResponse;
@@ -29,13 +31,17 @@ self.addEventListener('fetch', event => {
 
             return await fetch(event.request);
         } catch (error) {
-            // catch is only triggered if an exception is thrown, which is likely
-            // due to a network error.
-            // If fetch() returns a valid HTTP response with a response code in
-            // the 4xx or 5xx range, the catch() will NOT be called.
-            console.log('Fetch failed; returning offline page instead.', error);
 
+            console.log('Fetch failed; returning offline page instead.', error);
+            console.log(event);
             const cache = await caches.open(CACHE_NAME);
+
+            let valido = await cache.match(event.request);
+
+            if(valido){
+                return valido;
+            }
+
             return await cache.match(OFFLINE_URL);
         }
     })());
