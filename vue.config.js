@@ -15,7 +15,7 @@ module.exports = {
     },
     pwa: {
         name:"Medusa",
-        themeColor: "#fff",
+        themeColor: "#677eb6",
         msTileColor: "#fff",
         appleMobileWebAppCache: "yes",
         workboxPluginMode: "InjectManifest",
