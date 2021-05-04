@@ -1,42 +1,41 @@
-import * as navigationPreload from 'workbox-navigation-preload';
-import {registerRoute, NavigationRoute} from 'workbox-routing';
-import {NetworkOnly} from 'workbox-strategies';
+const CACHE_NAME = 'offline';
+// Customize this with a different URL if needed.
+const OFFLINE_URL = 'offline.html';
 
-const CACHE_NAME = 'offline-html';
-// This assumes /offline.html is a URL for your self-contained
-// (no external images or styles) offline page.
-const FALLBACK_HTML_URL = '/offline.html';
-// Populate the cache with the offline HTML page when the
-// service worker is installed.
-self.addEventListener('install', async (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => cache.add(FALLBACK_HTML_URL))
-    );
+self.addEventListener('install', (event) => {
+    event.waitUntil((async () => {
+        const cache = await caches.open(CACHE_NAME);
+        // Setting {cache: 'reload'} in the new request will ensure that the response
+        // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
+        await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+    })());
 });
 
-navigationPreload.enable();
+self.addEventListener('fetch', event => {
+    event.respondWith((async () => {
+        try {
+            // First, try to use the navigation preload response if it's supported.
+            const preloadResponse = await event.preloadResponse;
+            if (preloadResponse) {
+                return preloadResponse;
+            }
 
-const networkOnly = new NetworkOnly();
-const navigationHandler = async (params) => {
-    try {
-        // Attempt a network request.
-        return await networkOnly.handle(params);
-    } catch (error) {
-        // If it fails, return the cached HTML.
-        return caches.match(FALLBACK_HTML_URL, {
-            cacheName: CACHE_NAME,
-        });
-    }
-};
+            return await fetch(event.request);
+        } catch (error) {
+            // catch is only triggered if an exception is thrown, which is likely
+            // due to a network error.
+            // If fetch() returns a valid HTTP response with a response code in
+            // the 4xx or 5xx range, the catch() will NOT be called.
+            console.log('Fetch failed; returning offline page instead.', error);
 
-// Register this strategy to handle all navigations.
-registerRoute(
-    new NavigationRoute(navigationHandler)
-);
+            const cache = await caches.open(CACHE_NAME);
+            return await cache.match(OFFLINE_URL);
+        }
+    })());
 
+});
 
-addEventListener('message', (event) => {
+self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
