@@ -1,5 +1,5 @@
 <template>
-    <div class="caja columna">
+    <div class="caja columna titulo-cartera">
 
         <div class="fila inicial">
 
@@ -86,4 +86,7 @@ export default {
 
   &:active
     box-shadow: var(--sombra-interior)
+@media (max-width: $mobile)
+  .caja.titulo-cartera
+    width: calc(100vw - #{$margen*5})
 </style>

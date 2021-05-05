@@ -66,33 +66,16 @@ export let mutations = {
 
         state.usuario = {...datos.usuario};
 
-        if(!datos.divisas.precio){
-            state.divisas = {...datos.divisas};
-            state.conectado = true;
-
-            Object.keys(state.divisas).forEach(id=>{
-                let precios = state.divisas[id].precios;
-                ["dia","semana","mes"].forEach(modo=>{
-                    precios[modo] = LTTB(precios[modo],TOLERANCIA);
-                })
-            });
-
+        if(datos.divisas.bitcoin.precio){
+            procesarPrecios(state,datos.divisas)
         }
 
     },
 
     SOCKET_DIVISAS(state,divisas){
         state.divisas = {...divisas};
-        state.conectado = true;
 
-        Object.keys(state.divisas).forEach(id=>{
-            let precios = state.divisas[id].precios;
-
-            ["dia","semana","mes"].forEach(modo=>{
-                precios[modo] = LTTB(precios[modo],TOLERANCIA);
-            })
-        });
-
+        procesarPrecios(state,divisas);
     },
 
     SOCKET_PRECIO(state, params) {
@@ -130,4 +113,19 @@ export let mutations = {
         }
 
     }
+}
+
+function procesarPrecios(state,divisas){
+
+    state.conectado = true;
+
+    Object.keys(divisas).forEach(id=>{
+        let precios = divisas[id].precios;
+
+        ["dia","semana","mes"].forEach(modo=>{
+            precios[modo] = LTTB(precios[modo],TOLERANCIA);
+        })
+    });
+
+    state.divisas = {...divisas};
 }

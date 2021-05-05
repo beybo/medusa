@@ -20,6 +20,8 @@ export default {
                     legend: {
                         display: false
                     },
+                    parsing:false,
+                    normalized: true,
                     layout:{
                         padding: {
                             left: 5,

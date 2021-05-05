@@ -1,7 +1,7 @@
 <template>
     <div class="grid" v-if="getConectado">
 
-        <div class="caja columna area-info">
+        <div class="caja fila area-info">
             <imagen-perfil class="caja area-imagen" v-bind:nombre-usuario="getNombreUsuario"/>
 
             <div class="columna area-etiquetas">

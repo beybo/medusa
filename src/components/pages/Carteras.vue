@@ -3,7 +3,6 @@
 
         <titulo-carteras :orden="orden" @siguiente-orden="siguienteOrden"/>
 
-
         <transition-group name="flip-list" class="caja columna flip-list" tag="div">
             <div v-for="id in getIdsOrdenados" :key="id" class="divisa" @click="abrirCartera(id)">
                 <imagen-divisa :id-divisa="id" />

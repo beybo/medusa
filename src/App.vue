@@ -59,15 +59,7 @@ export default {
 
         if (this.$workbox) {
             this.$workbox.addEventListener("waiting", () => {
-                this.$swal({
-                    title:"Nueva versión",
-                    html:"Se ha detectado una nueva versión de la página. Es necesario refrescar la página",
-                    confirmButtonText: "Continuar",
-                    customClass: {
-                        confirmButton: 'btn info'
-                    },
-                    timer:30000
-                }).then(()=>{
+                this.mostrarSwalRefrescar().then(()=>{
                     this.$workbox.messageSW({ type: "SKIP_WAITING" });
                 })
             });
@@ -79,34 +71,6 @@ export default {
             this.promptInstalar = e;
         });
 
-    },
-    computed:{
-        ...mapGetters(['getTema','getConectado']),
-        mostrarInstalar(){
-
-            if(this.promptInstalar){
-
-                let stringFecha = localStorage.getItem("fecha_no_instalar");
-
-                if(stringFecha){
-
-                    let antigua = new Date(stringFecha),
-                        ahora = new Date();
-
-                    const utc1 = Date.UTC(antigua.getFullYear(), antigua.getMonth(), antigua.getDate());
-                    const utc2 = Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
-
-                    let diferenciaDias =  Math.floor((utc2 - utc1) / 1000 * 60 * 60 * 24);
-
-                    return diferenciaDias > 10;
-                }
-
-                return true;
-
-            }
-
-            return false;
-        }
     },
     methods: {
 
@@ -136,6 +100,45 @@ export default {
         async instalar() {
             this.promptInstalar.prompt();
             this.promptInstalar = null;
+        },
+        async mostrarSwalRefrescar(){
+            return await this.$swal({
+                title:"Nueva versión",
+                html:"Se ha detectado una nueva versión de la página. Es necesario refrescar la página",
+                confirmButtonText: "Continuar",
+                customClass: {
+                    confirmButton: 'btn info'
+                },
+                timer:30000
+            });
+        }
+    },
+    computed:{
+        ...mapGetters(['getTema','getConectado']),
+        mostrarInstalar(){
+
+            if(this.promptInstalar){
+
+                let stringFecha = localStorage.getItem("fecha_no_instalar");
+
+                if(stringFecha){
+
+                    let antigua = new Date(stringFecha),
+                        ahora = new Date();
+
+                    const utc1 = Date.UTC(antigua.getFullYear(), antigua.getMonth(), antigua.getDate());
+                    const utc2 = Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+
+                    let diferenciaDias =  Math.floor((utc2 - utc1) / 1000 * 60 * 60 * 24);
+
+                    return diferenciaDias > 10;
+                }
+
+                return true;
+
+            }
+
+            return false;
         }
     },
     watch: {
@@ -144,6 +147,18 @@ export default {
         }
     },
     sockets: {
+        version(version){
+
+            let versionLocal = localStorage.getItem("version_servidor");
+
+            if(versionLocal && version>parseInt(versionLocal)){
+                this.mostrarSwalRefrescar().then(()=>{
+                    window.location.reload(true);
+                })
+            }
+
+            localStorage.setItem("version_servidor",version);
+        },
         desconectar() {
             this.cerrarSesion();
         }
