@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Medusa, el simulador de criptodivisas más fácil de usar. Te permite simular las inversiones en diversas criptodivisas.">
     <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="icon/apple-icon-72x72.png">
@@ -46,7 +47,7 @@
             background: var(--fondo);
         }
 
-        .columna, .fila {
+        .columna{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -142,7 +143,8 @@
 
         document.body.dataset.tema = tema;
 
-        document.querySelector("meta[name=theme-color]").setAttribute("content",tema==='oscuro' ? "#312d38" : "#9baacf")
+        document.querySelector("meta[name=theme-color]").setAttribute("content",tema==='oscuro' ? "#312d38" : "#9baacf");
+        document.querySelector("meta[apple-mobile-web-app-status-bar-style]").setAttribute("content",tema==='oscuro' ? "black-translucent" : "default");
     </script>
 </body>
 </html>

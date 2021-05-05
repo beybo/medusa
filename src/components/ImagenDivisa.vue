@@ -1,5 +1,5 @@
 <template>
-    <img class="imagen-divisa" :src="getRuta()" :width="tam" :height="tam"/>
+    <img class="imagen-divisa" :src="getRuta()" :width="tam" :height="tam" :alt="`Logo de ${idDivisa}`"/>
 </template>
 
 <script>
