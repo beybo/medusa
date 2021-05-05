@@ -129,7 +129,7 @@ export default {
                     const utc1 = Date.UTC(antigua.getFullYear(), antigua.getMonth(), antigua.getDate());
                     const utc2 = Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
 
-                    let diferenciaDias =  Math.floor((utc2 - utc1) / 1000 * 60 * 60 * 24);
+                    let diferenciaDias =  Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
 
                     return diferenciaDias > 10;
                 }
