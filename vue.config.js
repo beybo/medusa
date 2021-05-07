@@ -24,6 +24,7 @@ module.exports = {
         },
         manifestOptions: {
             background_color: "#677eb6",
+            start_url:'/',
             icons: [
                 {
                     'src': 'icon/android-icon-192x192.png',

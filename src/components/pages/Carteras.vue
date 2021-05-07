@@ -72,9 +72,26 @@ export default {
                 return 0;
             }
 
-            let valorPasado = state.getCartera(id).transacciones.reduce((acu,transaccion) => {
-                return acu + (((transaccion.cantidad * transaccion.precio)) * (transaccion.tipo === 'compra' ? 1 : -1));
-            },0);
+            let divisa = 0,
+                valorPasado = 0;
+
+            let transacciones = state.getCartera(id).transacciones;
+
+            for(let i = 0; i < transacciones.length; i++){
+
+                let transaccion = transacciones[i];
+
+                let multiplicador = (transaccion.tipo === 'compra' ? 1 : -1);
+
+                divisa += transaccion.cantidad * multiplicador;
+
+                if(divisa===0){
+                    valorPasado = 0;
+                    continue;
+                }
+
+                valorPasado += (transaccion.cantidad * transaccion.precio) * multiplicador;
+            }
 
             return ((valorActual - valorPasado) / valorPasado);
 

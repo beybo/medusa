@@ -3,7 +3,7 @@
 
         <div class="fila inicial">
 
-            <font-awesome-icon class="icono-barra" :icon="['fas','chart-pie']" size="lg" @click="mostrarGrafico = !mostrarGrafico"/>
+            <font-awesome-icon class="icono-barra" :icon="['fas','chart-pie']" size="lg" @click="mostrarGrafico = !mostrarGrafico" title="Mostrar gráfico de tus carteras"/>
 
             <div class="columna">
                 <h3>Total: <numero animar negrita v-bind:valor="getValorTodasCartera" /></h3>
@@ -12,7 +12,7 @@
                 </transition>
             </div>
 
-            <font-awesome-icon class="icono-barra" :icon="getIconoOrden" size="lg" @click="siguienteOrden"/>
+            <font-awesome-icon class="icono-barra" :icon="getIconoOrden" size="lg" @click="siguienteOrden" title="Ordenar carteras"/>
 
         </div>
 
