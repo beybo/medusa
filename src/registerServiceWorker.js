@@ -4,7 +4,7 @@ let wb = null;
 
 
 if ("serviceWorker" in navigator) {
-    wb = new Workbox(`service-worker.js`);
+    wb = new Workbox(`/service-worker.js`);
 
     wb.addEventListener("controlling", () => {
         window.location.reload();
