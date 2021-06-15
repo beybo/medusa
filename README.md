@@ -4,9 +4,9 @@
 
 <h1 align="center">Medusa</h1>
 
-Servidor para medusa alojado en [medusa-server](https://github.com/beybo/medusa-server)
+Servidor para medusa alojado en [medusa-server](https://github.com/beybo/medusa-server).
 
-Es necesario que definas las siguientes variables de entorno:
+Es necesario definir las siguientes variables de entorno:
 
 |Nombre|Valor|
 |------|-----|
@@ -14,30 +14,20 @@ Es necesario que definas las siguientes variables de entorno:
 |VUE_APP_MEDUSA_SERVER_URL|Url del servidor de medusa|
 |VUE_APP_SENTRY_DSN|Url para la integración con Sentry, no es obligatorio.|
 
-## Project setup
+## Instalar todas las dependencias
 
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compila y lanza un servidor de desarrollo
 
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Compila y minimiza para producción
 
 ```
 yarn build
 ```
-
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
